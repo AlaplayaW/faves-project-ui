@@ -1,0 +1,7 @@
+<div class="flex flex-column" [ngClass]="theme">
+  <p-toast></p-toast>
+  <div [hidden]="!showLoader" class="np-loader">
+    <p-progressSpinner strokeWidth="3"></p-progressSpinner>
+  </div>
+    <router-outlet></router-outlet>
+</div>

@@ -1,0 +1,15 @@
+<p-card *ngFor="let movie of movies$ | async" class="p-2">
+  <ng-template pTemplate="content">
+    <div class="movie-card flex align-items-center">
+      <div class="movie-image mr-2">
+        <p-image [src]="'https://primefaces.org/cdn/primeng/images/demo/avatar/amyelsner.png'" styleClass="mr-2"></p-image>
+        <!-- <p-image [src]="movie.item?.media?.imageUrl ?? 'https://primefaces.org/cdn/primeng/images/demo/avatar/amyelsner.png'" styleClass="mr-2" size="xlarge"></p-image> -->
+      </div>
+      <div class="user-details flex-grow-1">
+        <p>{{ movie.item?.title }}</p>
+        <p>{{ movie.directors }}</p>
+      </div>
+    </div>
+  </ng-template>
+</p-card>
+

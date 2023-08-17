@@ -1,0 +1,33 @@
+<p-card *ngFor="let item of items$ | async" class="p-2">
+  <ng-template pTemplate="content">
+    <div class="item-card flex align-items-center">
+      <div class="item-image mr-2">
+        <p-image [src]="'https://primefaces.org/cdn/primeng/images/demo/avatar/amyelsner.png'"
+          styleClass="mr-2"></p-image>
+        <!-- <p-image [src]="item.media?.imageUrl ?? 'https://primefaces.org/cdn/primeng/images/demo/avatar/amyelsner.png'" styleClass="mr-2" size="xlarge"></p-image> -->
+      </div>
+      <div class="item-details flex-grow-1">
+        <p>{{ item.title }}</p>
+        <p>Note: {{ item.averageRating }}</p>
+        <ul>
+          <li *ngFor="let itemGenre of item.itemGenres">
+            {{ itemGenre.genre?.name }}
+          </li>
+        </ul>
+        <div *ngFor="let author of item.book?.authors">
+          <p>{{ author }}</p>
+        </div>
+        <p>Posté par: {{ item.postedBy?.userName }}</p>
+        <p>Posté le: {{ item.createdAt }}</p>
+        <p>Image du user: {{ item.postedBy?.media?.imageUrl }}</p>
+
+      </div>
+    </div>
+  </ng-template>
+</p-card>
+<!-- 
+<div class="card {{ (isGroupsAdminActive && item.is_admin === 1) ? 'group-admin' : '' }}" [ngClass]="{'user': item.is_admin === undefined, 'group': item.is_admin === 0 || item.is_admin === 1}">
+  <img *ngIf="item.image" src="/assets/group_image1.png" alt="{{ item.name }}" class="card-header-img">
+  <h2 class="title">{{item.name}}</h2>
+  <button class="btn btn-danger">Supprimer</button>
+</div> -->
