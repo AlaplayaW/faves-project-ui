@@ -23,11 +23,14 @@ export class StarRatingComponent {
 
     for (let i = 0; i < numberOfStars; i++) {
       if (i < normalizedNote-1) {
-        starsArray.push('full-star');
+        starsArray.push('heart-filled-svgrepo-com.svg');
+        // starsArray.push('full-star.png');
       } else if (i === Math.floor(normalizedNote) && normalizedNote % 1 > 0) {
-        starsArray.push('half-star');
+        starsArray.push('heart-half-stroke-filled-svgrepo-com.svg');
+        // starsArray.push('half-star.png');
       } else {
-        starsArray.push('empty-star');
+        starsArray.push('heart-svgrepo-com.svg');
+        // starsArray.push('empty-star.png');
       }
     }
 

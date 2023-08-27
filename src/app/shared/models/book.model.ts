@@ -7,6 +7,4 @@ export interface Book {
   publishedDate?: Date;
   pageCount?: number;
   item?: Item;
-  createdAt: Date | null;
-  updatedAt: Date | null;
 }

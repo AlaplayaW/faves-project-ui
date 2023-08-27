@@ -56,7 +56,7 @@ export class UserService {
   }
 
   getUserById(userId: string) {
-    return this.http.get<User>(`${this.apiUrl}/users/${userId}`);
+    return this.http.get<User>(`${this.apiUrl}/${userId}`);
   }
 
   saveEditUser(userId: string, user: User) {

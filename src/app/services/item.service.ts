@@ -6,6 +6,7 @@ import { environment } from 'src/environments/environment';
 import { FriendshipService } from './friendship.service';
 import { User } from '../shared/models/user.model';
 import { UserService } from './user.service';
+import { CreateItemDto } from '../shared/models/createItemDto.model';
 
 
 const httpOptions = {
@@ -35,6 +36,10 @@ export class ItemService {
     return this.itemsSubject.asObservable();
   }
 
+  getFilteredItems(itemType: string, query: string): Observable<Item[]> {
+    return this.http.get<Item[]>(this.apiUrl + `?mediaType=${itemType}&title=${query}`, httpOptions);
+  }
+  
   getItemsByUser(userId: number): Observable<Item[]> {
     return this.http.get<Item[]>(this.apiUrl + '?&postedBy=' + userId);
   }
@@ -56,6 +61,12 @@ export class ItemService {
     return this.http.get<Item[]>(this.apiUrl + '?&postedBy=' + friendIds);
   }
 
+  createItem(item: CreateItemDto): Observable<CreateItemDto> {
+    return this.http.post<CreateItemDto>(this.apiUrl, item).pipe(
+      tap((response) => this.log(response)),
+      catchError((error) => this.handleError(error, undefined))
+    );
+  }
 
   private loadItems(){
     this.http.get<Item[]>(this.apiUrl, httpOptions).subscribe({
@@ -79,14 +90,14 @@ export class ItemService {
   //     catchError((error) => this.handleError(error, []))
   //   );
   // }
-  // private log(response: any) {
-  //   console.table(response);
-  // }
+  private log(response: any) {
+    console.table(response);
+  }
 
-  // private handleError(error: Error, errorValue: any) {
-  //   console.error(error);
-  //   return of(errorValue);
-  // }
+  private handleError(error: Error, errorValue: any) {
+    console.error(error);
+    return of(errorValue);
+  }
 }
 
   // Interface pour la réponse Hydra contenant les métadonnées

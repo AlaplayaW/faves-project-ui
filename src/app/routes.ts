@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { LayoutComponent } from './core/layout/layout.component';
 import { authGuard } from './auth/guards/auth.guard';
 
+
 export const APP_ROUTES: Routes = [
 
   {
@@ -37,36 +38,64 @@ export const APP_ROUTES: Routes = [
     // canActivate: [authGuard],
     children: [
       {
-        path: 'home',
-        loadComponent: () => import('./components/pages/home/home.component').then(c => c.HomeComponent),
+        path: 'feed',
+        loadComponent: () => import('./components/pages/news-feed/news-feed.component').then(c => c.NewsFeedComponent),
+        title: "Fil d'actualités"
+      },
+      // {
+      //   path: 'home',
+      //   loadComponent: () => import('./components/pages/home/home.component').then(c => c.HomeComponent),
+      //   title: "Accueil"
+      // },
+      {
+        path: 'new-book',
+        loadComponent: () => import('./components/pages/new-item/new-item.component').then(c => c.NewItemComponent),
+        // title: 'Ajoute un média'
+      },
+      {
+        path: 'new-movie',
+        loadComponent: () => import('./components/pages/new-item/new-item.component').then(c => c.NewItemComponent),
+        // title: 'Ajoute un média'
+      },
+      {
+        path: 'new-review',
+        loadComponent: () => import('./components/pages/new-review/new-review.component').then(c => c.NewReviewComponent),
+        title: "Ajoute un avis"
+      },
+      {
+        path: 'new-review-bis',
+        loadComponent: () => import('./components/pages/new-review-bis/new-review-bis.component').then(c => c.NewReviewBisComponent),
+        title: "Ajoute un avis bis"
       },
       {
         path: 'books',
         loadComponent: () => import('./components/book/list-book/list-book.component').then(c => c.ListBookComponent),
+        title: "Liste de livres"
       },
       {
         path: 'movies',
         loadComponent: () => import('./components/movie/list-movie/list-movie.component').then(c => c.ListMovieComponent),
+        title: "Liste de films"
       },
       {
         path: 'users',
         loadComponent: () => import('./components/user/user.component').then(c => c.UserComponent),
       },
-      {
-        path: 'feed',
-        loadComponent: () => import('./components/pages/news-feed/news-feed.component').then(c => c.NewsFeedComponent),
-      },
-      // {
-      //     path: 'departments',
-      //     loadChildren: () => import('./features/department/department.Component').then(m => m.DepartmentComponent),
-      //     // canActivate: [AuthGuard]
-      // },
+
     ]
   },
   {
     path: '**',
     redirectTo: '',
   },
+
+        // {
+      //     path: 'departments',
+      //     loadChildren: () => import('./features/department/department.Component').then(m => m.DepartmentComponent),
+      //     // canActivate: [AuthGuard]
+      // },
+
+
   // { path: '404', component: Error404PageComponent },
 
   // {

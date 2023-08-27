@@ -3,20 +3,67 @@
 @import "../node_modules/primeng/resources/primeng.min.css";
 // @import "../node_modules/primeng/resources/themes/soho-light.css";
 @import "../node_modules/primeng/resources/themes/soho-light/theme.css";
+// @import "../node_modules/primeng/resources/themes/soho-dark/theme.css";
 @import "../node_modules/primeflex/primeflex.css";
+@import "/src/themes/variables";
 
-// @import "../node_modules/primeicons/primeicons.css";
+
+
 html,
 body {
   height: 100%;
   margin: 0;
+  font-family: var(--font-family);
 }
 
+label, .page-title {
+  color: $white;
+  font-weight: bold;
+}
+
+.page-title {
+  text-align: center;
+  font-size: 1rem;
+}
+
+.add-review {
+  justify-content: center;
+
+  .p-button {
+    background-color: $secondary-darker;
+    border-color: $secondary-darker;
+  }
+
+  .p-button:enabled:hover {
+    background: $secondary-darker;
+    border-color: $secondary-darker;
+  }
+
+  .review-btn .p-button {
+    padding: 2rem;
+    width: 100%;
+  }
+
+}
+
+.p-menuitem {
+  position: relative;
+
+  p-menubarsub {
+    position: absolute;
+    top: -140px;
+  }
+}
+
+app-layout {
+  background-color: $secondary-color
+}
 
 .item-card {
   .p-card {
     display: flex;
-    max-width: 400px;
+    // max-width: 400px;
+    background-color: $secondary-darker;
 
     .p-card-title {
       font-size: 1rem;
@@ -25,7 +72,7 @@ body {
     }
 
     .p-card-header {
-      flex: 1 1 100px;
+      flex: 1 1 135px;
 
       img {
         width: 100%;
@@ -40,6 +87,7 @@ body {
       padding: 0;
       flex-direction: column;
       justify-content: space-between;
+      color: $white;
 
       .p-card-content {
         padding: 0rem 1rem 0rem 1rem;
@@ -49,23 +97,76 @@ body {
       .p-card-footer {
         font-size: 0.8rem;
         padding: 0.2rem 1rem 0.2rem 1rem;
-        background-color: rgb(215, 228, 232);
+        // background-color: $light-grey;
+        background-color: $secondary-lighter;
       }
     }
 
   }
 }
 
-.p-tabmenu {
-  margin-bottom: 30px;
-  .p-tabmenu-nav {
-    justify-content: center;
+.item-tab-menu {
+  .p-tabmenu {
+    .p-tabmenu-nav {
+      justify-content: center;
+      border: 1px solid transparent;
+      background-color: transparent;
+
+      .p-tabmenuitem .p-menuitem-link {
+        background-color: transparent;
+        color: $whitesmoke;
+        border-color: $whitesmoke;
+        // padding: 1.24rem !important;
+      }
+
+      .p-tabmenuitem:not(.p-highlight):not(.p-disabled):hover .p-menuitem-link {
+        background-color: $transparent;
+        color: $white;
+        border-color: $white;
+      }
+
+      .p-tabmenuitem.p-highlight .p-menuitem-link {
+        // background: #ffffff;
+        border-color: $primary-color;
+        color: $primary-color;
+        background-color: $transparent;
+      }
+    }
+
   }
 }
 
-.p-inputtext {
-  font-size: 0.8rem;
-  width: 300px;
+app-news-feed {
+  .p-inputtext {
+    font-size: 0.8rem;
+    width: 300px;
+    padding: 0.5rem 0.5rem;
+    // background: #ffffff52;
+    color: $whitesmoke;
+    border: none;
+    background-color: $secondary-lighter
+  }
+
+  input::placeholder {
+    color: $white;
+  }
+}
+
+
+.navbar {
+  .p-tabmenu-nav {
+    justify-content: space-around;
+
+    .p-tabmenuitem .p-menuitem-link {
+      padding: 0px;
+    }
+  }
+}
+
+// Liste des livres avec recherche api google
+// problème de decalage du 1er element.
+.p-autocomplete-items {
+  margin-top: 25px;
 }
 
 // .star-rating {

@@ -5,11 +5,12 @@ import { TabMenuModule } from 'primeng/tabmenu';
 import { InputTextModule } from 'primeng/inputtext';
 import { MenuItem } from 'primeng/api';
 import { Subject } from 'rxjs';
+import { HeaderComponent } from 'src/app/core/header/header.component';
 
 @Component({
   selector: 'app-news-feed',
   standalone: true,
-  imports: [CommonModule, ListReviewComponent, TabMenuModule, InputTextModule],
+  imports: [CommonModule, ListReviewComponent, TabMenuModule, InputTextModule, HeaderComponent],
   templateUrl: './news-feed.component.html',
   styleUrls: ['./news-feed.component.scss']
 })

@@ -34,6 +34,17 @@ export class BookService {
     return this.booksSubject.asObservable();
   }
 
+  createBook(book: Book): Observable<Book> {
+    const httpOptions = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    };
+    return this.http.post<Book>(this.apiUrl, book, httpOptions).pipe(
+      tap((response) => this.log(response)),
+      catchError((error) => this.handleError(error, undefined))
+    );
+  }
+
+
   private loadBooks(){
     this.http.get<{ 'hydra:member': Book[] }>(this.apiUrl).subscribe({
     next: response => {
@@ -45,19 +56,19 @@ export class BookService {
     });
   }
 
+  private log(response: any) {
+    console.table(response);
+  }
+
+  private handleError(error: Error, errorValue: any) {
+    console.error(error);
+    return of(errorValue);
+  }
 
   // getBookList(url: string): Observable<object> {
   //   return this.http.get(url, httpOptions).pipe(
   //     tap((response) => this.log(response)),
   //     catchError((error) => this.handleError(error, []))
   //   );
-  // }
-  // private log(response: any) {
-  //   console.table(response);
-  // }
-
-  // private handleError(error: Error, errorValue: any) {
-  //   console.error(error);
-  //   return of(errorValue);
   // }
 }

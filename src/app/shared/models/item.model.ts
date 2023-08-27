@@ -15,13 +15,12 @@ export interface Item {
   description?: string;
   postedBy?: User;
   media?: Media;
-  // user?: User;
   book?: Book;
   movie?: Movie;
   reviews?: Review[];
-  itemGenres: ItemGenre[];
+  itemGenres?: ItemGenre[];
   averageRating?: number;
-  createdAt: Date | null;
-  updatedAt: Date | null;
+  createdAt?: Date | null;
+  updatedAt?: Date | null;
 }
 
