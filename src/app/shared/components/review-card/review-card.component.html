@@ -1,8 +1,4 @@
-<<<<<<<< HEAD:src/app/shared/components/review-card/review-card.component.html
 <p-card class="item-card" [style]="{ width: '100%' }" header="{{ review?.book?.title }}">
-========
-<p-card class="item-card" [style]="{ width: '100%' }" header="{{ item?.title }}">
->>>>>>>> origin/main:src/app/shared/components/item-card/item-card.component.html
   <ng-template pTemplate="header">
     <p-image [src]="'/assets/affiche-joker.jpeg'"></p-image>
     <!-- <p-image [src]="review.media?.imageUrl ?? 'https://primefaces.org/cdn/primeng/images/demo/avatar/amyelsner.png'" styleClass="mr-2" size="xlarge"></p-image> -->
@@ -13,7 +9,6 @@
   <ng-template pTemplate="content">
     <div class="review-card flex align-reviews-center">
       <div class="review-details flex flex-column flex-grow-1 gap-1">
-<<<<<<<< HEAD:src/app/shared/components/review-card/review-card.component.html
         <app-star-rating [rating]="review?.rating" [size]="15"></app-star-rating>
         <ul class="genre-list">
           <ng-container *ngFor="let itemGenre of review?.book?.bookGenres; let i = index; let last = last">
@@ -26,13 +21,7 @@
           <ul *ngSwitchCase="'book'" class="authors">
             <ng-container *ngIf="review?.book?.authors; else noAuthors">
               <ng-container *ngFor="let author of review?.book?.authors; let i = index; let last = last">
-========
 
-        <div [ngSwitch]="item?.mediaType">
-          <ul *ngSwitchCase="'book'" class="authors">
-            <ng-container *ngIf="item?.book?.authors; else noAuthors">
-              <ng-container *ngFor="let author of item?.book?.authors; let i = index; let last = last">
->>>>>>>> origin/main:src/app/shared/components/item-card/item-card.component.html
                 <li *ngIf="i < 3">
                   {{ author }}{{ !last && i < 2 ? ',' : '' }}&nbsp;</li>
                     <li *ngIf="i === 3">...</li>
@@ -43,18 +32,6 @@
             </ng-template>
           </ul>
 
-<<<<<<<< HEAD:src/app/shared/components/review-card/review-card.component.html
-========
-          <ul *ngSwitchCase="'movie'" class="directors">
-            <ng-container *ngIf="item?.movie?.directors; else noDirectors">
-              <div appTrimText [maxLength]="30">{{ item?.movie?.directors }}</div>
-            </ng-container>
-            <ng-template #noDirectors>
-              <div>No directors found for this movie.</div>
-            </ng-template>
-          </ul>
-
->>>>>>>> origin/main:src/app/shared/components/item-card/item-card.component.html
           <div *ngSwitchDefault>
             <p>Unsupported media type.</p>
           </div>
@@ -62,7 +39,6 @@
       </div>
     </div>
   </ng-template>
-<<<<<<<< HEAD:src/app/shared/components/review-card/review-card.component.html
 
   <ng-template pTemplate="footer">
     <div class="footer flex gap-2 justify-content-between align-items-center">
@@ -74,6 +50,5 @@
       <div class="date">{{ review?.createdAt | date: 'dd/MM/yy' }}</div>
     </div>
   </ng-template>
-========
->>>>>>>> origin/main:src/app/shared/components/item-card/item-card.component.html
+
 </p-card>

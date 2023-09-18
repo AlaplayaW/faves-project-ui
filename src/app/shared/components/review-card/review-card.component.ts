@@ -5,7 +5,7 @@ import { CardModule } from 'primeng/card';
 import { RatingModule } from 'primeng/rating';
 import { StarRatingComponent } from 'src/app/shared/components/star-rating/star-rating.component';
 import { TrimTextDirective } from 'src/app/shared/directives/trim-text.directive';
-import { Item } from '../../models/item.model';
+import { Review } from '../../models/review.model';
 
 @Component({
   selector: 'app-review-card',
@@ -16,6 +16,6 @@ import { Item } from '../../models/item.model';
 })
 export class ReviewCardComponent {
 
-  @Input() item: Item | undefined = undefined;
+  @Input() review: Review | undefined = undefined;
 
 }
