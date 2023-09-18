@@ -1,12 +1,18 @@
-
-<div class="card flex justify-content-center mb-2">
-  <input #searchBox type="text" pInputText (keyup)="search(searchBox.value)"
-    placeholder="Rechercher par username ou titre" />
-</div>
-
-<div class="card">
-  <p-tabMenu [model]="items" [activeItem]="activeItem" (activeItemChange)="onActiveItemChange($event)"
+<!-- <div class="book-tab-menu">
+  <p-tabMenu [model]="books" [activeItem]="activeBook" (activeItemChange)="onActiveBookChange($event)"
     class="    justify-content-center"></p-tabMenu>
+</div> -->
+
+<div class="card flex justify-content-center my-4">
+  <input #searchBox type="text" pInputText (keyup)="search(searchBox.value)"
+    placeholder="Rechercher par username ou titre" class="flex-auto"/>
 </div>
-<app-list-review [currentItemType]="currentItemType" [searchTerms]="searchTerms"
-  class="flex flex-column gap-2 "></app-list-review>
+
+<div class="flex flex-column gap-3 my-4 ">
+
+  <ng-container *ngFor="let book of filteredBooks$ | async">
+    <!-- <app-feed-card [book]="book" class="flex w-full"></app-feed-card> -->
+    <app-feed-card [book]="book" class=""></app-feed-card>
+  </ng-container>
+
+</div>

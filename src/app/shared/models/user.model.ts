@@ -1,22 +1,18 @@
-import { Item } from "./item.model";
+import { Book } from "./book.model";
 import { Media } from "./media.model";
 import { Review } from "./review.model";
 
 export interface User {
   id?: number;
-  firstName?: string;
-  lastName?: string;
-  userName?: string;
+  pseudo?: string;
   password?: string;
-  birthDate?: Date;
   email?: string;
-  phone?: string;
   media?: Media;
   roles?: string[];
-  items?: Item[];
+  books?: Book[];
   reviews?: Review[];
-  friendshipRequests?: User[];
-  friendshipAccepters?: User[];
+  friendRequesters?: User[];
+  friendAccepters?: User[];
   createdAt?: Date | null;
   updatedAt?: Date | null;
 }

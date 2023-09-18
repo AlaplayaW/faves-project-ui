@@ -1,0 +1,14 @@
+@import "/src/themes/variables";
+
+.app-title {
+  font-size: 30px;
+  font-weight: 900;
+  color: $primary-color;
+  letter-spacing: 8px;
+}
+.page-title {
+  font-size: 16px;
+  font-weight: bold;
+  color: $whitesmoke;
+  letter-spacing: 1px;
+}

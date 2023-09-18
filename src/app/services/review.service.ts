@@ -21,15 +21,14 @@ const httpOptions = {
 })
 export class ReviewService {
 
-  friendshipService = inject(FriendshipService);
-  userService = inject(UserService);
-  reviewService = inject(ReviewService);
+  // friendshipService = inject(FriendshipService);
+  // userService = inject(UserService);
 
   private apiUrl: string;
   private reviewsSubject = new BehaviorSubject<Review[]>([]);
 
   constructor(private http: HttpClient) { 
-    this.apiUrl = environment.apiUrl + '/reviews';
+    this.apiUrl = environment.apiUrl + '/api/reviews';
     this.loadReviews();
   }
 
@@ -38,21 +37,39 @@ export class ReviewService {
   }
 
   getReviewsByUser(userId: number): Observable<Review[]> {
-    return this.http.get<Review[]>(this.apiUrl + '?&postedBy=' + userId);
+    return this.http.get<Review[]>(this.apiUrl + '?&user=' + userId);
   }
+
+  // getReviewsById(id: number): Observable<Review[]> {
+  //   return this.http.get<Review[]>(this.apiUrl + '/' + id);
+  // }
+
+    // on utilise l'URI
+    getReviewDetails(reviewUrl: string): Observable<Review> {
+      return this.http.get<Review>(`${environment.apiUrl}${reviewUrl}`);
+    }
 
   // getBooks(): Observable<Review[]> {
   //   return this.http.get<Review[]>(this.apiUrl + '?mediaType=book');
   // }
 
   // getBooksByUser(userId: number): Observable<Review[]> {
-  //   return this.http.get<Review[]>(this.apiUrl + '?mediaType=book&postedBy=' + userId);
+  //   return this.http.get<Review[]>(this.apiUrl + '?mediaType=book&user=' + userId);
   // }
 
   getReviewsByFriends(): Observable<Review[]> {
     return this.http.get<Review[]>(environment.apiUrl + '/network/friends/reviews');
   }
 
+  createReview(review: Review): Observable<Review> {
+    const httpOptions = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    };
+    return this.http.post<Review>(this.apiUrl, review, httpOptions).pipe(
+      tap((response) => this.log(response)),
+      catchError((error) => this.handleError(error, undefined))
+    );
+  }
 
   private loadReviews(){
     this.http.get<Review[]>(this.apiUrl, httpOptions).subscribe({
@@ -76,12 +93,12 @@ export class ReviewService {
   //     catchError((error) => this.handleError(error, []))
   //   );
   // }
-  // private log(response: any) {
-  //   console.table(response);
-  // }
+  private log(response: any) {
+    console.table(response);
+  }
 
-  // private handleError(error: Error, errorValue: any) {
-  //   console.error(error);
-  //   return of(errorValue);
-  // }
+  private handleError(error: Error, errorValue: any) {
+    console.error(error);
+    return of(errorValue);
+  }
 }

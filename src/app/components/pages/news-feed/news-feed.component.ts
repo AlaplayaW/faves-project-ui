@@ -1,53 +1,76 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ListReviewComponent } from '../../review/list-review/list-review.component';
 import { TabMenuModule } from 'primeng/tabmenu';
 import { InputTextModule } from 'primeng/inputtext';
-import { MenuItem } from 'primeng/api';
-import { Subject } from 'rxjs';
+import { Observable, Subject, catchError, debounceTime, distinctUntilChanged, map, of } from 'rxjs';
+import { Book } from 'src/app/shared/models/book.model';
+import { BookService } from 'src/app/services/book.service';
+import { FeedCardComponent } from '../../feed-card/feed-card.component';
 
 @Component({
   selector: 'app-news-feed',
   standalone: true,
-  imports: [CommonModule, ListReviewComponent, TabMenuModule, InputTextModule],
+  imports: [CommonModule, TabMenuModule, InputTextModule, FeedCardComponent],
   templateUrl: './news-feed.component.html',
   styleUrls: ['./news-feed.component.scss']
 })
 export class NewsFeedComponent implements OnInit {
 
-  currentItemType: string | undefined = 'all';
-  items: MenuItem[];
-  activeItem: MenuItem;
-  searchQuery: string = '';
+  bookService = inject(BookService);
+
+  searchQuery: string;
+  books$!: Observable<Book[]>;
+  filteredBooks$: Observable<Book[]>
   searchTerms = new Subject<string>();
 
+  constructor() {
+    this.books$ = this.loadFeed();
+  }
+
   ngOnInit(): void {
-    this.items = [
-      { label: 'Tous', title: 'all' },
-      { label: 'Livres', title: 'book' },
-      { label: 'Films', title: 'movie' }
-    ];
-    this.activeItem = this.items[0];
-    this.currentItemType = this.activeItem.title;
-    console.log("this.currentItemType: ", this.currentItemType);
+    this.filteredBooks$ = this.books$;
+    this.books$.subscribe(data => {
+      console.log('Contenu de l\'Observable :');
+      console.log(data); // Affichez les données dans la console
+    });
+    // Utiliser le flux searchTerms pour réagir aux changements dans les termes de recherche
+    this.searchTerms.pipe(
+      debounceTime(300), // Attendre 300 ms avant de déclencher la recherche
+      distinctUntilChanged(), // Ne déclencher la recherche que si les termes sont différents
+    ).subscribe(term => {
+      this.searchQuery = term; // Mettre à jour la variable searchQuery
+      this.updateFilteredBooks(); // Mettre à jour les avis filtrés
+    });
   }
 
-  onActiveItemChange(event: MenuItem) {
-    this.activeItem = event;
-    this.currentItemType = event.title;
-    console.log("this.event: ", event);
+  // Mettre à jour les avis filtrés
+  private updateFilteredBooks(): void {
+    const searchQueryLower = this.searchQuery?.toLowerCase() || '';
+    this.filteredBooks$ = this.books$.pipe(
+      map(books =>
+        searchQueryLower
+          ? books.filter(
+              book =>
+                (book.user?.pseudo?.toLowerCase().includes(searchQueryLower) ||
+                  book.title?.toLowerCase().includes(searchQueryLower))
+            )
+          : books
+      )
+    );
   }
 
-  activateLast() {
-    this.activeItem = (this.items as MenuItem[])[(this.items as MenuItem[]).length - 1];
+  private loadFeed(page?: number): Observable<Book[]> {
+    return this.bookService.getBooksWithReviews().pipe(
+      catchError(error => {
+        console.error('Error loading books:', error);
+        return of([]);
+      })
+    );
   }
 
   search(term: string) {
     this.searchTerms.next(term);
     console.log(term);
   }
+
 }
-
-
-
-

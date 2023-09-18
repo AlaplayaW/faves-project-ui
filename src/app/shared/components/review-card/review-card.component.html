@@ -1,26 +1,26 @@
-<p-card class="item-card" [style]="{ width: '100%' }" header="{{ review?.item?.title }}">
+<p-card class="item-card" [style]="{ width: '100%' }" header="{{ review?.book?.title }}">
   <ng-template pTemplate="header">
     <p-image [src]="'/assets/affiche-joker.jpeg'"></p-image>
     <!-- <p-image [src]="review.media?.imageUrl ?? 'https://primefaces.org/cdn/primeng/images/demo/avatar/amyelsner.png'" styleClass="mr-2" size="xlarge"></p-image> -->
   </ng-template>
-  <!-- <p>Image du user: {{ review.postedBy?.media?.imageUrl }}</p> -->
-  <!-- <p-image [src]="review.postedBy?.media?.imageUrl ?? 'https://primefaces.org/cdn/primeng/images/demo/avatar/amyelsner.png'" styleClass="mr-2" size="xlarge"></p-image> -->
+  <!-- <p>Image du user: {{ review.user?.media?.imageUrl }}</p> -->
+  <!-- <p-image [src]="review.user?.media?.imageUrl ?? 'https://primefaces.org/cdn/primeng/images/demo/avatar/amyelsner.png'" styleClass="mr-2" size="xlarge"></p-image> -->
 
   <ng-template pTemplate="content">
     <div class="review-card flex align-reviews-center">
       <div class="review-details flex flex-column flex-grow-1 gap-1">
         <app-star-rating [rating]="review?.rating" [size]="15"></app-star-rating>
         <ul class="genre-list">
-          <ng-container *ngFor="let itemGenre of review?.item?.itemGenres; let i = index; let last = last">
+          <ng-container *ngFor="let itemGenre of review?.book?.bookGenres; let i = index; let last = last">
             <li *ngIf="i < 3">{{ itemGenre.genre?.name }}{{ !last && i < 2 ? ',' : '' }}&nbsp;</li>
             <li *ngIf="i === 3">...</li>
           </ng-container>
         </ul>
 
-        <div [ngSwitch]="review?.item?.mediaType">
+        <div [ngSwitch]="review?.book">
           <ul *ngSwitchCase="'book'" class="authors">
-            <ng-container *ngIf="review?.item?.book?.authors; else noAuthors">
-              <ng-container *ngFor="let author of review?.item?.book?.authors; let i = index; let last = last">
+            <ng-container *ngIf="review?.book?.authors; else noAuthors">
+              <ng-container *ngFor="let author of review?.book?.authors; let i = index; let last = last">
                 <li *ngIf="i < 3">
                   {{ author }}{{ !last && i < 2 ? ',' : '' }}&nbsp;</li>
                     <li *ngIf="i === 3">...</li>
@@ -28,15 +28,6 @@
             </ng-container>
             <ng-template #noAuthors>
               <div>No authors found for this book.</div>
-            </ng-template>
-          </ul>
-
-          <ul *ngSwitchCase="'movie'" class="directors">
-            <ng-container *ngIf="review?.item?.movie?.directors; else noDirectors">
-              <div appTrimText [maxLength]="30">{{ review?.item?.movie?.directors }}</div>
-            </ng-container>
-            <ng-template #noDirectors>
-              <div>No directors found for this movie.</div>
             </ng-template>
           </ul>
 
@@ -53,7 +44,7 @@
       <div class="user flex gap-2 align-items-center">
         <p-image [src]="'https://primefaces.org/cdn/primeng/images/demo/avatar/amyelsner.png'" width="25"
           height="25"></p-image>
-        <div>{{ review?.postedBy?.userName }}</div>
+        <div>{{ review?.user?.pseudo }}</div>
       </div>
       <div class="date">{{ review?.createdAt | date: 'dd/MM/yy' }}</div>
     </div>

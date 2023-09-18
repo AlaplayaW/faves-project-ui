@@ -1,14 +1,14 @@
-import { Item } from "./item.model";
+import { Book } from "./book.model";
 import { User } from "./user.model";
 
 export interface Review {
   id?: number;
   rating?: number;
-  comment?: Text;
-  item?: Item;
-  postedBy?: User;
-  createdAt: Date | null;
-  updatedAt: Date | null;
+  comment?: string;
+  book?: Book;
+  user?: User;
+  createdAt?: Date | null;
+  updatedAt?: Date | null;
 }
 
 // le rating d'un film :

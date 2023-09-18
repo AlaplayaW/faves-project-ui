@@ -1,0 +1,17 @@
+.book-card {
+  .genre-list, .authors, .directors {
+    display: flex;
+    list-style-type: none;
+    padding-left: 0;
+    font-size: 0.8rem;
+    margin: 0;
+  }
+  .authors {
+    font-size: 0.8rem;
+  }
+  .footer {
+    .date {
+      font-size: 0.7rem;
+    }
+  }
+}

@@ -24,7 +24,7 @@ export class NetworkService {
   private friendsSubject = new BehaviorSubject<User[]>([]);
 
   constructor(private http: HttpClient) { 
-    this.apiUrl = environment.apiUrl + '/network';
+    this.apiUrl = environment.apiUrl + '/api/network';
     this.loadReviews();
     this.loadFriends();
   }

@@ -22,13 +22,13 @@ export class ListBookComponent {
 
   books$!: Observable<Book[]>;
 
-  ngOnInit(): void {
-    this.loadBooks();
-  }
+  // ngOnInit(): void {
+  //   this.loadBooks();
+  // }
 
-  private loadBooks(page?: number) {
-    this.books$ = this.bookService.getBooks();
-  }
+  // private loadBooks(page?: number) {
+  //   this.books$ = this.bookService.getBooks();
+  // }
 
   // getNetwork(bookId: number, page: number, isGroupsActive: boolean, isFriendsActive: boolean): Observable<any> {
   //   const params = {
@@ -48,7 +48,7 @@ export class ListBookComponent {
   //     page: "1"
   //   };
   //   this.loaded = false;
-  //   this.booksService.getBookList('http://127.0.0.1:8000/api/items')
+  //   this.booksService.getBookList('http://127.0.0.1:8000/api/books')
   //     .subscribe(
   //       bookList => {
   //         this.bookList = bookList;

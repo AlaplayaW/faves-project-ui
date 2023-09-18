@@ -23,7 +23,7 @@ export class UserService {
 
 
   constructor(private http: HttpClient) { 
-    this.apiUrl = environment.apiUrl + '/users';
+    this.apiUrl = environment.apiUrl + '/api/users';
     this.loadUsers();
   }
 
@@ -32,7 +32,7 @@ export class UserService {
   }
 
   getUserFriends(userId: number): Observable<User[]> {
-    return this.http.get<User[]>(this.apiUrl + '/users/' + userId + '/friends');
+    return this.http.get<User[]>(this.apiUrl + '/' + userId + '/friends');
   }
 
   private loadUsers(){
@@ -55,19 +55,24 @@ export class UserService {
     return this.http.get<User[]>(`${this.apiUrl}/users`);
   }
 
+  // on utilise l'URI
+  getUserDetails(userUrl: string): Observable<User> {
+    return this.http.get<User>(`${environment.apiUrl}${userUrl}`);
+  }
+  
   getUserById(userId: string) {
-    return this.http.get<User>(`${this.apiUrl}/users/${userId}`);
+    return this.http.get<User>(`${this.apiUrl}/${userId}`);
   }
 
   saveEditUser(userId: string, user: User) {
-    return this.http.patch(`${this.apiUrl}/users/${userId}`, user);
+    return this.http.patch(`${this.apiUrl}/${userId}`, user);
   }
 
   saveUser(user: User) {
-    return this.http.post(`${this.apiUrl}/users/`, user);
+    return this.http.post(`${this.apiUrl}/`, user);
   }
 
   deleteUserById(userId: string) {
-    return this.http.delete(`${this.apiUrl}/users/${userId}`);
+    return this.http.delete(`${this.apiUrl}/${userId}`);
   }
 }

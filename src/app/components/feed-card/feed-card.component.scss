@@ -1,0 +1,42 @@
+@import "/src/themes/variables";
+
+.feed-card {
+  .user-image {
+    border-radius: 50px;
+    width: 25px;
+    height: 25px;
+  }
+
+  .book-image {
+    width: 100px;
+    height: 100%;
+  }
+
+  .genre-list,
+  .authors,
+  .directors {
+    display: flex;
+    list-style-type: none;
+    padding-left: 0;
+    font-size: 0.8rem;
+    margin: 0;
+  }
+
+  .authors {
+    font-size: 0.8rem;
+  }
+
+  .footer {
+    .date {
+      font-size: 0.7rem;
+    }
+  }
+
+  .friend-comment {
+    // background-color: lightgray;
+    background-color: $secondary-lighter;
+
+    padding: 0.5em;
+    border-radius: 6px;
+  }
+}

@@ -8,13 +8,13 @@ import { StarRatingComponent } from 'src/app/shared/components/star-rating/star-
 import { TrimTextDirective } from 'src/app/shared/directives/trim-text.directive';
 
 @Component({
-  selector: 'app-item-card',
+  selector: 'app-review-card',
   standalone: true,
   imports: [CommonModule, ImageModule, CardModule, RatingModule, StarRatingComponent, TrimTextDirective],
-  templateUrl: './item-card.component.html',
-  styleUrls: ['./item-card.component.scss']
+  templateUrl: './review-card.component.html',
+  styleUrls: ['./review-card.component.scss']
 })
-export class ItemCardComponent {
+export class ReviewCardComponent {
 
   @Input() review: Review | undefined = undefined;
 

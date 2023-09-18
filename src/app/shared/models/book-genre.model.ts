@@ -1,9 +1,9 @@
+import { Book } from "./book.model";
 import { Genre } from "./genre.model";
-import { Item } from "./item.model";
 
-export interface ItemGenre {
+export interface BookGenre {
   id: number;
-  item?: Item;
+  book?: Book;
   genre?: Genre;
   createdAt: Date | null;
   updatedAt: Date | null;

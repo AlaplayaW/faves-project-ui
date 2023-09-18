@@ -1,11 +1,3 @@
-<!-- <ng-container *ngFor="let review of reviews$ | async">
-  <app-item-card [review]="review"></app-item-card>
-</ng-container> -->
-
-<!-- <ng-container *ngFor="let review of filterReviewsByItemType(itemType) | async">
-  <app-item-card [review]="review"></app-item-card>
-</ng-container> -->
-
 <ng-container *ngFor="let review of filteredReviews$ | async">
-  <app-item-card [review]="review"></app-item-card>
+  <app-review-card [review]="review" class="flex w-full"></app-review-card>
 </ng-container>

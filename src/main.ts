@@ -6,7 +6,7 @@ import { APP_ROUTES } from "./app/routes";
 import { provideAnimations } from "@angular/platform-browser/animations";
 import { HttpClientModule, withInterceptors } from "@angular/common/http";
 import { provideHttpClient } from '@angular/common/http';
-import { PreloadAllModules, provideRouter, withPreloading, withDebugTracing } from '@angular/router';
+import { PreloadAllModules, provideRouter, withPreloading, withDebugTracing, TitleStrategy, withRouterConfig, RouterStateSnapshot } from '@angular/router';
 // import { provideLogger } from './app/shared/util-logger';
 // import { loggerConfig } from './app/logger.config';
 import { authInterceptor } from './app/auth/guards/auth.interceptor';
@@ -28,10 +28,11 @@ bootstrapApplication(AppComponent, {
       withPreloading(PreloadAllModules), 
       withDebugTracing()
     ),
-
     // provideLogger(loggerConfig),
     // provideEffects(),
     provideAnimations(),
+
+    // importProvidersFrom(RouterModule.forRoot(routes)),
 
     // importProvidersFrom(TicketsModule),
     // importProvidersFrom(LayoutModule),

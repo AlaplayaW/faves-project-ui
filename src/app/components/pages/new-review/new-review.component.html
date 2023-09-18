@@ -1,0 +1,30 @@
+<div class="add-review card flex flex-column gap-4 h-full p-2">
+  <!-- Si le type est 'book' ou 'movie' -->
+    <form [formGroup]="searchForm!">
+      <p-autoComplete formControlName="selectedBook" [suggestions]="suggestions!" [dropdown]="true"
+        (completeMethod)="filterBook($event)" (onSelect)="onSelect()" field="title"
+        [placeholder]="searchPlaceholder" styleClass="w-full"></p-autoComplete>
+    </form>
+
+
+  <!-- Si le formulaire de création d'un review est affiché -->
+  <ng-container *ngIf="showCreateReviewForm">
+    <!-- Si un book est sélectionné -->
+    <div *ngIf="bookToReview !== undefined" class="card flex flex-column gap-3">
+      <app-book-card [book]="bookToReview"></app-book-card>
+    </div>
+    <div>
+      <!-- Créer une nouvelle critique -->
+      <!-- <app-create-review-form></app-create-review-form> -->
+      <form [formGroup]="createReviewForm" (ngSubmit)="onSubmit()" class="create-review-form gap-3 flex flex-column">
+        <label for="rating">Note : {{ this.createReviewForm.value.rating }}</label>
+        <p-slider formControlName="rating" [step]="1" [min]="0" [max]="10"></p-slider>
+
+        <label for="comment">Commentaire</label>
+        <textarea formControlName="comment" rows="5" cols="30" pInputTextarea></textarea>
+
+        <p-button styleClass="w-full" type="submit" label="Envoyer" [disabled]="!createReviewForm.valid"></p-button>
+      </form>
+    </div>
+  </ng-container>
+</div>

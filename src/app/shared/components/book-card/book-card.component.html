@@ -1,0 +1,29 @@
+<p-card class="book-card" [style]="{ width: '100%' }" header="{{ book?.title }}">
+  <ng-template pTemplate="header">
+    <p-image [src]="'/assets/affiche-joker.jpeg'"></p-image>
+    <!-- <p-image [src]="review.media?.imageUrl ?? 'https://primefaces.org/cdn/primeng/images/demo/avatar/amyelsner.png'" styleClass="mr-2" size="xlarge"></p-image> -->
+  </ng-template>
+  <!-- <p>Image du user: {{ review.user?.media?.imageUrl }}</p> -->
+  <!-- <p-image [src]="review.user?.media?.imageUrl ?? 'https://primefaces.org/cdn/primeng/images/demo/avatar/amyelsner.png'" styleClass="mr-2" size="xlarge"></p-image> -->
+
+  <ng-template pTemplate="content">
+    <div class="review-card flex align-reviews-center">
+      <div class="review-details flex flex-column flex-grow-1 gap-1">
+
+          <ul class="authors">
+            <ng-container *ngIf="book?.authors; else noAuthors">
+              <ng-container *ngFor="let author of book?.authors; let i = index; let last = last">
+                <li *ngIf="i < 3">
+                  {{ author }}{{ !last && i < 2 ? ',' : '' }}&nbsp;</li>
+                    <li *ngIf="i === 3">...</li>
+              </ng-container>
+            </ng-container>
+            <ng-template #noAuthors>
+              <div>No authors found for this book.</div>
+            </ng-template>
+          </ul>
+          
+        </div>
+      </div>
+  </ng-template>
+</p-card>
