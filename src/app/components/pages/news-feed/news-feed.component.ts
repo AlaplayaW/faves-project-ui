@@ -6,6 +6,7 @@ import { Observable, Subject, catchError, debounceTime, distinctUntilChanged, ma
 import { Book } from 'src/app/shared/models/book.model';
 import { BookService } from 'src/app/services/book.service';
 import { FeedCardComponent } from '../../feed-card/feed-card.component';
+import { NetworkService } from 'src/app/services/network.service';
 
 @Component({
   selector: 'app-news-feed',
@@ -17,6 +18,7 @@ import { FeedCardComponent } from '../../feed-card/feed-card.component';
 export class NewsFeedComponent implements OnInit {
 
   bookService = inject(BookService);
+  networkService = inject(NetworkService);
 
   searchQuery: string;
   books$!: Observable<Book[]>;
@@ -60,7 +62,7 @@ export class NewsFeedComponent implements OnInit {
   }
 
   private loadFeed(page?: number): Observable<Book[]> {
-    return this.bookService.getBooksWithReviews().pipe(
+    return this.networkService.getNetworkBooks().pipe(
       catchError(error => {
         console.error('Error loading books:', error);
         return of([]);

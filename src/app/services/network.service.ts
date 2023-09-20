@@ -4,6 +4,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { Review } from '../shared/models/review.model';
 import { environment } from 'src/environments/environment';
 import { User } from '../shared/models/user.model';
+import { Book } from '../shared/models/book.model';
 
 
 
@@ -22,11 +23,13 @@ export class NetworkService {
   private apiUrl: string;
   private reviewsSubject = new BehaviorSubject<Review[]>([]);
   private friendsSubject = new BehaviorSubject<User[]>([]);
+  private booksSubject = new BehaviorSubject<Book[]>([]);
 
   constructor(private http: HttpClient) { 
     this.apiUrl = environment.apiUrl + '/api/network';
     this.loadReviews();
     this.loadFriends();
+    this.loadBooksByNetwork();
   }
 
 
@@ -38,9 +41,12 @@ export class NetworkService {
     return this.reviewsSubject.asObservable();
   }
 
+  getNetworkBooks(): Observable<Book[]> {
+    return this.booksSubject.asObservable();
+  }
 
   private loadReviews(){
-    this.http.get<Review[]>(this.apiUrl + '/friends/reviews', httpOptions).subscribe({
+    this.http.get<Review[]>(this.apiUrl + '/reviews', httpOptions).subscribe({
       next: reviews => {
         console.log(reviews);
         this.reviewsSubject.next(reviews);
@@ -54,6 +60,16 @@ export class NetworkService {
       next: friends => {
         console.log(friends);
         this.friendsSubject.next(friends);
+      },
+      error: error => console.error(error),
+    });
+  }
+
+    private loadBooksByNetwork(){
+    this.http.get<Book[]>(this.apiUrl + '/books', httpOptions).subscribe({
+      next: books => {
+        console.log(books);
+        this.booksSubject.next(books);
       },
       error: error => console.error(error),
     });

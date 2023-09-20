@@ -9,6 +9,7 @@ import { CreateBookDto } from '../shared/models/createBookDto.model';
 import { ReviewService } from './review.service';
 import { Review } from '../shared/models/review.model';
 import { User } from '../shared/models/user.model';
+import { Utils } from './utils';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -33,12 +34,12 @@ export class BookService {
   constructor(private http: HttpClient) {
     this.apiUrl = environment.apiUrl + '/api/books'; //items?page=1&user.id=5
     // this.loadBooks();
-    this.loadBooksAndReviewsByFriends();
+    // this.loadBooksAndReviewsByFriends();
   }
 
-  getBooksWithReviews(): Observable<Book[]> {
-    return this.booksAndReviewsSubject.asObservable();
-  }
+  // getBooksWithReviews(): Observable<Book[]> {
+  //   return this.booksAndReviewsSubject.asObservable();
+  // }
 
   getFilteredBooks(query: string): Observable<Book[]> {
     return this.http.get<Book[]>(this.apiUrl + `?title=${query}`, httpOptions);
@@ -52,23 +53,23 @@ export class BookService {
   //     })
   //   );
   // }
-  getReviewsByBookId(id: number): Observable<Review[]> {
-    return this.booksAndReviewsSubject.pipe(
-      map(books => {
-        const book = books.find(b => b.id === id);
-        return book ? book.reviews : [];
-      }),
-      switchMap(reviews => {
-        const detailedReviewsObservables = reviews.map(review => this.reviewService.getReviewDetails(review.toString()));
-        return forkJoin(detailedReviewsObservables);
-      })
-    );
-  }
+  // getReviewsByBookId(id: number): Observable<Review[]> {
+  //   return this.booksAndReviewsSubject.pipe(
+  //     map(books => {
+  //       const book = books.find(b => b.id === id);
+  //       return book ? book.reviews : [];
+  //     }),
+  //     switchMap(reviews => {
+  //       const detailedReviewsObservables = reviews.map(review => this.reviewService.getReviewDetails(review.toString()));
+  //       return forkJoin(detailedReviewsObservables);
+  //     })
+  //   );
+  // }
 
   createBook(book: CreateBookDto): Observable<Book> {
     return this.http.post<Book>(this.apiUrl, book, httpOptions).pipe(
-      tap((response) => this.log(response)),
-      catchError((error) => this.handleError(error, undefined))
+      tap((response) => Utils.log(response)),
+      catchError((error) => Utils.handleError(error, undefined))
     );
   }
 
@@ -89,62 +90,7 @@ export class BookService {
   //   });
   // }
 
-  private loadBooksAndReviewsByFriends() {
-    this.http.get<Book[]>(this.apiUrl + '/reviews-by-friends', httpOptions).subscribe({
-      next: books => {
-        // Pour chaque livre, on récupère l'URL de l'utilisateur
-        books.forEach(book => {
-          const userUrl: User = book.user;
-          const reviewUrls: Review[] = book.reviews;
 
-          if (userUrl) {
-            // Appelez la méthode getUserDetails avec l'URL
-            this.userService.getUserDetails(userUrl.toString()).subscribe(user => {
-              // Mettre à jour la propriété user du livre avec les détails de l'utilisateur
-              book.user = user;
-            });
-          }
-          // Si des critiques (reviews) sont associées au livre
-        if (reviewUrls && reviewUrls.length > 0) {
-          const reviews: Review[] = [];
-
-          // Pour chaque URL de critique, appelez la méthode correspondante pour obtenir les détails de la critique
-          reviewUrls.forEach(reviewUrl => {
-            this.reviewService.getReviewDetails(reviewUrl.toString()).subscribe(review => {
-              reviews.push(review);
-
-              // Si nous avons obtenu les détails de toutes les critiques, mettez à jour la propriété reviews du livre
-              if (reviews.length === reviewUrls.length) {
-                book.reviews = reviews;
-
-                // Si vous devez effectuer une action une fois que les critiques sont mises à jour, faites-le ici.
-              }
-            });
-          });
-        }
-          // if (reviewUrl) {
-          //   this.reviewService.getReviewDetails(reviewUrl.toString()).subscribe(reviews[] => {
-          //     book.reviews = reviews[];
-          //   });
-          // }
-        });
-        // Mettre à jour le sujet
-        this.booksAndReviewsSubject.next(books);
-      },
-      error: error => console.error(error),
-    });
-  }
-
-
-
-  private log(response: any) {
-    console.table(response);
-  }
-
-  private handleError(error: Error, errorValue: any) {
-    console.error(error);
-    return of(errorValue);
-  }
 
   // private loadBooks(){
   //   this.http.get<Book[]>(this.apiUrl, httpOptions).subscribe({
@@ -161,13 +107,6 @@ export class BookService {
   //   });
   // }
 
-  // getBookList(url: string): Observable<object> {
-  //   return this.http.get(url, httpOptions).pipe(
-  //     tap((response) => this.log(response)),
-  //     catchError((error) => this.handleError(error, []))
-  //   );
-  // }
-
   // getBooksByFriends(userId: number): Observable<Book[]> {
   //   const friendIds = this.userService.getUserFriends(userId).pipe(
   //     map((friends: User[]) => {
@@ -175,13 +114,6 @@ export class BookService {
   //     })
   //   ) ;
   //   return this.http.get<Book[]>(this.apiUrl + '?&user=' + friendIds);
-  // }
-
-  // getBooksByUser(userId: number): Observable<Book[]> {
-  //   return this.http.get<Book[]>(this.apiUrl + '?mediaType=book&user=' + userId);
-  // }
-  // getBooksByUser(userId: number): Observable<Book[]> {
-  //   return this.http.get<Book[]>(this.apiUrl + '?&user=' + userId);
   // }
 
 

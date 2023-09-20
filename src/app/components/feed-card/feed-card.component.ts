@@ -36,9 +36,9 @@ export class FeedCardComponent implements OnInit {
       // Utilisez le service CurrentUserService pour obtenir l'ID de l'utilisateur connecté
     // const userId = this.currentUserService.currentUser$.value?.id;
     // Assurez-vous que le livre est défini avant d'appeler la fonction
-    if (this.book && this.book.id !== undefined) { // Vérifiez si book.id est défini
-      this.loadReviewsForBook(this.book.id);
-    }
+    // if (this.book && this.book.id !== undefined) { // Vérifiez si book.id est défini
+    //   this.loadReviewsForBook(this.book.id);
+    // }
     this.formGroup = new FormGroup({
       review: new FormControl<string | null>(null)
   });
@@ -46,15 +46,15 @@ export class FeedCardComponent implements OnInit {
 
 
 
-  loadReviewsForBook(bookId: number) {
-    this.bookService.getReviewsByBookId(bookId).subscribe({
-      next: reviews => {
-        this.reviews = reviews;
-      },
-      error: error =>
-        console.error('Erreur lors du chargement des avis du livre :', error)
-    });
-  }
+  // loadReviewsForBook(bookId: number) {
+  //   this.bookService.getReviewsByBookId(bookId).subscribe({
+  //     next: reviews => {
+  //       this.reviews = reviews;
+  //     },
+  //     error: error =>
+  //       console.error('Erreur lors du chargement des avis du livre :', error)
+  //   });
+  // }
 
 
   // submitReview() {
