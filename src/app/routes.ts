@@ -26,14 +26,14 @@ export const APP_ROUTES: Routes = [
   //   path: 'users',
   //   loadComponent: () => import('./components/user/user.component').then(c => c.UserComponent),
   // },
-  // {
-  //   path: 'auth',
-  //   // canActivate: [authGuard],
-  //   loadChildren: () =>
-  //     import('./features/auth/auth.routes')
-  // },
   {
-    path: '',
+    path: 'auth',
+    // canActivate: [authGuard],
+    loadChildren: () =>
+      import('./auth/auth.routes')
+  },
+  {
+    path: 'app',
     component: LayoutComponent,
     // canActivate: [authGuard],
     children: [

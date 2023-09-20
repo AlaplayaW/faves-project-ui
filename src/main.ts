@@ -10,6 +10,7 @@ import { PreloadAllModules, provideRouter, withPreloading, withDebugTracing, Tit
 // import { provideLogger } from './app/shared/util-logger';
 // import { loggerConfig } from './app/logger.config';
 import { authInterceptor } from './app/auth/guards/auth.interceptor';
+import { jwtInterceptor } from './app/auth/guards/jwt.interceptor';
 
 
 
@@ -20,7 +21,7 @@ if (environment.production) {
 bootstrapApplication(AppComponent, {
   providers: [
     provideHttpClient(
-      withInterceptors([authInterceptor]),
+      withInterceptors([authInterceptor, jwtInterceptor]),
     ),
         // provider to inject routes, preload all modules and trace route change events
     provideRouter(

@@ -1,4 +1,14 @@
-<form (ngSubmit)="onSubmit()" [formGroup]="loginForm">
+<!-- <div class="flex flex-column h-screen">
+    <app-header class="flex-initial" ></app-header>
+    <main class="flex-auto overflow-scroll mx-3" >
+    <router-outlet></router-outlet>
+    </main>
+    <app-footer [ngClass]="{'hidden-menu-content': !isMenuVisible}" class="flex-initial">
+      <app-navbar></app-navbar>
+    </app-footer>
+  </div> -->
+
+<form (ngSubmit)="loginUser()" [formGroup]="loginForm">
   <p-panel header="Login Example">
       <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px">
           <div class="ui-grid-row">
@@ -6,10 +16,10 @@
                   Login:
               </div>
               <div class="ui-grid-col-6">
-                  <input pInputText type="text" formControlName="login" class="form-control" name="login">
+                  <input pInputText type="text" formControlName="username" class="form-control" name="username">
               </div>
               <div class="ui-grid-col-4">
-                  <div [hidden]="loginForm.controls['login'].valid || !loginForm.controls['login'].dirty" class="alert alert-danger">
+                  <div [hidden]="loginForm.controls['username'].valid || !loginForm.controls['username'].dirty" class="alert alert-danger">
                       Login is required
                   </div>
               </div>
@@ -37,3 +47,4 @@
       </div>
   </p-panel>
 </form>
+
