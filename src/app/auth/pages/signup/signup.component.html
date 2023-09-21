@@ -1,1 +1,48 @@
-<p>signup works!</p>
+<div class="signup-page w-full m-auto">
+  <form (ngSubmit)="registerUser()" [formGroup]="signupForm" class="my-2">
+    <div class="flex flex-column gap-2">
+      <input pInputText type="text" formControlName="pseudo" class="form-control" name="pseudo"
+        placeholder="Votre pseudo" required>
+
+      <div [hidden]="signupForm.controls['pseudo'].valid || !signupForm.controls['pseudo'].dirty"
+        class="alert alert-danger">
+        Pseudo is required
+      </div>
+      <input pInputText type="email" class="form-control" formControlName="email" placeholder="Votre email" required />
+      <div [hidden]="signupForm.controls['email'].valid || !signupForm.controls['email'].dirty"
+        class="alert alert-danger">
+        Email is required
+      </div>
+      <div class="flex flex-column justify-content-center">
+        <input pInputText type="password" formControlName="password" class="form-control" name="password"
+          placeholder="Votre mot de passe">
+        <ul class="pwd-infos">
+          <li>Plus de 8 caractères</li>
+          <li>Au moins une minuscule et une majuscule</li>
+          <li>Au moins un symbole (!?#$*&)</li>
+          <li>Au moins un chiffre</li>
+        </ul>
+      </div>
+      <div [hidden]="signupForm.controls['password'].valid || !signupForm.controls['password'].dirty"
+        class="alert alert-danger">
+        Password is required
+      </div>
+
+      <div class="flex gap-2 checkbox-btn justify-content-center mt-1">
+        <p-checkbox formControlName="rgpd" value="true" inputId="rgpd"></p-checkbox>
+        <label for="rgpd">J'accèpte les <a href="#"> conditions</a></label>
+      </div>
+      <p-button type="submit" label="Se connecter" class="submit-btn my-2 flex justify-content-center"
+        [disabled]="!signupForm.valid"></p-button>
+      <p-button appBackButton label="Retour" icon="pi pi-arrow-left" class="go-back-btn" styleClass="p-button-link"></p-button>
+    </div>
+
+    <div>
+      <p-toast></p-toast>
+      <p-fileUpload mode="basic" chooseLabel="Votre photo"
+        url="https://www.primefaces.org/cdn/api/upload.php" accept="image/*" [multiple]="false"
+        (onUpload)="onFileUpload($event)" (onSelect)="onSelect($event)"></p-fileUpload>
+    </div>
+    
+  </form>
+</div>

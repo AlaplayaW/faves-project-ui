@@ -16,17 +16,6 @@ body {
   font-family: var(--font-family);
 }
 
-label,
-.page-title {
-  color: $white;
-  font-weight: bold;
-}
-
-.page-title {
-  text-align: center;
-  font-size: 1rem;
-}
-
 .p-inputtext {
   color: $whitesmoke;
   border: none;
@@ -36,6 +25,87 @@ label,
 input::placeholder {
   color: $white;
 }
+
+.layout {
+
+  label,
+  .page-title {
+    color: $whitesmoke;
+  }
+
+  .page-title {
+    font-size: 1rem;
+    font-weight: bold;
+  }
+}
+
+.auth-layout {
+  .app-title {
+    font-size: 3rem;
+    font-weight: 900;
+    color: $primary-color;
+    letter-spacing: 8px;
+  }
+
+  .page-title {
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: $whitesmoke;
+    letter-spacing: 1px;
+  }
+
+  .login-page,
+  .signup-page {
+    .pwd-infos {
+      margin: 10px 10px 0 10px;
+      font-size: 0.8rem;
+      color: $whitesmoke;
+      padding-left: 10px;
+    }
+
+    .p-fileupload {
+      .p-button.p-fileupload-choose {
+        width: 100%;
+        background-color: $secondary-lighter;
+        border: none;
+        .p-button-label{
+          font-weight: normal;
+        }
+      }
+    }
+
+    .p-button.p-button-link,
+    .checkbox-btn label {
+      color: $whitesmoke;
+      font-size: 0.9rem;
+
+      .p-button-label {
+        font-weight: 300;
+      }
+
+      a {
+        color: $whitesmoke;
+      }
+    }
+
+    .link-btn button {
+      padding: 0;
+    }
+
+    .checkbox-btn label {
+      padding: 0;
+    }
+
+    .submit-btn button {
+      width: 100%;
+    }
+
+    .go-back-btn button {
+      padding: 0;
+    }
+  }
+}
+
 
 .add-review {
   justify-content: center;
@@ -66,7 +136,8 @@ input::placeholder {
   }
 }
 
-app-layout {
+app-layout,
+app-auth-layout {
   background-color: $secondary-color
 }
 
