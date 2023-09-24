@@ -75,7 +75,7 @@ export class NewBookComponent implements OnInit {
     const uploadedFile = event.files[0];
     console.log('uploadedFile : ----- ', uploadedFile);
     this.createBookForm.patchValue({
-      media: uploadedFile.url // Assuming the URL of the uploaded file
+      media: uploadedFile.name // Assuming the URL of the uploaded file
     });
   }
 

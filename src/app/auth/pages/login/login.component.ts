@@ -1,11 +1,11 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { AuthService } from 'src/app/services/auth.service';
 import { Router } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { BackButtonDirective } from 'src/app/shared/directives/back-button.directive';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-login',

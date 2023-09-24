@@ -3,18 +3,8 @@ import { Injectable, inject } from '@angular/core';
 import { BehaviorSubject, Observable, catchError, map, mapTo, of, tap } from 'rxjs';
 import { Review } from '../shared/models/review.model';
 import { environment } from 'src/environments/environment';
-import { FriendshipService } from './friendship.service';
-import { User } from '../shared/models/user.model';
-import { UserService } from './user.service';
 
 
-
-const httpOptions = {
-  headers: new HttpHeaders({
-    'Content-Type': 'application/json',
-    'Accept': 'application/json' // Pour une réponse JSON
-  })
-};
 
 @Injectable({
   providedIn: 'root'
@@ -62,17 +52,17 @@ export class ReviewService {
   }
 
   createReview(review: Review): Observable<Review> {
-    const httpOptions = {
-      headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-    };
-    return this.http.post<Review>(this.apiUrl, review, httpOptions).pipe(
+    // const httpOptions = {
+    //   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    // };
+    return this.http.post<Review>(this.apiUrl, review).pipe(
       tap((response) => this.log(response)),
       catchError((error) => this.handleError(error, undefined))
     );
   }
 
   private loadReviews(){
-    this.http.get<Review[]>(this.apiUrl, httpOptions).subscribe({
+    this.http.get<Review[]>(this.apiUrl).subscribe({
       next: reviews => {
         console.log(reviews);
         this.reviewsSubject.next(reviews);

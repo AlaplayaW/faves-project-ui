@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { BehaviorSubject } from "rxjs";
-import { SessionService } from 'src/app/services/session.service';
+import { SessionService } from 'src/app/services/zold-session.service';
 
 const defaultUser = null;
 

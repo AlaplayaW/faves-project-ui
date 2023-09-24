@@ -63,6 +63,12 @@ input::placeholder {
       padding-left: 10px;
     }
 
+    .p-password{
+      width: 100%;
+      .p-inputtext{
+      width: 100%;
+      }
+    }
     .p-fileupload {
       .p-button.p-fileupload-choose {
         width: 100%;

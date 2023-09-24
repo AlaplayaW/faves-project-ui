@@ -5,13 +5,6 @@ import { User } from 'src/app/shared/models/user.model';
 import { environment } from 'src/environments/environment';
 
 
-const httpOptions = {
-  headers: new HttpHeaders({
-    'Content-Type': 'application/json',
-    'Accept': 'application/json' // Pour une réponse JSON
-  })
-};
-
 @Injectable({
   providedIn: 'root'
 })
@@ -19,7 +12,6 @@ export class UserService {
 
   private apiUrl: string;
   private usersSubject = new BehaviorSubject<User[]>([]);
-  // private usersSubject = new ReplaySubject<User[]>(1);
 
 
   constructor(private http: HttpClient) { 
@@ -36,7 +28,7 @@ export class UserService {
   }
 
   private loadUsers(){
-    this.http.get<User[]>(this.apiUrl, httpOptions).subscribe({
+    this.http.get<User[]>(this.apiUrl).subscribe({
     next: users => {
       console.log(users);
       this.usersSubject.next(users);

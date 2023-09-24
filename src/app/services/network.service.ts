@@ -1,19 +1,11 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Review } from '../shared/models/review.model';
 import { environment } from 'src/environments/environment';
 import { User } from '../shared/models/user.model';
 import { Book } from '../shared/models/book.model';
 
-
-
-const httpOptions = {
-  headers: new HttpHeaders({
-    'Content-Type': 'application/json',
-    'Accept': 'application/json' // Pour une réponse JSON
-  })
-};
 
 @Injectable({
   providedIn: 'root'
@@ -25,13 +17,12 @@ export class NetworkService {
   private friendsSubject = new BehaviorSubject<User[]>([]);
   private booksSubject = new BehaviorSubject<Book[]>([]);
 
-  constructor(private http: HttpClient) { 
+  constructor(private http: HttpClient) {
     this.apiUrl = environment.apiUrl + '/api/network';
-    this.loadReviews();
-    this.loadFriends();
+    this.loadFriendsByNetwork();
     this.loadBooksByNetwork();
+    this.loadReviewsByNetwork();
   }
-
 
   getNetworkFriends(): Observable<User[]> {
     return this.friendsSubject.asObservable();
@@ -45,8 +36,8 @@ export class NetworkService {
     return this.booksSubject.asObservable();
   }
 
-  private loadReviews(){
-    this.http.get<Review[]>(this.apiUrl + '/reviews', httpOptions).subscribe({
+  private loadReviewsByNetwork() {
+    this.http.get<Review[]>(this.apiUrl + '/reviews').subscribe({
       next: reviews => {
         console.log(reviews);
         this.reviewsSubject.next(reviews);
@@ -55,8 +46,8 @@ export class NetworkService {
     });
   }
 
-  private loadFriends(){
-    this.http.get<User[]>(this.apiUrl + '/friends', httpOptions).subscribe({
+  private loadFriendsByNetwork() {
+    this.http.get<User[]>(this.apiUrl + '/friends').subscribe({
       next: friends => {
         console.log(friends);
         this.friendsSubject.next(friends);
@@ -65,8 +56,8 @@ export class NetworkService {
     });
   }
 
-    private loadBooksByNetwork(){
-    this.http.get<Book[]>(this.apiUrl + '/books', httpOptions).subscribe({
+  private loadBooksByNetwork() {
+    this.http.get<Book[]>(this.apiUrl + '/books').subscribe({
       next: books => {
         console.log(books);
         this.booksSubject.next(books);

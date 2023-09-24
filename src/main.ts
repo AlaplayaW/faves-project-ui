@@ -4,13 +4,10 @@ import { AppComponent } from './app/app.component';
 import { environment } from './environments/environment';
 import { APP_ROUTES } from "./app/routes";
 import { provideAnimations } from "@angular/platform-browser/animations";
-import { HttpClientModule, withInterceptors } from "@angular/common/http";
+import { withInterceptors } from "@angular/common/http";
 import { provideHttpClient } from '@angular/common/http';
-import { PreloadAllModules, provideRouter, withPreloading, withDebugTracing, TitleStrategy, withRouterConfig, RouterStateSnapshot } from '@angular/router';
-// import { provideLogger } from './app/shared/util-logger';
-// import { loggerConfig } from './app/logger.config';
+import { PreloadAllModules, provideRouter, withPreloading, withDebugTracing } from '@angular/router';
 import { authInterceptor } from './app/auth/guards/auth.interceptor';
-import { jwtInterceptor } from './app/auth/guards/jwt.interceptor';
 
 
 
@@ -20,22 +17,20 @@ if (environment.production) {
 
 bootstrapApplication(AppComponent, {
   providers: [
+    // Configuration du service HttpClient avec l'intercepteur authInterceptor
     provideHttpClient(
-      withInterceptors([authInterceptor, jwtInterceptor]),
+      withInterceptors([authInterceptor]),
     ),
-        // provider to inject routes, preload all modules and trace route change events
+    // Configuration du système de routage de l'application Angular
     provideRouter(
-      APP_ROUTES, 
-      withPreloading(PreloadAllModules), 
+      // Configuration des routes de l'application (APP_ROUTES)
+      APP_ROUTES,
+      // Activation du preloading de tous les modules
+      withPreloading(PreloadAllModules),
+      // Activation du traçage de débogage pour les routes
+      // TODO: A supprimer quand plus utile
       withDebugTracing()
     ),
-    // provideLogger(loggerConfig),
-    // provideEffects(),
     provideAnimations(),
-
-    // importProvidersFrom(RouterModule.forRoot(routes)),
-
-    // importProvidersFrom(TicketsModule),
-    // importProvidersFrom(LayoutModule),
-    ]
+  ]
 }).catch(err => console.error(err));

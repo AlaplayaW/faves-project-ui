@@ -4,13 +4,6 @@ import { BehaviorSubject, Observable, catchError, of, tap } from 'rxjs';
 import { Book } from '../shared/models/book.model';
 import { environment } from 'src/environments/environment';
 
-const httpOptions = {
-  headers: new HttpHeaders(
-    {
-      'Content-Type': 'application/json',
-    }
-  )
-};
 
 @Injectable({
   providedIn: 'root'
@@ -22,7 +15,7 @@ export class FriendshipService {
 
   constructor(private http: HttpClient) { 
     this.apiUrl = environment.apiUrl + '/api/friendships';
-    this.loadBooks();
+    // this.loadBooks();
   }
 
   getFriendships(): Observable<Book[]> {

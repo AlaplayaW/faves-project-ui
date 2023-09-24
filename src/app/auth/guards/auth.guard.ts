@@ -1,7 +1,7 @@
 import { inject } from "@angular/core"
 import { Router } from "@angular/router";
 import { filter, map } from "rxjs";
-import { CurrentUserService } from "../../services/current-user.service";
+import { CurrentUserService } from "../../services/zold-current-user.service";
 
 export const authGuard = () => {
   const currentUserService = inject(CurrentUserService);

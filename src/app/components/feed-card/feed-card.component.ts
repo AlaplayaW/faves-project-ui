@@ -1,22 +1,19 @@
 import { Component, Input, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Book } from 'src/app/shared/models/book.model';
-import { ImageModule } from 'primeng/image';
 import { CardModule } from 'primeng/card';
-import { RatingModule } from 'primeng/rating';
 import { StarRatingComponent } from 'src/app/shared/components/star-rating/star-rating.component';
-import { ButtonModule } from 'primeng/button';
 import { Review } from 'src/app/shared/models/review.model';
 import { BookService } from 'src/app/services/book.service';
 import { ReviewService } from 'src/app/services/review.service';
 import { InputTextModule } from 'primeng/inputtext';
 import { FormControl, FormGroup } from '@angular/forms';
-import { CurrentUserService } from 'src/app/services/current-user.service';
+import { CurrentUserService } from 'src/app/services/zold-current-user.service';
 
 @Component({
   selector: 'app-feed-card',
   standalone: true,
-  imports: [CommonModule, ImageModule, CardModule, RatingModule, StarRatingComponent, ButtonModule, InputTextModule],
+  imports: [CommonModule, CardModule, StarRatingComponent, InputTextModule],
   templateUrl: './feed-card.component.html',
   styleUrls: ['./feed-card.component.scss']
 })
@@ -43,19 +40,6 @@ export class FeedCardComponent implements OnInit {
       review: new FormControl<string | null>(null)
   });
   }
-
-
-
-  // loadReviewsForBook(bookId: number) {
-  //   this.bookService.getReviewsByBookId(bookId).subscribe({
-  //     next: reviews => {
-  //       this.reviews = reviews;
-  //     },
-  //     error: error =>
-  //       console.error('Erreur lors du chargement des avis du livre :', error)
-  //   });
-  // }
-
 
   // submitReview() {
   //   if (this.formGroup && this.formGroup.valid) {

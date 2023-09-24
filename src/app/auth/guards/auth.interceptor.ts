@@ -1,49 +1,77 @@
-import { HttpInterceptorFn } from "@angular/common/http";
-import { tap } from "rxjs";
+import { HttpHandlerFn, HttpInterceptorFn, HttpRequest } from "@angular/common/http";
+import { catchError, tap, throwError } from "rxjs";
+import { environment } from "src/environments/environment";
 
-export const authInterceptor: HttpInterceptorFn = (req, next) => {
-    
-    // console.log('authInterceptor (root scope)');
+// Intercepteur HTTP pour ajouter l'en-tête d'authentification JWT aux requêtes HTTP sortantes destinées à mon API.
+export const authInterceptor: HttpInterceptorFn = (req: HttpRequest<unknown>, next: HttpHandlerFn) => {
 
-    if (req.url.startsWith('http://127.0.0.1:8000/api/')) {
-        // Setting a dummy token for demonstration
-        const headers = req.headers.set('Authorization', 'Bearer Auth-1234567');
-        req = req.clone({headers});
+  let headers = req.headers
+    .set('Content-Type', 'application/json')
+    .set('Accept', 'application/json');
+
+  // Vérifie si la requête a une URL qui commence par l'URL de l'API définie dans l'environnement.
+  if (req.url.startsWith(environment.apiUrl + '/api/')) {
+
+    // Récupère le jeton JWT depuis le stockage local (localStorage).
+    let jwt = '';
+
+    // jwt = JSON.parse(localStorage.setItem('jwt') || '');
+    if (localStorage.getItem('jwt')) {
+      jwt = JSON.parse(localStorage.getItem('jwt') || '');
     }
 
-    return next(req).pipe(
-        // tap(resp => console.log('response', resp))
-    );
+    if (jwt) {
+      headers = req.headers
+        .set('Authorization', `Bearer ${jwt}`);
+    }
+  }
+
+  req = req.clone({ headers });
+
+  // Poursuit le traitement de la requête vers le serveur en appelant la fonction next.
+  return next(req).pipe(
+    tap(resp => console.log('response', resp)),
+    catchError((error: any) => {
+      // Gérez l'erreur ici, par exemple, en affichant un message d'erreur ou en effectuant une action spécifique.
+      console.error('Erreur dans la requête :', error);
+
+      // Vous pouvez choisir de renvoyer une nouvelle observable avec une erreur personnalisée.
+      return throwError(() => new Error("Une erreur s'est produite lors de la requête."));
+    })
+  );
 }
 
-// import { Injectable } from '@angular/core';
-// import {
-//   HttpRequest,
-//   HttpHandler,
-//   HttpEvent,
-//   HttpInterceptor
-// } from '@angular/common/http';
-// import { Observable } from 'rxjs';
-// import { AuthService } from 'src/app/services/auth.service';
-// import { SitesService } from 'src/app/services/sites.service';
 
-// @Injectable()
-// export class AuthInterceptor implements HttpInterceptor {
+// import { HttpHandlerFn, HttpInterceptorFn, HttpRequest } from "@angular/common/http";
+// import { catchError, tap, throwError } from "rxjs";
+// import { environment } from "src/environments/environment";
 
-//   constructor(private authService: AuthService,
-//               private siteService: SitesService) { }
+// // Intercepteur HTTP pour ajouter l'en-tête d'authentification JWT aux requêtes HTTP sortantes destinées à mon API.
+// export const authInterceptor: HttpInterceptorFn = (req: HttpRequest<unknown>, next: HttpHandlerFn) => {
 
-//   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-//     const authToken = this.authService.token;
-//     const selectedSite = this.siteService.selectedSite$.value;
-
-//     if (authToken) {
-//         const authRequest = request.clone({
-//           headers: request.headers
-//             .set('Authorization', "Bearer " + authToken).set('Site', selectedSite ? selectedSite._id : 'global'),
-//         });
-//         return next.handle(authRequest);
+//   // Vérifie si la requête a une URL qui commence par l'URL de l'API définie dans l'environnement.
+//   if (req.url.startsWith(environment.apiUrl + '/api/')) {
+//     // Récupère le jeton JWT depuis le stockage local (localStorage).
+//     const jwt = JSON.parse(localStorage.getItem('jwt') || '');
+//     // Si un jeton JWT est disponible, ajoutez-le comme en-tête d'authentification à la requête.
+//     if (jwt) {
+//       const headers = req.headers
+//         .set('Authorization', `Bearer ${jwt}`)
+//         .set('Content-Type', 'application/json')
+//         .set('Accept', 'application/json');
+//       req = req.clone({ headers });
 //     }
-//     return next.handle(request);
 //   }
+
+//   // Poursuit le traitement de la requête vers le serveur en appelant la fonction next.
+//   return next(req).pipe(
+//     tap(resp => console.log('response', resp)),
+//     catchError((error: any) => {
+//       // Gérez l'erreur ici, par exemple, en affichant un message d'erreur ou en effectuant une action spécifique.
+//       console.error('Erreur dans la requête :', error);
+
+//       // Vous pouvez choisir de renvoyer une nouvelle observable avec une erreur personnalisée.
+//       return throwError(() => new Error("Une erreur s'est produite lors de la requête."));
+//     })
+//   );
 // }

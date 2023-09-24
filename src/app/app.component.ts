@@ -3,7 +3,7 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Component, Inject, Input, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { ThemeService } from './services/theme.service';
-import { SessionService } from './services/session.service';
+import { SessionService } from './services/zold-session.service';
 import { LayoutComponent } from './core/layout/layout.component';
 import { LoaderService } from './services/loader.service';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';

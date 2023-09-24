@@ -13,17 +13,23 @@
         class="alert alert-danger">
         Email is required
       </div>
-      <div class="flex flex-column justify-content-center">
-        <input pInputText type="password" formControlName="password" class="form-control" name="password"
-          placeholder="Votre mot de passe">
-        <ul class="pwd-infos">
-          <li>Plus de 8 caractères</li>
-          <li>Au moins une minuscule et une majuscule</li>
-          <li>Au moins un symbole (!?#$*&)</li>
-          <li>Au moins un chiffre</li>
-        </ul>
+      <div class="flex flex-column justify-content-center w-full">
+        <p-password formControlName="plainPassword" [toggleMask]="true">
+          <ng-template pTemplate="header">
+            <h6>Choisir un mot de passe</h6>
+          </ng-template>
+          <ng-template pTemplate="footer">
+            <p-divider></p-divider>
+            <ul class="pl-2 ml-2 mt-0" style="line-height: 1.5">
+              <li>Minimum 8 caractères</li>
+              <li>Au moins une minuscule</li>
+              <li>Au moins une majuscule</li>
+              <li>Au moins un chiffre</li>
+            </ul>
+          </ng-template>
+        </p-password>
       </div>
-      <div [hidden]="signupForm.controls['password'].valid || !signupForm.controls['password'].dirty"
+      <div [hidden]="signupForm.controls['plainPassword'].valid || !signupForm.controls['plainPassword'].dirty"
         class="alert alert-danger">
         Password is required
       </div>
@@ -34,15 +40,16 @@
       </div>
       <p-button type="submit" label="Se connecter" class="submit-btn my-2 flex justify-content-center"
         [disabled]="!signupForm.valid"></p-button>
-      <p-button appBackButton label="Retour" icon="pi pi-arrow-left" class="go-back-btn" styleClass="p-button-link"></p-button>
+      <p-button appBackButton label="Retour" icon="pi pi-arrow-left" class="go-back-btn"
+        styleClass="p-button-link"></p-button>
     </div>
 
     <div>
       <p-toast></p-toast>
-      <p-fileUpload mode="basic" chooseLabel="Votre photo"
-        url="https://www.primefaces.org/cdn/api/upload.php" accept="image/*" [multiple]="false"
-        (onUpload)="onFileUpload($event)" (onSelect)="onSelect($event)"></p-fileUpload>
+      <p-fileUpload mode="basic" chooseLabel="Votre photo" url="https://www.primefaces.org/cdn/api/upload.php"
+        accept="image/*" [multiple]="false" (onUpload)="onFileUpload($event)"
+        (onSelect)="onSelect($event)"></p-fileUpload>
     </div>
-    
+
   </form>
 </div>

@@ -6,6 +6,7 @@ export interface User {
   id?: number;
   pseudo?: string;
   password?: string;
+  plainPassword?: string;
   email?: string;
   media?: Media;
   roles?: string[];

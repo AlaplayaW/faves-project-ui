@@ -11,7 +11,8 @@ import { FileUploadModule } from 'primeng/fileupload';
 import { MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
 import { BackButtonDirective } from 'src/app/shared/directives/back-button.directive';
-
+import { PasswordModule } from 'primeng/password';
+import { DividerModule } from 'primeng/divider';
 
 interface UploadEvent {
   originalEvent: Event;
@@ -31,7 +32,7 @@ interface UploadEvent {
     CheckboxModule,
     FileUploadModule,
     ToastModule,
-    BackButtonDirective,
+    BackButtonDirective, PasswordModule, DividerModule
   ],
   templateUrl: './signup.component.html',
   styleUrls: [],
@@ -55,25 +56,31 @@ export class SignupComponent implements OnInit {
       email: ['', Validators.compose([
         Validators.required,
         Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')])],
-      password: [
-        '',
-        Validators.compose([
-          Validators.required,
-          this.passwordValidator, // Utilisation du validateur personnalisé
-        ]),
-      ],
+      plainPassword: ['', Validators.required],
+      roles: [['ROLE_USER']],
       rgpd: ['', Validators.required],
     });
   }
 
   registerUser() {
-    this.authService.signUp(this.signupForm.value).subscribe((res) => {
-      if (res.result) {
-        this.signupForm.reset();
-        this.router.navigate(['log-in']);
-      }
+    // Créez une copie de l'objet signupForm.value sans le champ 'rgpd'
+    const { rgpd, ...userWithoutRgpd } = this.signupForm.value;
+
+    this.authService.signUp(userWithoutRgpd).subscribe({
+      next: (res) => {
+        console.log(res);
+        if (res) {
+          this.signupForm.reset();
+          this.router.navigate(['/auth/login']);
+        }
+      },
+      error: (error) => {
+        console.error(error);
+        // Gestion des erreurs
+      },
     });
   }
+
 
   onFileUpload(event: any) {
     // Assuming the uploaded file is an object with relevant information
@@ -91,20 +98,20 @@ export class SignupComponent implements OnInit {
     console.log(event);
   }
 
-  // Fonction de validation personnalisée pour le mot de passe
-  private passwordValidator(control: AbstractControl): { [key: string]: boolean } | null {
-    const password = control.value;
+  // // Fonction de validation personnalisée pour le mot de passe
+  // private passwordValidator(control: AbstractControl): { [key: string]: boolean } | null {
+  //   const password = control.value;
 
-    // Définissez votre expression régulière pour la validation du mot de passe
-    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$*&])[A-Za-z0-9!@#$*&]{8,}$/;
+  //   // Définissez votre expression régulière pour la validation du mot de passe
+  //   const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$*&])[A-Za-z0-9!@#$*&]{8,}$/;
 
-    if (!passwordRegex.test(password)) {
-      // La validation a échoué, retournez une erreur personnalisée
-      return { invalidPassword: true };
-    }
+  //   if (!passwordRegex.test(password)) {
+  //     // La validation a échoué, retournez une erreur personnalisée
+  //     return { invalidPassword: true };
+  //   }
 
-    // La validation a réussi, retournez null
-    return null;
-  }
+  //   // La validation a réussi, retournez null
+  //   return null;
+  // }
 
 }

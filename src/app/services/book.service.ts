@@ -11,12 +11,6 @@ import { Review } from '../shared/models/review.model';
 import { User } from '../shared/models/user.model';
 import { Utils } from './utils';
 
-const httpOptions = {
-  headers: new HttpHeaders({
-    'Content-Type': 'application/json',
-    'Accept': 'application/json' // Pour une réponse JSON
-  })
-};
 
 @Injectable({
   providedIn: 'root'
@@ -42,7 +36,8 @@ export class BookService {
   // }
 
   getFilteredBooks(query: string): Observable<Book[]> {
-    return this.http.get<Book[]>(this.apiUrl + `?title=${query}`, httpOptions);
+    // return this.http.get<Book[]>(this.apiUrl + `?title=${query}`, httpOptions);
+    return this.http.get<Book[]>(this.apiUrl + `?title=${query}`);
   }
 
   // getReviewsByBookId(id: number): Observable<Review[]> {
@@ -67,7 +62,7 @@ export class BookService {
   // }
 
   createBook(book: CreateBookDto): Observable<Book> {
-    return this.http.post<Book>(this.apiUrl, book, httpOptions).pipe(
+    return this.http.post<Book>(this.apiUrl, book).pipe(
       tap((response) => Utils.log(response)),
       catchError((error) => Utils.handleError(error, undefined))
     );

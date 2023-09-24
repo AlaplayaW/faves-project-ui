@@ -1,6 +1,6 @@
-<div class="layout flex flex-column h-screen">
+<div class="layout flex flex-column h-screen overflow-scroll">
   <app-header class="flex-initial" ></app-header>
-  <main class="flex-auto overflow-scroll mx-3" >
+  <main class="flex-auto mx-3" >
   <router-outlet></router-outlet>
   </main>
   <app-footer [ngClass]="{'hidden-menu-content': !isMenuVisible}" class="flex-initial">
