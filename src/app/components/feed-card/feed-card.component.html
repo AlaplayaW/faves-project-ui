@@ -25,10 +25,10 @@
 
     <div class="flex gap-2">
       <div>
-        <img class="book-image" [src]="'/assets/affiche-joker.jpeg'" />
+        <img class="book-image" [src]="book?.media?.imageUrl ?? '/assets/affiche-joker.jpeg'" alt="Image" />
       </div>
       <div class="flex flex-column p-2 flex-grow-1 gap-2">
-        <div>{{ book?.title }}</div>
+        <div class="book-title">{{ book?.title }}</div>
         <app-star-rating [rating]="book?.averageRating" [size]="15"></app-star-rating>
         <ul class="genre-list">
           <ng-container *ngFor="let bookGenre of book?.bookGenres; let i = index; let last = last">

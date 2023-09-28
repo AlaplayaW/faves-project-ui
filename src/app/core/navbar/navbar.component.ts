@@ -24,7 +24,7 @@ export class NavbarComponent implements OnInit {
         icon: 'pi pi-home',
         routerLink: 'feed'
       },
-      { label: 'Search', icon: 'pi pi-search', routerLink: 'new-review-bis' },
+      { label: 'Search', icon: 'pi pi-search', routerLink: '' },
       {
         label: 'Add', icon: 'pi pi-plus', routerLink: 'new-review'
       },

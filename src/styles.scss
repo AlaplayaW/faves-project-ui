@@ -1,9 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 @import "primeicons/primeicons.css";
 @import "../node_modules/primeng/resources/primeng.min.css";
-// @import "../node_modules/primeng/resources/themes/soho-light.css";
 @import "../node_modules/primeng/resources/themes/soho-light/theme.css";
-// @import "../node_modules/primeng/resources/themes/soho-dark/theme.css";
 @import "../node_modules/primeflex/primeflex.css";
 @import "/src/themes/variables";
 
@@ -14,6 +12,7 @@ body {
   height: 100%;
   margin: 0;
   font-family: var(--font-family);
+  color: $white
 }
 
 .p-inputtext {
@@ -63,18 +62,21 @@ input::placeholder {
       padding-left: 10px;
     }
 
-    .p-password{
+    .p-password {
       width: 100%;
-      .p-inputtext{
-      width: 100%;
+
+      .p-inputtext {
+        width: 100%;
       }
     }
+
     .p-fileupload {
       .p-button.p-fileupload-choose {
         width: 100%;
         background-color: $secondary-lighter;
         border: none;
-        .p-button-label{
+
+        .p-button-label {
           font-weight: normal;
         }
       }
@@ -147,82 +149,99 @@ app-auth-layout {
   background-color: $secondary-color
 }
 
-.feed-card {
+.p-card {
+  max-width: 400px;
+  background-color: $secondary-darker;
+  font-size: 0.9rem;
 
-  .p-card {
-    // display: flex;
-    // flex-direction: column;
-    max-width: 400px;
-    background-color: $secondary-darker;
+  .p-button {
+    color: $whitesmoke;
+    padding: 5px 0;
+    font-size: 0.9rem;
+    font-weight: 300;
 
-    .p-card-title {
-      font-size: 1rem;
-      font-weight: 700;
-      padding: 1rem 1rem 0rem 1rem;
-    }
-
-    .p-button {
-      color: $whitesmoke;
-      padding: 5px 0;
-      font-size: 0.9rem;
-      font-weight: 300;
-    }
-
-    .p-button {
-      color: $whitesmoke;
-      padding: 5px 0;
-
-      .p-button-label {
-        font-size: 0.8rem;
-        font-weight: 400;
-      }
-    }
-
-    .p-button:enabled:hover {
-      color: $whitesmoke;
-    }
-
-    // .p-card-header {
-    //   flex: 1 1 135px;
-
-    //   img {
-    //     width: 100%;
-    //     height: 100%;
-    //     object-fit: cover;
-    //   }
-    // }
-    .p-card-header {
+    .p-button-label {
       font-size: 0.8rem;
-      color: white;
-      padding: 0.2rem 1rem 0.2rem 1rem;
-      // background-color: $secondary-lighter;
+      font-weight: 400;
+    }
+
+    &:enabled:hover {
+      color: $whitesmoke;
+    }
+  }
+
+  .p-card-header {
+    font-size: 0.8rem;
+    color: white;
+    padding: 0.2rem 1rem 0.2rem 1rem;
+    background-color: $secondary-darker;
+  }
+
+  .p-card-body {
+    display: flex;
+    flex: 1 1 100%;
+    padding: 0;
+    flex-direction: column;
+    justify-content: space-between;
+    color: $white;
+
+    .p-card-content {
+      padding: 0;
+      margin-bottom: 0;
+      background-color: $soft-black;
+    }
+
+    .p-card-footer {
+      font-size: 0.8rem;
+      padding: 1em;
       background-color: $secondary-darker;
     }
+  }
 
+  .book-title {
+    font-weight: bold;
+  }
 
-    .p-card-body {
-      display: flex;
-      flex: 1 1 100%;
-      padding: 0;
-      flex-direction: column;
-      justify-content: space-between;
-      color: $white;
+  .book-image {
+    width: 100px;
+    height: 100%;
+  }
 
-      .p-card-content {
-        padding: 0;
-        margin-bottom: 0;
-        background-color: $soft-black;
-      }
+  .genre-list,
+  .authors,
+  .directors {
+    display: flex;
+    list-style-type: none;
+    padding-left: 0;
+    font-size: 0.8rem;
+    margin: 0;
+  }
 
-      .p-card-footer {
-        font-size: 0.8rem;
-        padding: 1em;
-        // background-color: $secondary-lighter;
-        background-color: $secondary-darker;
+  .authors {
+    font-size: 0.8rem;
+  }
 
-      }
+}
+
+.feed-card {
+  .p-card {
+    .user-image {
+      border-radius: 50px;
+      width: 25px;
+      height: 25px;
     }
 
+    .friend-comment {
+      background-color: $secondary-lighter;
+      padding: 0.5em 1em;
+      border-radius: 6px;
+    }
+
+    .footer {
+      .date {
+        font-size: 0.7rem;
+      }
+    }
   }
 }
 
@@ -237,7 +256,6 @@ app-auth-layout {
         background-color: transparent;
         color: $whitesmoke;
         border-color: $whitesmoke;
-        // padding: 1.24rem !important;
       }
 
       .p-tabmenuitem:not(.p-highlight):not(.p-disabled):hover .p-menuitem-link {
@@ -247,7 +265,6 @@ app-auth-layout {
       }
 
       .p-tabmenuitem.p-highlight .p-menuitem-link {
-        // background: #ffffff;
         border-color: $primary-color;
         color: $primary-color;
         background-color: $transparent;
@@ -279,25 +296,3 @@ app-news-feed {
 .p-autocomplete-items {
   margin-top: 25px;
 }
-
-// .star-rating {
-//   // font-size: 24px; /* Taille des étoiles */
-
-//   .star {
-//     display: inline-block;
-//     width: 18px; /* Largeur d'une étoile */
-//     overflow: hidden;
-//     text-align: center; /* Centrer le contenu vertical dans l'étoile */
-//     color: transparent; /* Rendre l'étoile transparente */
-//     border: 1px solid #ffcc00; /* Contour des étoiles */
-
-//     &.full {
-//       color: #ffcc00; /* Couleur des étoiles pleines */
-//     }
-
-//     &.half {
-//       width: 9px; /* Largeur d'une demi-étoile */
-//       border-right: none; /* Pas de contour à droite pour la demi-étoile */
-//     }
-//   }
-// }

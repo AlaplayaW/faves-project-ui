@@ -1,17 +1,19 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
-import { ReactiveFormsModule, FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { ReactiveFormsModule, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { BookService } from 'src/app/services/book.service';
-import { Book } from 'src/app/shared/models/book.model';
+import { Book } from 'src/app/models/book.model';
 import { ImageModule } from 'primeng/image';
 import { SliderModule } from 'primeng/slider';
 import { AutoCompleteModule } from 'primeng/autocomplete';
-import { BookCardComponent } from 'src/app/shared/components/book-card/book-card.component';
+import { BookCardComponent } from 'src/app/components/book-card/book-card.component';
 import { Router } from '@angular/router';
-import { NewBookComponent } from '../new-book/new-book.component';
 import { ReviewService } from 'src/app/services/review.service';
 import { GoogleBooksService } from 'src/app/services/google-books.service';
+import { Subject } from 'rxjs';
+import { GoogleBook } from 'src/app/models/google-book.model';
+import { Media } from 'src/app/models/media.model';
 
 interface AutoCompleteCompleteEvent {
   originalEvent: Event;
@@ -21,9 +23,9 @@ interface AutoCompleteCompleteEvent {
 @Component({
   selector: 'app-new-review',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, ButtonModule, AutoCompleteModule, ImageModule, BookCardComponent, NewBookComponent, SliderModule, AutoCompleteModule],
+  imports: [CommonModule, ReactiveFormsModule, ButtonModule, AutoCompleteModule, ImageModule, BookCardComponent, SliderModule, AutoCompleteModule],
   templateUrl: './new-review.component.html',
-  styleUrls: ['./new-review.component.scss']
+  styleUrls: []
 })
 export class NewReviewComponent implements OnInit {
 
@@ -32,6 +34,17 @@ export class NewReviewComponent implements OnInit {
   reviewService = inject(ReviewService);
   bookService = inject(BookService);
   googleBooksService = inject(GoogleBooksService);
+  searchTerms = new Subject<string>();
+
+  /// NEW ///
+  books: any[] | undefined;
+  selectedBook: GoogleBook;
+  filteredBooks: GoogleBook[] | undefined;
+  searchQuery$ = new Subject<string>();
+  /// END NEW ///
+
+
+  bookToReview: Book | undefined;
 
   createReviewForm: FormGroup;
 
@@ -41,33 +54,37 @@ export class NewReviewComponent implements OnInit {
   isSelected: boolean = false;
   noResults: boolean = false;
 
-  bookToReview: Book | undefined;
 
   showCreateBookForm: boolean = false;
   showCreateReviewForm: boolean = false;
 
+
+
   ngOnInit() {
-    this.searchForm = new FormGroup({
-      selectedBook: new FormControl<object | null>(null)
+
+    // Initialize this.suggestions as an empty array
+    this.filteredBooks = [];
+
+    this.searchForm = this.fb.group({
+      selectedBook: [null]
     });
     this.createReviewForm = this.fb.group({
       comment: ['', Validators.required],
       rating: ['', Validators.required],
-      // Add other form controls for book creation (e.g., author, publisher, etc.)
     });
   }
 
-  onSelect() {
-    this.isSelected = true;
-    if (this.getSelectedBook().id !== 'NotFound') {
-      this.bookToReview = this.getSelectedBook();
-      this.showCreateReviewForm = true;
-      console.log(this.bookToReview);
-    } else {
-      this.router.navigate(['/new-book']);
-      // this.showCreateBookForm = true;
-    }
+
+  filterBooks(event: AutoCompleteCompleteEvent) {
+    const query = event.query;
+    this.searchQuery$.next(query);
+
+    this.googleBooksService.searchBooks(this.searchQuery$).subscribe(data => {
+      this.filteredBooks = data || [];
+      console.log('Filtered Books:', this.filteredBooks);
+    });
   }
+
 
   onBookFormSubmit() {
     this.showCreateBookForm = false;
@@ -81,7 +98,7 @@ export class NewReviewComponent implements OnInit {
   onSubmit(): void {
     if (this.createReviewForm.valid) {
       const newReview = this.createReviewForm.value;
-      // Call the reviewService to create the new book
+
       this.reviewService.createReview(newReview).subscribe(
         createdReview => {
           console.log(createdReview);
@@ -93,7 +110,7 @@ export class NewReviewComponent implements OnInit {
   }
 
   // Fonction pour récupérer la valeur de selectedBook
-  getSelectedBook(): Book | any {
+  getSelectedBook(): GoogleBook | any {
     return this.searchForm?.get('selectedBook')?.value;
   }
 
@@ -101,19 +118,44 @@ export class NewReviewComponent implements OnInit {
     return 'Cherche un livre';
   }
 
-  filterBook(event: AutoCompleteCompleteEvent) {
-
-    let query = event.query;
-    console.log('Autocomplete value:', event.query);
-
-    // this.bookService.getFilteredBooks(bookType, query).subscribe((books) => {
-    //   this.suggestions = books;
-    //   this.suggestions.push({ id: 'NotFound', title: 'Pas trouvé' });
-    //   this.noResults = this.suggestions.length === 0 ? true : false;
-    //   console.log('noResults :', this.noResults);
-    //   console.log('suggestions :', this.suggestions);
-    // });;
+  search(term: string) {
+    this.searchTerms.next(term);
+    console.log(term);
   }
 
 
+
+  onSelectNew() {
+    this.isSelected = true;
+    if (this.getSelectedBook().id !== 'NotFound') {
+      this.bookToReview = this.convertGoogleBookToBook(this.getSelectedBook());
+      this.showCreateReviewForm = true;
+      console.log('this.bookToReview: ', this.bookToReview);
+    } else {
+      this.router.navigate(['/new-book'])
+      // this.showCreateBookForm = true;
+    }
+  }
+
+  convertGoogleBookToBook(googleBook: GoogleBook): Book {
+    const media: Media = {
+      imageUrl: googleBook.volumeInfo.imageLinks?.smallThumbnail || '', 
+    };
+    const industryIdentifier = googleBook.volumeInfo?.industryIdentifiers?.[0];
+    const isbn = industryIdentifier ? industryIdentifier.identifier : '';
+
+    const book: Book = {
+      title: googleBook.volumeInfo.title,
+      subtitle: googleBook.volumeInfo.subtitle,
+      authors: googleBook.volumeInfo.authors ?? [''],
+      pageCount: googleBook.volumeInfo.pageCount,
+      isbn: isbn,
+      printType: googleBook.volumeInfo.printType,
+      publishedDate: new Date(googleBook.volumeInfo.publishedDate),
+      description: googleBook.volumeInfo.description,
+      media: media,
+    };
+
+    return book;
+  }
 }

@@ -12,7 +12,7 @@ export class CreateBookDto {
   reviews?: string[];
   itemGenres?: string[];
   averageRating?: number;
-  createdAt?: Date | null;
-  updatedAt?: Date | null;
+  // createdAt?: Date | null;
+  // updatedAt?: Date | null;
 }
 

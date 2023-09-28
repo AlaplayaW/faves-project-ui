@@ -1,4 +1,5 @@
 import { BookGenre } from "./book-genre.model";
+import { industryIdentifier } from "./google-book.model";
 import { Media } from "./media.model";
 import { Review } from "./review.model";
 import { User } from "./user.model";
@@ -10,16 +11,16 @@ export interface Book {
   authors?: string[];
   bookGenres?: BookGenre[];
   publisher?: string;
-  isbn: string;
-  printType: string;
+  isbn?: string;
+  printType?: string;
   publishedDate?: Date;
   description?: string;
   averageRating?: number;
-  ratingsCount: number;
+  ratingsCount?: number;
   media?: Media;
   pageCount?: number;
-  user: User;
-  reviews: Review[];
+  user?: User;
+  reviews?: Review[];
   rating?: number;
   createdAt?: Date | null;
   updatedAt?: Date | null;

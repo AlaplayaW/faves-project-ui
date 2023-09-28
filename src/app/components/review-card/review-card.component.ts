@@ -3,8 +3,8 @@ import { CommonModule } from '@angular/common';
 import { ImageModule } from 'primeng/image';
 import { CardModule } from 'primeng/card';
 import { RatingModule } from 'primeng/rating';
-import { StarRatingComponent } from 'src/app/shared/components/star-rating/star-rating.component';
-import { TrimTextDirective } from 'src/app/shared/directives/trim-text.directive';
+import { StarRatingComponent } from 'src/app/components/star-rating/star-rating.component';
+import { TrimTextDirective } from 'src/app/directives/trim-text.directive';
 import { Review } from '../../models/review.model';
 
 @Component({

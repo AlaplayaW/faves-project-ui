@@ -4,10 +4,6 @@ import { BehaviorSubject } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-/**
- * loader service
- * toggle loader gif in website
- */
 export class LoaderService {
   public status: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 

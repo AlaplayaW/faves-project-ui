@@ -18,7 +18,6 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit(): void {
     this.title = this.titleStrategy.title.getTitle();
-    console.log('===== this.title:', this.title );
   }
 
 }

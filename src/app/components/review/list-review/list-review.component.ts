@@ -2,8 +2,8 @@ import { CommonModule } from '@angular/common';
 import { Component, Input, OnChanges, OnInit, SimpleChanges, inject } from '@angular/core';
 import { Observable, Subject, catchError, debounceTime, distinctUntilChanged, map, of } from 'rxjs';
 import { NetworkService } from 'src/app/services/network.service';
-import { ReviewCardComponent } from 'src/app/shared/components/review-card/review-card.component';
-import { Review } from 'src/app/shared/models/review.model';
+import { ReviewCardComponent } from 'src/app/components/review-card/review-card.component';
+import { Review } from 'src/app/models/review.model';
 
 @Component({
   selector: 'app-list-review',

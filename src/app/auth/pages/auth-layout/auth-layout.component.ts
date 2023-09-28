@@ -1,4 +1,4 @@
-import { Component, Input, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DefaultTitleStrategy, RouterOutlet } from '@angular/router';
 import { HeaderComponent } from 'src/app/core/header/header.component';
@@ -17,7 +17,6 @@ export class AuthLayoutComponent {
 
   ngOnInit(): void {
     this.title = this.titleStrategy.title.getTitle();
-    console.log('===== this.title:', this.title );
   }
 
 }

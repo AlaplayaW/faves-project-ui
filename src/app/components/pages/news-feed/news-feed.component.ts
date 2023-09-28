@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { TabMenuModule } from 'primeng/tabmenu';
 import { InputTextModule } from 'primeng/inputtext';
 import { Observable, Subject, catchError, debounceTime, distinctUntilChanged, map, of } from 'rxjs';
-import { Book } from 'src/app/shared/models/book.model';
+import { Book } from 'src/app/models/book.model';
 import { BookService } from 'src/app/services/book.service';
 import { FeedCardComponent } from '../../feed-card/feed-card.component';
 import { NetworkService } from 'src/app/services/network.service';
@@ -13,7 +13,7 @@ import { NetworkService } from 'src/app/services/network.service';
   standalone: true,
   imports: [CommonModule, TabMenuModule, InputTextModule, FeedCardComponent],
   templateUrl: './news-feed.component.html',
-  styleUrls: ['./news-feed.component.scss']
+  styleUrls: []
 })
 export class NewsFeedComponent implements OnInit {
 
@@ -33,7 +33,7 @@ export class NewsFeedComponent implements OnInit {
     this.filteredBooks$ = this.books$;
     this.books$.subscribe(data => {
       console.log('Contenu de l\'Observable :');
-      console.log(data); // Affichez les données dans la console
+      console.log(data);
     });
     // Utiliser le flux searchTerms pour réagir aux changements dans les termes de recherche
     this.searchTerms.pipe(
@@ -47,15 +47,18 @@ export class NewsFeedComponent implements OnInit {
 
   // Mettre à jour les avis filtrés
   private updateFilteredBooks(): void {
-    const searchQueryLower = this.searchQuery?.toLowerCase() || '';
+    const searchQueryLower = this.removeAccents(this.searchQuery?.toLowerCase()) || '';
     this.filteredBooks$ = this.books$.pipe(
       map(books =>
         searchQueryLower
           ? books.filter(
-              book =>
-                (book.user?.pseudo?.toLowerCase().includes(searchQueryLower) ||
-                  book.title?.toLowerCase().includes(searchQueryLower))
-            )
+            book => {
+              const userPseudo = this.removeAccents(book.user?.pseudo?.toLowerCase()) || '';
+              const title = this.removeAccents(book.title?.toLowerCase()) || '';
+
+              return userPseudo.includes(searchQueryLower) || title.includes(searchQueryLower);
+            }
+          )
           : books
       )
     );
@@ -73,6 +76,15 @@ export class NewsFeedComponent implements OnInit {
   search(term: string) {
     this.searchTerms.next(term);
     console.log(term);
+  }
+
+  removeAccents(str: string | undefined): string {
+    if (str === undefined) {
+      return ''; // Ou tout autre traitement que vous préférez pour le cas où str est undefined
+    }
+    return str
+      .normalize('NFD') // Normalize the string into Unicode Normalization Form D (NFD)
+      .replace(/[\u0300-\u036f]/g, ''); // Remove diacritical marks (accents)
   }
 
 }

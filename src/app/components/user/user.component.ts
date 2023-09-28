@@ -1,6 +1,6 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { User } from 'src/app/shared/models/user.model';
+import { User } from 'src/app/models/user.model';
 import { Router } from '@angular/router';
 import { UserService } from '../../services/user.service';
 import { Observable } from 'rxjs';
@@ -29,20 +29,4 @@ export class UserComponent implements OnInit {
   private loadUsers(page?: number) {
     this.users$ = this.userService.getUsers();
   }
-  // private loadUsers(page?: number) {
-  //   this.userService
-  //     .getAllusers()
-  //     .subscribe({
-  //       next: (data) => {
-  //         this.users = data;
-  //         console.log('data --- :', data);
-  //       },
-  //       error: (error: HttpErrorResponse) => {
-  //         console.log(error.message)
-  //       }
-  //     });
-  // }
-
-
-
 }

@@ -14,27 +14,4 @@ import { RouterOutlet } from '@angular/router';
 })
 export class LayoutComponent {
   isMenuVisible: boolean = true;
-  // @Input() isLoggedIn!: boolean;
-  // constructor(private menuDataService: MenuDataService,
-  //   private applicationStateService: ApplicationStateService) {
-  // }
-
-  // ngOnInit() {
-  //   var that = this;
-  //   this.menuDataService.toggleMenuBar.subscribe(function (data: any) {
-  //     if (data && data != null) {
-  //       that.isMenuVisible = !that.isMenuVisible;
-  //     }
-  //   });
-
-  //   if (this.applicationStateService.getIsMobileResolution()) {
-  //     this.isMenuVisible = false;
-  //   } else {
-  //     this.isMenuVisible = true;
-  //   }
-  // }
-
-  // ngOnDestroy() {
-  //   this.menuDataService.toggleMenuBar.observers.forEach(function (element) { element.complete(); });
-  // }
 }

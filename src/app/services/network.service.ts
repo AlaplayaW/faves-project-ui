@@ -1,10 +1,10 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Injectable, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Injectable, inject } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { Review } from '../shared/models/review.model';
+import { Review } from '../models/review.model';
 import { environment } from 'src/environments/environment';
-import { User } from '../shared/models/user.model';
-import { Book } from '../shared/models/book.model';
+import { User } from '../models/user.model';
+import { Book } from '../models/book.model';
 
 
 @Injectable({
@@ -12,13 +12,15 @@ import { Book } from '../shared/models/book.model';
 })
 export class NetworkService {
 
+  private http = inject(HttpClient);
+
   private apiUrl: string;
   private reviewsSubject = new BehaviorSubject<Review[]>([]);
   private friendsSubject = new BehaviorSubject<User[]>([]);
   private booksSubject = new BehaviorSubject<Book[]>([]);
 
-  constructor(private http: HttpClient) {
-    this.apiUrl = environment.apiUrl + '/api/network';
+  constructor() {
+    this.apiUrl = environment.apiUrl + '/network';
     this.loadFriendsByNetwork();
     this.loadBooksByNetwork();
     this.loadReviewsByNetwork();
@@ -34,6 +36,16 @@ export class NetworkService {
 
   getNetworkBooks(): Observable<Book[]> {
     return this.booksSubject.asObservable();
+  }
+
+  private loadBooksByNetwork() {
+    this.http.get<Book[]>(this.apiUrl + '/books').subscribe({
+      next: books => {
+        console.log(books);
+        this.booksSubject.next(books);
+      },
+      error: error => console.error(error),
+    });
   }
 
   private loadReviewsByNetwork() {
@@ -56,28 +68,4 @@ export class NetworkService {
     });
   }
 
-  private loadBooksByNetwork() {
-    this.http.get<Book[]>(this.apiUrl + '/books').subscribe({
-      next: books => {
-        console.log(books);
-        this.booksSubject.next(books);
-      },
-      error: error => console.error(error),
-    });
-  }
-
-  // getReviewList(url: string): Observable<object> {
-  //   return this.http.get(url, httpOptions).pipe(
-  //     tap((response) => this.log(response)),
-  //     catchError((error) => this.handleError(error, []))
-  //   );
-  // }
-  // private log(response: any) {
-  //   console.table(response);
-  // }
-
-  // private handleError(error: Error, errorValue: any) {
-  //   console.error(error);
-  //   return of(errorValue);
-  // }
 }

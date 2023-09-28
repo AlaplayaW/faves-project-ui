@@ -1,7 +1,7 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, ReplaySubject, map } from 'rxjs';
-import { User } from 'src/app/shared/models/user.model';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { User } from 'src/app/models/user.model';
 import { environment } from 'src/environments/environment';
 
 
@@ -14,8 +14,8 @@ export class UserService {
   private usersSubject = new BehaviorSubject<User[]>([]);
 
 
-  constructor(private http: HttpClient) { 
-    this.apiUrl = environment.apiUrl + '/api/users';
+  constructor(private http: HttpClient) {
+    this.apiUrl = environment.apiUrl + '/users';
     this.loadUsers();
   }
 
@@ -27,31 +27,20 @@ export class UserService {
     return this.http.get<User[]>(this.apiUrl + '/' + userId + '/friends');
   }
 
-  private loadUsers(){
+  private loadUsers() {
     this.http.get<User[]>(this.apiUrl).subscribe({
-    next: users => {
-      console.log(users);
-      this.usersSubject.next(users);
-    },
+      next: users => {
+        console.log(users);
+        this.usersSubject.next(users);
+      },
       error: error => console.error(error),
     });
   }
 
-
-  // getAllusers(page?: number) {
-  //   let pageParam = undefined;
-  //   if (page) pageParam = `/?&page=${page}`
-  //   return this.http.get<User[]>(`${this.apiUrl}/users${pageParam}`);
-  // }
   getAllusers(): Observable<User[]> {
     return this.http.get<User[]>(`${this.apiUrl}/users`);
   }
 
-  // on utilise l'URI
-  getUserDetails(userUrl: string): Observable<User> {
-    return this.http.get<User>(`${environment.apiUrl}${userUrl}`);
-  }
-  
   getUserById(userId: string) {
     return this.http.get<User>(`${this.apiUrl}/${userId}`);
   }

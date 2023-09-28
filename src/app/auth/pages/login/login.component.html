@@ -1,24 +1,25 @@
 <div class="login-page w-full m-auto">
     <form (ngSubmit)="loginUser()" [formGroup]="loginForm" class="my-2">
         <div class="flex flex-column gap-2">
+
             <input pInputText type="text" formControlName="username" class="form-control" name="username"
                 placeholder="Votre email">
-
             <div [hidden]="loginForm.controls['username'].valid || !loginForm.controls['username'].dirty"
-                class="alert alert-danger">
-                Login is required
-            </div>
+                class="alert alert-danger">Email obligatoire</div>
+
             <input pInputText type="password" formControlName="password" class="form-control" name="password"
                 placeholder="Votre mot de passe">
             <div [hidden]="loginForm.controls['password'].valid || !loginForm.controls['password'].dirty"
-                class="alert alert-danger">
-                Password is required
-            </div>
+                class="alert alert-danger">Mot de passe obligatoire</div>
+
             <p-button label="Mot de passe oublié" class="link-btn flex justify-content-center"
                 styleClass="p-button-link"></p-button>
+                
             <p-button type="submit" label="Se connecter" class="submit-btn my-2 flex justify-content-center"
                 [disabled]="!loginForm.valid"></p-button>
-            <p-button appBackButton label="Retour" icon="pi pi-arrow-left" class="go-back-btn" styleClass="p-button-link"></p-button>
+
+            <p-button appBackButton label="Retour" icon="pi pi-arrow-left" class="go-back-btn"
+                styleClass="p-button-link"></p-button>
         </div>
     </form>
 </div>

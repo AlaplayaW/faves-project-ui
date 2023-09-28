@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { BehaviorSubject, Observable, catchError, of, tap } from 'rxjs';
-import { Book } from '../shared/models/book.model';
+import { Book } from '../models/book.model';
 import { environment } from 'src/environments/environment';
 
 
@@ -14,7 +14,7 @@ export class FriendshipService {
   private booksSubject = new BehaviorSubject<Book[]>([]);
 
   constructor(private http: HttpClient) { 
-    this.apiUrl = environment.apiUrl + '/api/friendships';
+    this.apiUrl = environment.apiUrl + '/friendships';
     // this.loadBooks();
   }
 
