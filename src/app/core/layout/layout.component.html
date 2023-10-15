@@ -1,11 +1,14 @@
 <div class="layout flex flex-column h-screen">
-  <div class="layout flex flex-column overflow-scroll flex-auto">
-    <app-header class=""></app-header>
+  <div class="flex flex-column overflow-scroll flex-auto">
+    <header>
+      <app-header></app-header>
+    </header>
     <main class="flex-auto mx-3">
       <router-outlet></router-outlet>
     </main>
   </div>
-  <app-footer [ngClass]="{'hidden-menu-content': !isMenuVisible}" class="flex-initial">
-    <app-navbar></app-navbar>
-  </app-footer>
+  <nav aria-label="Menu de navigation">
+    <app-navbar class="flex-initial"></app-navbar>
+  </nav>
 </div>
+
