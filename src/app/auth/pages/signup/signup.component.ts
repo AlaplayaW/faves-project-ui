@@ -1,7 +1,7 @@
-import { Component, OnInit, Provider, forwardRef, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth.service';
 import { PanelModule } from 'primeng/panel';
 import { ButtonModule } from 'primeng/button';
@@ -13,6 +13,8 @@ import { ToastModule } from 'primeng/toast';
 import { BackButtonDirective } from 'src/app/directives/back-button.directive';
 import { PasswordModule } from 'primeng/password';
 import { DividerModule } from 'primeng/divider';
+import { HttpErrorResponse } from '@angular/common/http';
+import { ErrorService } from 'src/app/services/error.service';
 
 interface UploadEvent {
   originalEvent: Event;
@@ -42,6 +44,7 @@ export class SignupComponent implements OnInit {
 
   fb = inject(FormBuilder);
   messageService = inject(MessageService);
+  errorService = inject(ErrorService);
   router = inject(Router);
   authService = inject(AuthService);
 
@@ -53,31 +56,34 @@ export class SignupComponent implements OnInit {
       pseudo: ['', Validators.required],
       email: ['', Validators.compose([
         Validators.required,
-        Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')])],
+        Validators.pattern('^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}$')])],
       plainPassword: ['', Validators.required],
       roles: [['ROLE_USER']],
       rgpd: ['', Validators.required],
     });
+
+    this.errorService.getErrorSubject().subscribe((error: HttpErrorResponse) => {
+      if (error.status === 422 && error.error.detail) {
+        this.messageService.add({ severity: 'error', summary: 'Erreur', detail: error.error.detail });
+      } else {
+        this.messageService.add({ severity: 'error', summary: 'Erreur', detail: 'Une erreur s\'est produite lors de la requête.' });
+      }
+    });
+
   }
 
   registerUser() {
-    // Créez une copie de l'objet signupForm.value sans le champ 'rgpd'
+    // Crée une copie de l'objet signupForm.value sans le champ 'rgpd'
     const { rgpd, ...userWithoutRgpd } = this.signupForm.value;
 
     this.authService.signUp(userWithoutRgpd).subscribe({
       next: (res) => {
-        console.log(res);
         if (res) {
           this.signupForm.reset();
-          this.router.navigate(['/auth/login']);
         }
-      },
-      error: (error) => {
-        console.error(error);
       },
     });
   }
-
 
   onFileUpload(event: any) {
     const uploadedFile = event.files[0];

@@ -1,9 +1,14 @@
-import { HttpHandlerFn, HttpInterceptorFn, HttpRequest } from "@angular/common/http";
-import { catchError, tap, throwError } from "rxjs";
+import { HttpErrorResponse, HttpHandlerFn, HttpInterceptorFn, HttpRequest } from "@angular/common/http";
+import { inject } from "@angular/core";
+import { Subject, catchError, tap, throwError } from "rxjs";
+import { ErrorService } from "src/app/services/error.service";
 import { environment } from "src/environments/environment";
 
 // Intercepteur HTTP pour ajouter l'en-tête d'authentification JWT aux requêtes HTTP sortantes destinées à mon API.
 export const authInterceptor: HttpInterceptorFn = (req: HttpRequest<unknown>, next: HttpHandlerFn) => {
+
+  
+  const errorService = inject(ErrorService);
 
   let headers = req.headers
     .set('Content-Type', 'application/json')
@@ -29,9 +34,8 @@ export const authInterceptor: HttpInterceptorFn = (req: HttpRequest<unknown>, ne
 
   return next(req).pipe(
     tap(resp => console.log('response', resp)),
-    catchError((error: any) => {
-      console.error('Erreur dans la requête :', error);
-
+    catchError((error: HttpErrorResponse) => {
+      errorService.handleError(error); // Émet l'erreur à travers le sujet
       return throwError(() => new Error("Une erreur s'est produite lors de la requête."));
     })
   );

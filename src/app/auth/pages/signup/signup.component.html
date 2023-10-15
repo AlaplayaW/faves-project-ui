@@ -1,6 +1,7 @@
 <div class="signup-page w-full m-auto">
   <form (ngSubmit)="registerUser()" [formGroup]="signupForm" class="my-2">
     <div class="flex flex-column gap-2">
+      <p-toast></p-toast>
       <input pInputText type="text" formControlName="pseudo" class="form-control" name="pseudo"
         placeholder="Votre pseudo" required>
 
@@ -46,9 +47,9 @@
 
     <div>
       <p-toast></p-toast>
-      <p-fileUpload mode="basic" chooseLabel="Votre photo" url="https://www.primefaces.org/cdn/api/upload.php"
+      <!-- <p-fileUpload mode="basic" chooseLabel="Votre photo" url="https://www.primefaces.org/cdn/api/upload.php"
         accept="image/*" [multiple]="false" (onUpload)="onFileUpload($event)"
-        (onSelect)="onSelect($event)"></p-fileUpload>
+        (onSelect)="onSelect($event)"></p-fileUpload> -->
     </div>
 
   </form>

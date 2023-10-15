@@ -1,6 +1,7 @@
 <div class="login-page w-full m-auto">
-    <form (ngSubmit)="loginUser()" [formGroup]="loginForm" class="my-2">
+    <form (ngSubmit)="loginUser()" [formGroup]="loginForm" class="my-2" method="post">
         <div class="flex flex-column gap-2">
+            <p-toast></p-toast>
 
             <input pInputText type="text" formControlName="username" class="form-control" name="username"
                 placeholder="Votre email">
@@ -14,12 +15,15 @@
 
             <p-button label="Mot de passe oublié" class="link-btn flex justify-content-center"
                 styleClass="p-button-link"></p-button>
-                
+            
+            <input pInputText type="text" class="ohnohoney" autocomplete="off" formControlName="favsemail" name="favsemail" placeholder="Your e-mail here">
+
             <p-button type="submit" label="Se connecter" class="submit-btn my-2 flex justify-content-center"
                 [disabled]="!loginForm.valid"></p-button>
 
             <p-button appBackButton label="Retour" icon="pi pi-arrow-left" class="go-back-btn"
                 styleClass="p-button-link"></p-button>
+
         </div>
     </form>
 </div>

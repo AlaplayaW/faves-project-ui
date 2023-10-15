@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
-import { Observable, catchError, map, throwError } from 'rxjs';
+import { Observable, catchError, map, tap, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { User } from '../models/user.model';
 import { Router } from '@angular/router';
@@ -18,8 +18,14 @@ export class AuthService {
   signUp(user: User): Observable<any> {
     let api = `${this.apiUrl}/users`;
     console.log('Tentative d\'inscription avec les données suivantes :', user);
-    return this.http.post(api, user, { headers: this.headers }).pipe(catchError(this.handleError));
+    return this.http.post(api, user, { headers: this.headers }).pipe(
+      catchError(this.handleError),
+      tap(() => {
+        this.router.navigate(['/auth/login']);
+      })
+    );
   }
+
 
   signIn(user: User) {
     return this.http
