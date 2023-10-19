@@ -5,8 +5,8 @@ export interface Review {
   id?: number;
   rating?: number;
   comment?: string;
-  book?: Book;
   user?: User;
+  book?: Book;
   createdAt?: Date | null;
   updatedAt?: Date | null;
 }

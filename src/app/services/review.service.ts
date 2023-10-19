@@ -5,13 +5,10 @@ import { Review } from '../models/review.model';
 import { environment } from 'src/environments/environment';
 import { Utils } from './utils';
 
-
-
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ReviewService {
-
   private apiUrl: string;
   private reviewsSubject = new BehaviorSubject<Review[]>([]);
 
@@ -20,20 +17,7 @@ export class ReviewService {
     this.loadReviews();
   }
 
-  // TODO: A supprimer ou non
-  // getReviews(): Observable<Review[]> {
-  //   return this.reviewsSubject.asObservable();
-  // }
-
-  // getReviewsByUser(userId: number): Observable<Review[]> {
-  //   return this.http.get<Review[]>(this.apiUrl + '?&user=' + userId);
-  // }
-
-  // getReviewsByFriends(): Observable<Review[]> {
-  //   return this.http.get<Review[]>(environment.apiUrl + '/network/friends/reviews');
-  // }
-
-  createReview(review: Review): Observable<Review> {
+  createReview(review: any): Observable<Review> {
     return this.http.post<Review>(this.apiUrl, review).pipe(
       tap((response) => Utils.log(response)),
       catchError((error) => Utils.handleError(error, undefined))
@@ -42,11 +26,10 @@ export class ReviewService {
 
   private loadReviews() {
     this.http.get<Review[]>(this.apiUrl).subscribe({
-      next: reviews => {
+      next: (reviews) => {
         this.reviewsSubject.next(reviews);
       },
-      error: error => console.error(error),
+      error: (error) => console.error(error),
     });
   }
-
 }

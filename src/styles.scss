@@ -24,6 +24,7 @@ body {
   width: 0;
   z-index: -1;
 }
+
 .p-inputtext {
   color: $whitesmoke;
   border: none;
@@ -227,6 +228,26 @@ app-auth-layout {
 
 }
 
+/* Pour les écrans de tablette (largeur minimale de 500px) */
+@media (min-width: 500px) {
+  .p-card {
+    width: 600px;
+    max-width: 600px;
+    /* Par exemple, ajustez la largeur maximale pour les tablettes */
+    /* Autres styles spécifiques aux tablettes */
+  }
+}
+
+/* Pour les écrans de bureau (largeur minimale de 700px) */
+@media (min-width: 700px) {
+  .p-card {
+    width: 800px;
+    max-width: 800px;
+    /* Par exemple, ajustez la largeur maximale pour les écrans de bureau */
+    /* Autres styles spécifiques aux écrans de bureau */
+  }
+}
+
 .feed-card {
   .p-card {
     .user-image {
@@ -239,6 +260,13 @@ app-auth-layout {
       background-color: $secondary-lighter;
       padding: 0.5em 1em;
       border-radius: 6px;
+    }
+
+    .showAllComments-button {
+      background-color: $secondary-darker;
+      border-bottom: 1px solid #ffffff33;
+      padding: 5px 10px 15px 10px;
+      cursor: pointer;
     }
 
     .footer {

@@ -17,7 +17,6 @@ import { NetworkService } from 'src/app/services/network.service';
 })
 export class NewsFeedComponent implements OnInit {
 
-  bookService = inject(BookService);
   networkService = inject(NetworkService);
 
   searchQuery: string;

@@ -35,7 +35,7 @@ export class LoginComponent implements OnInit {
     });
 
     this.errorService.getErrorSubject().subscribe((error: HttpErrorResponse) => {
-      if (error.status === 422 && error.error.detail) {
+      if (error.error.detail) {
         this.messageService.add({ severity: 'error', summary: 'Erreur', detail: error.error.detail });
       } else {
         this.messageService.add({ severity: 'error', summary: 'Erreur', detail: 'Une erreur s\'est produite lors de la requête.' });

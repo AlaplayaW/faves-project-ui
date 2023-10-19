@@ -22,8 +22,8 @@
   <!-- Si le formulaire de création d'un review est affiché -->
   <ng-container *ngIf="showCreateReviewForm">
     <!-- Si un book est sélectionné -->
-    <div *ngIf="bookToReview !== undefined" class="card flex flex-column gap-3">
-      <app-book-card [book]="bookToReview"></app-book-card>
+    <div *ngIf="bookData !== undefined" class="card flex flex-column gap-3">
+      <app-book-card [book]="bookData"></app-book-card>
     </div>
 
     
@@ -31,9 +31,11 @@
       <!-- Créer une nouvelle critique -->
       <!-- <app-create-review-form></app-create-review-form> -->
       <form [formGroup]="createReviewForm" (ngSubmit)="onSubmit()" class="create-review-form gap-3 flex flex-column">
-        <label for="rating">Note : {{ this.createReviewForm.value.rating }}</label>
-        <p-slider formControlName="rating" [step]="1" [min]="0" [max]="10"></p-slider>
-
+        <div class="py-3">
+          <label class="pr-3" for="rating">Donnez une note</label>
+          <!-- <p-slider class="p-2" formControlName="rating" [step]="1" [min]="0" [max]="10"></p-slider> -->
+          <p-inputNumber inputId="integeronly" formControlName="rating" [step]="1" [min]="0" [max]="10" suffix=" sur 10"></p-inputNumber>
+        </div>
         <label for="comment">Commentaire</label>
         <textarea formControlName="comment" rows="5" cols="30" pInputTextarea></textarea>
 

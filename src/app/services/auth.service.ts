@@ -31,10 +31,47 @@ export class AuthService {
     return this.http
       .post<any>(`${this.apiUrl}/login`, user, { headers: this.headers })
       .subscribe((res: any) => {
+        if (res && res.token) {
         localStorage.setItem('jwt', JSON.stringify(res.token));
-        this.router.navigate(['/app/feed']);
+
+        this.http.get<User>(`${this.apiUrl}/current-user`, { headers: this.headers }).subscribe((userDetails: User) => {
+          localStorage.setItem('user', JSON.stringify(userDetails));
+
+          this.router.navigate(['/app/feed']);
+        });
+        } else {
+          console.error("Authentification échouée :", res);
+        }
       });
   }
+  
+
+
+  // signIn(user: User) {
+  //   return this.http
+  //     .post<any>(`${this.apiUrl}/login`, user, { headers: this.headers })
+  //     .subscribe({
+  //       next: (res: any) => {
+  //         if (res.status === 200) {
+  //           // Authentification réussie, stockez le token
+  //           localStorage.setItem('jwt', JSON.stringify(res.token));
+  //           this.router.navigate(['/app/feed']);
+  //         } else if (res.status === 403) {
+  //           // Authentification échouée en raison d'une interdiction (403),
+  //           // Vous pouvez ajouter ici votre logique pour gérer cela.
+  //           console.log('Authentification échouée (403).');
+  //         }
+  //       },
+  //       error: (error: HttpErrorResponse) => {
+  //         // Gérez ici les erreurs HTTP, par exemple, 401 (Non autorisé).
+  //         console.error("Erreur lors de l'authentification :", error.status);
+  //         if (error.status === 401) {
+  //           // Authentification échouée en raison d'une non-autorisation (401).
+  //           // Vous pouvez ajouter ici votre logique pour gérer cela.
+  //         }
+  //       }}
+  //     );
+  // }
 
   getToken() {
     return localStorage.getItem('jwt');
@@ -47,8 +84,10 @@ export class AuthService {
 
   doLogout() {
     let removeToken = localStorage.removeItem('jwt');
+    localStorage.removeItem('user');
+    console.log("removeToken: ", removeToken);
     if (removeToken == null) {
-      this.router.navigate(['log-in']);
+      this.router.navigate(['/auth/login']);
     }
   }
 

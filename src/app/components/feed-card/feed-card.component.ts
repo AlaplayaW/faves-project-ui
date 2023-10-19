@@ -4,59 +4,70 @@ import { Book } from 'src/app/models/book.model';
 import { CardModule } from 'primeng/card';
 import { StarRatingComponent } from 'src/app/components/star-rating/star-rating.component';
 import { Review } from 'src/app/models/review.model';
-import { BookService } from 'src/app/services/book.service';
 import { ReviewService } from 'src/app/services/review.service';
 import { InputTextModule } from 'primeng/inputtext';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { ButtonModule } from 'primeng/button';
+import { User } from 'src/app/models/user.model';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-feed-card',
   standalone: true,
-  imports: [CommonModule, CardModule, StarRatingComponent, InputTextModule],
+  imports: [
+    CommonModule,
+    CardModule,
+    StarRatingComponent,
+    InputTextModule,
+    ButtonModule,
+    ReactiveFormsModule,
+  ],
   templateUrl: './feed-card.component.html',
-  styleUrls: []
+  styleUrls: [],
 })
 export class FeedCardComponent implements OnInit {
-  @Input() book?: Book;
+  @Input() book: Book;
 
-  bookService = inject(BookService);
   reviewService = inject(ReviewService);
-  formGroup: FormGroup | undefined;
 
-  showMore = false;
-  reviews: Review[] = [];
+  reviewForm: FormGroup;
+  reviews: Review[] | undefined = [];
+  user: User;
+  userJson: string | null;
 
+  public showAllComments = false;
+  public showMore = false;
 
   ngOnInit() {
-    this.formGroup = new FormGroup({
-      review: new FormControl<string | null>(null)
-  });
+    this.userJson = localStorage.getItem('user');
+
+    if (this.userJson) {
+      this.user = JSON.parse(this.userJson);
+    }
+
+    this.reviewForm = new FormGroup({
+      reviewText: new FormControl(''),
+    });
   }
 
-  // submitReview() {
-  //   if (this.formGroup && this.formGroup.valid) {
-  //     const comment = this.formGroup.get('review')?.value;
-  
-  //     if (this.book && comment) {
-  //       const review: Review = {
-  //         user: this.book.user,
-  //         comment: comment,
-  //       };
-  
-  //       this.reviewService.submitReview(review).subscribe({
-  //         next: (newReview) => {
-  //           // La revue a été soumise avec succès, vous pouvez l'ajouter à la liste des avis
-  //           this.reviews.push(newReview);
-  
-  //           this.formGroup.reset();
-  //         },
-  //         error: (error) => {
-  //           console.error('Erreur lors de la soumission de la revue :', error);
-  //         },
-  //       });
-  //     }
-  //   }
-  // }
-  
+  postComment(book: Book) {
+    if (this.reviewForm?.valid) {
+      this.reviews = this.book.reviews;
+      console.log('this.reviews, ', this.reviews);
 
+      const newReview = {
+        user: `${environment.apiUrl}/users/${this.user.id}`,
+        book: `${environment.apiUrl}/books/${book.id}`,
+        rating: 5,
+        comment: this.reviewForm.get('reviewText')?.value,
+      };
+
+      this.reviewService.createReview(newReview).subscribe((res) => {
+        if (res) {
+          this.reviews?.push(res);
+          this.reviewForm?.reset();
+        }
+      });
+    }
+  }
 }

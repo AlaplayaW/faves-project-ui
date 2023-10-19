@@ -3,7 +3,7 @@
     placeholder="Rechercher par username ou titre" class="p-inputtext-sm flex-auto"/>
 </div>
 
-<div class="flex flex-column gap-3 my-4 ">
+<div class="flex flex-column gap-3 my-4 align-items-center">
 
   <ng-container *ngFor="let book of filteredBooks$ | async">
     <app-feed-card [book]="book"></app-feed-card>

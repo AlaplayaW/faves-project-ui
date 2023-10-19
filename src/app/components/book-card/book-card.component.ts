@@ -12,7 +12,7 @@ import { Book } from '../../models/book.model';
   standalone: true,
   imports: [CommonModule, ImageModule, CardModule, RatingModule, StarRatingComponent, TrimTextDirective],
   templateUrl: './book-card.component.html',
-  styleUrls: ['./book-card.component.scss']
+  styleUrls: []
 })
 export class BookCardComponent {
 

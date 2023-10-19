@@ -6,12 +6,10 @@ import { environment } from 'src/environments/environment';
 import { User } from '../models/user.model';
 import { Book } from '../models/book.model';
 
-
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class NetworkService {
-
   private http = inject(HttpClient);
 
   private apiUrl: string;
@@ -40,32 +38,31 @@ export class NetworkService {
 
   private loadBooksByNetwork() {
     this.http.get<Book[]>(this.apiUrl + '/books').subscribe({
-      next: books => {
-        console.log(books);
+      next: (books) => {
+        // console.log(books);
         this.booksSubject.next(books);
       },
-      error: error => console.error(error),
+      error: (error) => console.error(error),
     });
   }
 
   private loadReviewsByNetwork() {
     this.http.get<Review[]>(this.apiUrl + '/reviews').subscribe({
-      next: reviews => {
-        console.log(reviews);
+      next: (reviews) => {
+        // console.log(reviews);
         this.reviewsSubject.next(reviews);
       },
-      error: error => console.error(error),
+      error: (error) => console.error(error),
     });
   }
 
   private loadFriendsByNetwork() {
     this.http.get<User[]>(this.apiUrl + '/friends').subscribe({
-      next: friends => {
-        console.log(friends);
+      next: (friends) => {
+        // console.log(friends);
         this.friendsSubject.next(friends);
       },
-      error: error => console.error(error),
+      error: (error) => console.error(error),
     });
   }
-
 }

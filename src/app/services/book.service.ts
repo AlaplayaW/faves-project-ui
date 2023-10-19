@@ -5,9 +5,9 @@ import { Book } from '../models/book.model';
 import { environment } from 'src/environments/environment';
 import { FriendshipService } from './friendship.service';
 import { UserService } from './user.service';
-import { CreateBookDto } from '../models/createBookDto.model';
 import { ReviewService } from './review.service';
 import { Utils } from './utils';
+import { Media } from '../models/media.model';
 
 
 @Injectable({
@@ -29,7 +29,11 @@ export class BookService {
     return this.http.get<Book[]>(this.apiUrl + `?title=${query}`);
   }
 
-  createBook(book: CreateBookDto): Observable<Book> {
+  createMedia(mediaData: Media): Observable<Media> {
+    return this.http.post<Media>(environment.apiUrl + '/medias', mediaData);
+  }
+
+  createBook(book: Book): Observable<Book> {
     return this.http.post<Book>(this.apiUrl, book).pipe(
       tap((response) => Utils.log(response)),
       catchError((error) => Utils.handleError(error, undefined))
