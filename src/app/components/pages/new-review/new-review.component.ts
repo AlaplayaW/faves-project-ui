@@ -101,9 +101,10 @@ export class NewReviewComponent implements OnInit {
     this.searchQuery$.next(query);
 
     this.googleBooksService.searchBooks(this.searchQuery$).subscribe((data) => {
-      this.filteredBooks = data || [];
+      this.filteredBooks = data ? Object.values(data) : [];
       console.log('Filtered Books:', this.filteredBooks);
     });
+
   }
 
   onBookFormSubmit() {
