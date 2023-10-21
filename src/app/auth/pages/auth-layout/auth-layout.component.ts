@@ -1,6 +1,12 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute, DefaultTitleStrategy, NavigationEnd, Router, RouterOutlet } from '@angular/router';
+import {
+  ActivatedRoute,
+  DefaultTitleStrategy,
+  NavigationEnd,
+  Router,
+  RouterOutlet,
+} from '@angular/router';
 import { HeaderComponent } from 'src/app/core/header/header.component';
 import { Title } from '@angular/platform-browser';
 import { filter, map } from 'rxjs';
@@ -10,10 +16,9 @@ import { filter, map } from 'rxjs';
   standalone: true,
   imports: [CommonModule, RouterOutlet, HeaderComponent],
   templateUrl: './auth-layout.component.html',
-  styleUrls: []
+  styleUrls: [],
 })
 export class AuthLayoutComponent {
-
   titleStrategy = inject(DefaultTitleStrategy);
   title: string;
 
@@ -45,5 +50,4 @@ export class AuthLayoutComponent {
         }
       });
   }
-
 }

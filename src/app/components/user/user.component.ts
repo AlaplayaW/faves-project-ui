@@ -12,15 +12,13 @@ import { AvatarModule } from 'primeng/avatar';
   standalone: true,
   imports: [CommonModule, CardModule, AvatarModule],
   templateUrl: './user.component.html',
-  styleUrls: []
+  styleUrls: [],
 })
 export class UserComponent implements OnInit {
-
   userService = inject(UserService);
   router = inject(Router);
 
   users$!: Observable<User[]>;
-
 
   ngOnInit(): void {
     this.loadUsers();

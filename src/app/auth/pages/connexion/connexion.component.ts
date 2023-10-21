@@ -8,6 +8,6 @@ import { ButtonModule } from 'primeng/button';
   standalone: true,
   imports: [CommonModule, ButtonModule, RouterModule],
   templateUrl: './connexion.component.html',
-  styleUrls: []
+  styleUrls: [],
 })
-export class ConnexionComponent { }
+export class ConnexionComponent {}
