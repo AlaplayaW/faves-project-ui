@@ -4,7 +4,6 @@ import { TabMenuModule } from 'primeng/tabmenu';
 import { InputTextModule } from 'primeng/inputtext';
 import { Observable, Subject, catchError, debounceTime, distinctUntilChanged, map, of } from 'rxjs';
 import { Book } from 'src/app/models/book.model';
-import { BookService } from 'src/app/services/book.service';
 import { FeedCardComponent } from '../../feed-card/feed-card.component';
 import { NetworkService } from 'src/app/services/network.service';
 
@@ -34,17 +33,16 @@ export class NewsFeedComponent implements OnInit {
       console.log('Contenu de l\'Observable :');
       console.log(data);
     });
-    // Utiliser le flux searchTerms pour réagir aux changements dans les termes de recherche
+    // Utilise le flux searchTerms pour réagir aux changements dans les termes de recherche
     this.searchTerms.pipe(
-      debounceTime(300), // Attendre 300 ms avant de déclencher la recherche
-      distinctUntilChanged(), // Ne déclencher la recherche que si les termes sont différents
+      debounceTime(300), // Attendre 0,3 s avant de déclencher la recherche
+      distinctUntilChanged(), // Ne déclenche la recherche que si les termes sont différents
     ).subscribe(term => {
-      this.searchQuery = term; // Mettre à jour la variable searchQuery
-      this.updateFilteredBooks(); // Mettre à jour les avis filtrés
+      this.searchQuery = term;
+      this.updateFilteredBooks();
     });
   }
 
-  // Mettre à jour les avis filtrés
   private updateFilteredBooks(): void {
     const searchQueryLower = this.removeAccents(this.searchQuery?.toLowerCase()) || '';
     this.filteredBooks$ = this.books$.pipe(
@@ -74,16 +72,15 @@ export class NewsFeedComponent implements OnInit {
 
   search(term: string) {
     this.searchTerms.next(term);
-    console.log(term);
   }
 
   removeAccents(str: string | undefined): string {
     if (str === undefined) {
-      return ''; // Ou tout autre traitement que vous préférez pour le cas où str est undefined
+      return '';
     }
     return str
-      .normalize('NFD') // Normalize the string into Unicode Normalization Form D (NFD)
-      .replace(/[\u0300-\u036f]/g, ''); // Remove diacritical marks (accents)
+      .normalize('NFD') // Normalise la chaîne en utilisant la Forme de Normalisation Unicode D (NFD)
+      .replace(/[\u0300-\u036f]/g, ''); // Supprime les accents
   }
 
 }

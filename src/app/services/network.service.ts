@@ -39,7 +39,6 @@ export class NetworkService {
   private loadBooksByNetwork() {
     this.http.get<Book[]>(this.apiUrl + '/books').subscribe({
       next: (books) => {
-        // console.log(books);
         this.booksSubject.next(books);
       },
       error: (error) => console.error(error),
@@ -49,7 +48,6 @@ export class NetworkService {
   private loadReviewsByNetwork() {
     this.http.get<Review[]>(this.apiUrl + '/reviews').subscribe({
       next: (reviews) => {
-        // console.log(reviews);
         this.reviewsSubject.next(reviews);
       },
       error: (error) => console.error(error),
@@ -59,7 +57,6 @@ export class NetworkService {
   private loadFriendsByNetwork() {
     this.http.get<User[]>(this.apiUrl + '/friends').subscribe({
       next: (friends) => {
-        // console.log(friends);
         this.friendsSubject.next(friends);
       },
       error: (error) => console.error(error),

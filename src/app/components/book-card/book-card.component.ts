@@ -10,12 +10,17 @@ import { Book } from '../../models/book.model';
 @Component({
   selector: 'app-book-card',
   standalone: true,
-  imports: [CommonModule, ImageModule, CardModule, RatingModule, StarRatingComponent, TrimTextDirective],
+  imports: [
+    CommonModule,
+    ImageModule,
+    CardModule,
+    RatingModule,
+    StarRatingComponent,
+    TrimTextDirective,
+  ],
   templateUrl: './book-card.component.html',
-  styleUrls: []
+  styleUrls: [],
 })
 export class BookCardComponent {
-
   @Input() book: Book | undefined = undefined;
-
 }
