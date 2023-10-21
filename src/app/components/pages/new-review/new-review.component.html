@@ -9,7 +9,6 @@
           <img [src]="book.volumeInfo.imageLinks?.smallThumbnail?? '/assets/empty-star.png'" alt="Book Cover" style="width: 30px;" class="mr-2"/>
           <div class="details-container flex flex-column justify-content-between">
             <div class="title"><strong>{{ book.volumeInfo.title }}</strong></div>
-            <!-- <div class="author-date">{{ book.volumeInfo.authors[0] }} - {{ book.volumeInfo.publishedDate | date:'yyyy' }}</div> -->
             <div class="author-date">
               {{ book.volumeInfo.authors?.[0] ?? '' }} - {{ book.volumeInfo.publishedDate ?? '' | date:'yyyy' }}
             </div>
@@ -29,12 +28,10 @@
     
     <div>
       <!-- Créer une nouvelle critique -->
-      <!-- <app-create-review-form></app-create-review-form> -->
       <form [formGroup]="createReviewForm" (ngSubmit)="onSubmit()" class="create-review-form gap-3 flex flex-column">
         <div class="py-3">
-          <label class="pr-3" for="rating">Donnez une note</label>
-          <!-- <p-slider class="p-2" formControlName="rating" [step]="1" [min]="0" [max]="10"></p-slider> -->
-          <p-inputNumber inputId="integeronly" formControlName="rating" [step]="1" [min]="0" [max]="10" suffix=" sur 10"></p-inputNumber>
+          <label class="pr-3" for="rating">Donnez une note sur 10</label>
+          <p-inputNumber inputId="integeronly" formControlName="rating" [step]="1" [min]="0" [max]="10"></p-inputNumber>
         </div>
         <label for="comment">Commentaire</label>
         <textarea formControlName="comment" rows="5" cols="30" pInputTextarea></textarea>

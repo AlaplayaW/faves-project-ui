@@ -5,13 +5,15 @@ import {
   catchError,
   debounceTime,
   distinctUntilChanged,
+  filter,
   map,
   of,
   switchMap,
-  tap,
 } from 'rxjs';
 import { GoogleBook } from '../models/google-book.model';
 import { environment } from 'src/environments/environment';
+import { Book } from '../models/book.model';
+import { Media } from '../models/media.model';
 
 @Injectable({
   providedIn: 'root',
@@ -19,44 +21,46 @@ import { environment } from 'src/environments/environment';
 export class GoogleBooksService {
   http = inject(HttpClient);
 
-  private cache: { [query: string]: GoogleBook[] } = {};
-  private apiUrl: string;
+  private apiUrl = environment.apiUrl + '/google-books/search';
 
-  constructor() {
-    this.apiUrl = environment.apiUrl + '/google-books/search';
-  }
-
-  searchBooks(query$: Observable<string>): Observable<GoogleBook[]> {
-    return query$.pipe(
-      debounceTime(300),
+  searchBooks(queryObservable: Observable<string>): Observable<GoogleBook[]> {
+    return queryObservable.pipe(
+      debounceTime(500), // 0,5 seconde
       distinctUntilChanged(),
+      filter((query) => query.trim().length > 2), // Ignore les requêtes de mois de 3 caractères
       switchMap((query) => {
-        if (this.cache[query]) {
-          // Si les résultats sont en cache, on les retourne depuis le cache,
-          // ce qui limite la quantité d'appels à l'API
-          console.log(this.cache[query]);
-          return of(
-            this.cache[query].filter(
-              (book) =>
-                book.volumeInfo.imageLinks &&
-                book.volumeInfo.imageLinks.thumbnail
-            )
-          );
-        } else {
-          const params = {
-            title: query,
-          };
-          return this.http.get<GoogleBook[]>(this.apiUrl, { params }).pipe(
-            map((response) => response || []),
-            tap((response) => console.log(response)),
-            tap((response) => (this.cache[query] = response)),
-            catchError((error: any) => {
-              console.error('Error occurred:', error);
-              return of([]);
-            })
-          );
-        }
+        const params = { title: query };
+        return this.http.get<GoogleBook[]>(this.apiUrl, { params }).pipe(
+          map((response) => response || []),
+          catchError((error: any) => {
+            console.error('Une erreur est survenue :', error);
+            return of([]); // Retourne un tableau vide en cas d'erreur
+          })
+        );
       })
     );
+  }
+
+  convertGoogleBookToBook(googleBook: GoogleBook): Book {
+    const media: Media = {
+      imageUrl: googleBook.volumeInfo.imageLinks?.smallThumbnail ?? '',
+    };
+    const industryIdentifier = googleBook.volumeInfo?.industryIdentifiers?.[0];
+    const isbn = industryIdentifier ? industryIdentifier.identifier : '';
+
+    const book: Book = {
+      title: googleBook.volumeInfo.title,
+      subtitle: googleBook.volumeInfo.subtitle,
+      authors: googleBook.volumeInfo.authors ?? [''],
+      pageCount: googleBook.volumeInfo.pageCount,
+      isbn: isbn,
+      publisher: googleBook.volumeInfo.publisher,
+      printType: googleBook.volumeInfo.printType,
+      publishedDate: new Date(googleBook.volumeInfo.publishedDate),
+      description: googleBook.volumeInfo.description,
+      media: media,
+    };
+
+    return book;
   }
 }
