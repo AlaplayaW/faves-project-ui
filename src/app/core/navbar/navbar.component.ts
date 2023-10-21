@@ -29,7 +29,7 @@ export class NavbarComponent implements OnInit {
         label: 'Add', icon: 'pi pi-plus', routerLink: 'new-review'
       },
       { label: 'Notifications', icon: 'pi pi-bell', routerLink: 'notifications' },
-      { label: 'Account', icon: 'pi pi-user', routerLink: 'account' }
+      { label: 'Dashboard', icon: 'pi pi-user', routerLink: 'dashboard' }
     ];
 
     this.activeItem = this.items[0];

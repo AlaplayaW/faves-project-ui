@@ -126,6 +126,29 @@ input::placeholder {
   }
 }
 
+.dashboard {
+    margin-top: 20%;
+
+  .p-menu {
+    padding: 0.25rem 0;
+    background: transparent;
+    color: $white;
+    border: none;
+    width: 12.5rem;
+    font-size: 1.1rem;
+    .p-menuitem-text {
+      color: $white;
+    }
+    .p-menuitem-link {
+      justify-content: center;
+    }
+  }
+}
+.dashboard-friends {
+  h2 {
+    font-size: 1.2rem;
+  }
+}
 
 .add-review {
   justify-content: center;

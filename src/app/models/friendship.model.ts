@@ -2,10 +2,14 @@ import { User } from "./user.model";
 
 export interface Friendship {
   id?: number;
-  requester?: User;
-  accepter?: User;
+  friendRequester?: User;
+  friendAccepter?: User;
   isAccepted: boolean;
-  createdAt: Date | null;
+  status: string;
+  requestDate: Date | null;
+  acceptanceDate: Date | null;
+  rejectionDate: Date | null;
   updatedAt: Date | null;
+
 }
 

@@ -5,6 +5,7 @@ import { Review } from '../models/review.model';
 import { environment } from 'src/environments/environment';
 import { User } from '../models/user.model';
 import { Book } from '../models/book.model';
+import { Friendship } from '../models/friendship.model';
 
 @Injectable({
   providedIn: 'root',
@@ -34,6 +35,10 @@ export class NetworkService {
 
   getNetworkBooks(): Observable<Book[]> {
     return this.booksSubject.asObservable();
+  }
+
+  getAllUserFriendships(): Observable<Friendship[]> {
+    return this.http.get<Friendship[]>(this.apiUrl + '/all-friends');
   }
 
   private loadBooksByNetwork() {

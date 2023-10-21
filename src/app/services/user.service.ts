@@ -23,10 +23,6 @@ export class UserService {
     return this.usersSubject.asObservable();
   }
 
-  getUserFriends(userId: number): Observable<User[]> {
-    return this.http.get<User[]>(this.apiUrl + '/' + userId + '/friends');
-  }
-
   private loadUsers() {
     this.http.get<User[]>(this.apiUrl).subscribe({
       next: users => {

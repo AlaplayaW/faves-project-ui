@@ -1,0 +1,62 @@
+<div class="dashboard-friends">
+  <h2>Mes Amis</h2>
+  <div class="flex flex-column gap-2 pb-4">
+    <p-card *ngFor="let friend of acceptedFriends">
+      <ng-template pTemplate="content">
+        <div class="user-card flex align-items-center px-2 justify-content-between">
+          <div class="user-image mr-2 flex align-items-center">
+            <p-avatar [image]="'https://primefaces.org/cdn/primeng/images/demo/avatar/amyelsner.png'" styleClass="mr-2"
+              size="medium" shape="circle"></p-avatar>
+            <p class="flex align-items-center">
+              <ng-container *ngIf="currentUser.id === friend.friendRequester?.id; else accepterBlock">
+                {{ friend.friendAccepter?.pseudo }}
+              </ng-container>
+              <ng-container *ngIf="currentUser.id === friend.friendAccepter?.id; else requesterBlock">
+                {{ friend.friendRequester?.pseudo }}
+              </ng-container>
+            </p>
+          </div>
+          <div class="flex gap-2">
+            <p-button icon="pi pi-times" styleClass="p-button-danger"></p-button>
+          </div>
+        </div>
+        <ng-template #accepterBlock></ng-template>
+        <ng-template #requesterBlock></ng-template>
+      </ng-template>
+    </p-card>
+  </div>
+
+  <h2>Amis en attente</h2>
+  <div class="flex flex-column gap-2">
+
+    <p-card *ngFor="let friend of pendingFriends">
+      <ng-template pTemplate="content">
+        <div class="user-card flex align-items-center px-2 justify-content-between">
+          <div class="user-image mr-2 flex align-items-center">
+            <p-avatar [image]="'https://primefaces.org/cdn/primeng/images/demo/avatar/amyelsner.png'" styleClass="mr-2"
+              size="medium" shape="circle"></p-avatar>
+            <p class="flex align-items-center">
+              <ng-container *ngIf="currentUser.id === friend.friendRequester?.id; else accepterBlock">
+                {{ friend.friendAccepter?.pseudo }}
+              </ng-container>
+              <ng-container *ngIf="currentUser.id === friend.friendAccepter?.id; else requesterBlock">
+                {{ friend.friendRequester?.pseudo }}
+              </ng-container>
+            </p>
+          </div>
+          <div class="flex gap-2">
+            <p-button icon="pi pi-check"></p-button>
+            <p-button icon="pi pi-times" styleClass="p-button-danger"></p-button>
+          </div>
+        </div>
+        <ng-template #accepterBlock></ng-template>
+        <ng-template #requesterBlock></ng-template>
+      </ng-template>
+    </p-card>
+
+    <p-card *ngIf="!(friends$ | async)?.length && !friendsLoading" class="p-2">
+      Vous n'avez pas d'amis.
+    </p-card>
+  </div>
+
+</div>
