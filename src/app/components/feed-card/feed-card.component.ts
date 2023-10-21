@@ -6,7 +6,7 @@ import { StarRatingComponent } from 'src/app/components/star-rating/star-rating.
 import { Review } from 'src/app/models/review.model';
 import { ReviewService } from 'src/app/services/review.service';
 import { InputTextModule } from 'primeng/inputtext';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { User } from 'src/app/models/user.model';
 import { environment } from 'src/environments/environment';
@@ -46,7 +46,7 @@ export class FeedCardComponent implements OnInit {
     }
 
     this.reviewForm = new FormGroup({
-      reviewText: new FormControl(''),
+      reviewText: new FormControl('', Validators.required),
     });
   }
 
@@ -55,7 +55,7 @@ export class FeedCardComponent implements OnInit {
       this.reviews = this.book.reviews;
       console.log('this.reviews, ', this.reviews);
 
-      const newReview = {
+      const newReview: Review = {
         user: `${environment.apiUrl}/users/${this.user.id}`,
         book: `${environment.apiUrl}/books/${book.id}`,
         rating: 5,

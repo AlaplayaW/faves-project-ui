@@ -14,7 +14,7 @@
         {{ book.reviews[0].comment }}
       </ng-container>
       <ng-template #shortComment>
-        {{ book.reviews[0].comment?.slice(0, 120) }}
+        {{ book.reviews[0].comment.slice(0, 120) }}
         <span *ngIf="book.reviews[0].comment && book.reviews[0].comment.length > 120" (click)="showMore = true"
           style="cursor: pointer;"> ...
           Afficher plus
@@ -60,7 +60,8 @@
 
       <ng-container *ngIf="!showAllComments && book.reviews">
         <div *ngIf="book.reviews.length > 3" (click)="showAllComments = true" class="showAllComments-button">
-          <strong>Voir plus de commentaires</strong></div>
+          <strong>Voir plus de commentaires</strong>
+        </div>
         <ng-container *ngFor="let review of book.reviews.slice(-3); let i = index; let last = last">
           <div *ngIf="i > 0" class="flex gap-2">
             <img class="user-image" [src]="review.user?.media?.imageUrl" alt="Image" />
