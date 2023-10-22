@@ -6,10 +6,16 @@ import { StarRatingComponent } from 'src/app/components/star-rating/star-rating.
 import { Review } from 'src/app/models/review.model';
 import { ReviewService } from 'src/app/services/review.service';
 import { InputTextModule } from 'primeng/inputtext';
-import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { User } from 'src/app/models/user.model';
 import { environment } from 'src/environments/environment';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-feed-card',
@@ -29,21 +35,17 @@ export class FeedCardComponent implements OnInit {
   @Input() book: Book;
 
   reviewService = inject(ReviewService);
+  userService = inject(UserService);
 
   reviewForm: FormGroup;
   reviews: Review[] | undefined = [];
-  user: User;
-  userJson: string | null;
+  user: User | null;
 
   public showAllComments = false;
   public showMore = false;
 
   ngOnInit() {
-    this.userJson = localStorage.getItem('user');
-
-    if (this.userJson) {
-      this.user = JSON.parse(this.userJson);
-    }
+    this.user = this.userService.getCurrentUser();
 
     this.reviewForm = new FormGroup({
       reviewText: new FormControl('', Validators.required),
@@ -56,7 +58,7 @@ export class FeedCardComponent implements OnInit {
       console.log('this.reviews, ', this.reviews);
 
       const newReview: Review = {
-        user: `${environment.apiUrl}/users/${this.user.id}`,
+        user: `${environment.apiUrl}/users/${this.user?.id}`,
         book: `${environment.apiUrl}/books/${book.id}`,
         comment: this.reviewForm.get('reviewText')?.value,
       };

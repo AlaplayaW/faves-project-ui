@@ -4,19 +4,26 @@ import { BehaviorSubject, Observable, catchError, of, tap } from 'rxjs';
 import { User } from 'src/app/models/user.model';
 import { environment } from 'src/environments/environment';
 
-
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class UserService {
-
   private apiUrl: string;
   private usersSubject = new BehaviorSubject<User[]>([]);
 
+  user: User;
 
   constructor(private http: HttpClient) {
     this.apiUrl = environment.apiUrl + '/users';
     this.loadUsers();
+  }
+
+  getCurrentUser(): User | null {
+    const userJson: string | null = localStorage.getItem('user');
+    if (userJson === null) {
+      return null;
+    }
+    return JSON.parse(userJson);
   }
 
   getUsers(): Observable<User[]> {

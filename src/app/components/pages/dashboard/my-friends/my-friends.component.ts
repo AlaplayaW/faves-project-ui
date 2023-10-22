@@ -27,15 +27,10 @@ export class MyFriendsComponent {
   acceptedFriends: Friendship[] = [];
   pendingFriends: Friendship[] = [];
 
-  currentUser: User;
-  userJson: string | null;
+  currentUser: User | null;
 
   ngOnInit(): void {
-    this.userJson = localStorage.getItem('user');
-
-    if (this.userJson) {
-      this.currentUser = JSON.parse(this.userJson);
-    }
+    this.currentUser = this.userService.getCurrentUser();
 
     this.friends$ = this.loadFriends();
 

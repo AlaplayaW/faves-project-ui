@@ -21,6 +21,7 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
 import { Review } from 'src/app/models/review.model';
 import { User } from 'src/app/models/user.model';
 import { InputNumberModule } from 'primeng/inputnumber';
+import { UserService } from 'src/app/services/user.service';
 
 interface AutoCompleteCompleteEvent {
   originalEvent: Event;
@@ -46,6 +47,7 @@ export class NewBookComponent implements OnInit {
   fb = inject(FormBuilder);
   router = inject(Router);
   reviewService = inject(ReviewService);
+  userService = inject(UserService);
   bookService = inject(BookService);
   googleBooksService = inject(GoogleBooksService);
 
@@ -53,9 +55,6 @@ export class NewBookComponent implements OnInit {
 
   filteredBooks: GoogleBook[] | undefined;
   searchQuery$ = new Subject<string>();
-
-  user: User;
-  userJson: string | null;
 
   bookData: Book;
 
@@ -68,12 +67,10 @@ export class NewBookComponent implements OnInit {
   showCreateBookForm: boolean = false;
   showCreateReviewForm: boolean = false;
 
-  ngOnInit() {
-    this.userJson = localStorage.getItem('user');
+  user: User | null;
 
-    if (this.userJson) {
-      this.user = JSON.parse(this.userJson);
-    }
+  ngOnInit(): void {
+    this.user = this.userService.getCurrentUser();
 
     this.filteredBooks = [];
 
@@ -109,7 +106,7 @@ export class NewBookComponent implements OnInit {
     // 1 - Creation du livre
     this.bookService.createBook(this.bookData).subscribe((book) => {
       const newReview: Review = {
-        user: `${environment.apiUrl}/users/${this.user.id}`,
+        user: `${environment.apiUrl}/users/${this.user?.id}`,
         book: `${environment.apiUrl}/books/${book.id}`,
         rating: +this.createReviewForm.get('rating')?.value,
         comment: this.createReviewForm.get('comment')?.value,
@@ -140,7 +137,7 @@ export class NewBookComponent implements OnInit {
       this.bookData = this.googleBooksService.convertGoogleBookToBook(
         this.getSelectedBook()
       );
-      this.bookData.user = `${environment.apiUrl}/users/${this.user.id}`;
+      this.bookData.user = `${environment.apiUrl}/users/${this.user?.id}`;
       this.showCreateReviewForm = true;
     } else {
       this.router.navigate(['/new-book']);

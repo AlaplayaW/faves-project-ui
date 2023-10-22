@@ -8,10 +8,10 @@
             <p-avatar [image]="'https://primefaces.org/cdn/primeng/images/demo/avatar/amyelsner.png'" styleClass="mr-2"
               size="medium" shape="circle"></p-avatar>
             <p class="flex align-items-center">
-              <ng-container *ngIf="currentUser.id === friend.friendRequester?.id; else accepterBlock">
+              <ng-container *ngIf="currentUser?.id === friend.friendRequester?.id; else accepterBlock">
                 {{ friend.friendAccepter?.pseudo }}
               </ng-container>
-              <ng-container *ngIf="currentUser.id === friend.friendAccepter?.id; else requesterBlock">
+              <ng-container *ngIf="currentUser?.id === friend.friendAccepter?.id; else requesterBlock">
                 {{ friend.friendRequester?.pseudo }}
               </ng-container>
             </p>
@@ -36,10 +36,10 @@
             <p-avatar [image]="'https://primefaces.org/cdn/primeng/images/demo/avatar/amyelsner.png'" styleClass="mr-2"
               size="medium" shape="circle"></p-avatar>
             <p class="flex align-items-center">
-              <ng-container *ngIf="currentUser.id === friend.friendRequester?.id; else accepterBlock">
+              <ng-container *ngIf="currentUser?.id === friend.friendRequester?.id; else accepterBlock">
                 {{ friend.friendAccepter?.pseudo }}
               </ng-container>
-              <ng-container *ngIf="currentUser.id === friend.friendAccepter?.id; else requesterBlock">
+              <ng-container *ngIf="currentUser?.id === friend.friendAccepter?.id; else requesterBlock">
                 {{ friend.friendRequester?.pseudo }}
               </ng-container>
             </p>

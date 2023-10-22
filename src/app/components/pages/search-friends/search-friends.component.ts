@@ -15,7 +15,6 @@ import { UserService } from 'src/app/services/user.service';
 import { CardModule } from 'primeng/card';
 import { AvatarModule } from 'primeng/avatar';
 
-
 @Component({
   selector: 'app-search-friends',
   standalone: true,
@@ -65,7 +64,14 @@ export class SearchFriendsComponent implements OnInit {
 
   private loadUsers(page?: number): void {
     this.userService.getUsers().subscribe((users) => {
-      this.users$ = of(users);
+      const currentUser = this.userService.getCurrentUser();
+      if (currentUser) {
+        // Filtre la liste pour exclure l'utilisateur connecté et l'admin.
+        const otherUsers = users.filter(
+          (user) => user.id !== currentUser.id && user.id !== 1
+        );
+        this.users$ = of(otherUsers);
+      }
     });
   }
 
