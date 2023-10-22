@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MenuItem } from 'primeng/api';
 import { MenuModule } from 'primeng/menu';
 import { RouterModule, RouterOutlet } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -13,6 +14,9 @@ import { ButtonModule } from 'primeng/button';
   styleUrls: []
 })
 export class DashboardComponent {
+
+  private authservice = inject(AuthService);
+
   menuItems: MenuItem[] = [];
 
   ngOnInit(): void {
@@ -23,4 +27,10 @@ export class DashboardComponent {
       { label: 'Mes notifications', routerLink: 'notifications' },
     ];
   }
+
+  logout () {
+    this.authservice.doLogout();
+  }
+
+
 }

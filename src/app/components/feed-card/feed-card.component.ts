@@ -58,7 +58,6 @@ export class FeedCardComponent implements OnInit {
       const newReview: Review = {
         user: `${environment.apiUrl}/users/${this.user.id}`,
         book: `${environment.apiUrl}/books/${book.id}`,
-        rating: 5,
         comment: this.reviewForm.get('reviewText')?.value,
       };
 

@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, catchError, of, tap } from 'rxjs';
 import { User } from 'src/app/models/user.model';
 import { environment } from 'src/environments/environment';
 
@@ -23,20 +23,6 @@ export class UserService {
     return this.usersSubject.asObservable();
   }
 
-  private loadUsers() {
-    this.http.get<User[]>(this.apiUrl).subscribe({
-      next: users => {
-        console.log(users);
-        this.usersSubject.next(users);
-      },
-      error: error => console.error(error),
-    });
-  }
-
-  getAllusers(): Observable<User[]> {
-    return this.http.get<User[]>(`${this.apiUrl}/users`);
-  }
-
   getUserById(userId: string) {
     return this.http.get<User>(`${this.apiUrl}/${userId}`);
   }
@@ -51,5 +37,15 @@ export class UserService {
 
   deleteUserById(userId: string) {
     return this.http.delete(`${this.apiUrl}/${userId}`);
+  }
+
+  private loadUsers() {
+    this.http.get<{ 'hydra:member': User[] }>(this.apiUrl).subscribe({
+      next: (response) => {
+        const users = response['hydra:member'];
+        this.usersSubject.next(users);
+      },
+      error: (error) => console.error(error),
+    });
   }
 }

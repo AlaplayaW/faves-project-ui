@@ -33,13 +33,22 @@ export const APP_ROUTES: Routes = [
         data: { title: 'Fil de lecture' },
       },
       {
-        path: 'new-review',
+        path: 'new-book',
         loadComponent: () =>
-          import('./components/pages/new-review/new-review.component').then(
-            (c) => c.NewReviewComponent
+          import('./components/pages/new-book/new-book.component').then(
+            (c) => c.NewBookComponent
           ),
-        title: 'Ajoute un avis',
-        data: { title: 'Ajoute un avis' },
+        title: 'Ajoute un livre',
+        data: { title: 'Ajoute un livre' },
+      },
+      {
+        path: 'search-friends',
+        loadComponent: () =>
+          import('./components/pages/search-friends/search-friends.component').then(
+            (c) => c.SearchFriendsComponent
+          ),
+        title: 'Recherche un ami',
+        data: { title: 'Recherche un ami' },
       },
       {
         path: 'users',

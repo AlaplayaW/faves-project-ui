@@ -28,7 +28,7 @@ interface AutoCompleteCompleteEvent {
 }
 
 @Component({
-  selector: 'app-new-review',
+  selector: 'app-new-book',
   standalone: true,
   imports: [
     CommonModule,
@@ -39,10 +39,10 @@ interface AutoCompleteCompleteEvent {
     InputTextareaModule,
     InputNumberModule,
   ],
-  templateUrl: './new-review.component.html',
+  templateUrl: './new-book.component.html',
   styleUrls: [],
 })
-export class NewReviewComponent implements OnInit {
+export class NewBookComponent implements OnInit {
   fb = inject(FormBuilder);
   router = inject(Router);
   reviewService = inject(ReviewService);
@@ -82,7 +82,7 @@ export class NewReviewComponent implements OnInit {
     });
     this.createReviewForm = this.fb.group({
       comment: ['', Validators.required],
-      rating: ['5', Validators.required],
+      rating: [''],
     });
   }
 

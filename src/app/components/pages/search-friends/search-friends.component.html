@@ -1,0 +1,22 @@
+<div class="add-review card flex flex-column gap-4 h-full p-2">
+  <div class="card flex justify-content-center mb-4">
+    <input #searchBox type="text" pInputText (keyup)="search(searchBox.value)" placeholder="Quel est son nom?"
+      class="p-inputtext-sm flex-auto" />
+  </div>
+  <div class="flex flex-column gap-2 pb-4">
+    <p-card *ngFor="let user of users$ | async">
+      <div class="user-card flex align-items-center px-2 justify-content-between">
+        <div class="user-image mr-2 flex align-items-center">
+          <p-avatar [image]="'https://primefaces.org/cdn/primeng/images/demo/avatar/amyelsner.png'" styleClass="mr-2"
+            size="medium" shape="circle"></p-avatar>
+          <p class="flex align-items-center">
+            {{ user.pseudo }}
+          </p>
+        </div>
+        <div class="flex gap-2">
+          <p-button class="add-friend-button" icon="pi pi-plus"></p-button>
+        </div>
+      </div>
+    </p-card>
+  </div>
+</div>
