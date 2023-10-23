@@ -5,10 +5,8 @@ import { InputTextModule } from 'primeng/inputtext';
 import {
   Observable,
   Subject,
-  catchError,
   debounceTime,
   distinctUntilChanged,
-  finalize,
   map,
   of,
 } from 'rxjs';
@@ -33,14 +31,18 @@ import { ButtonModule } from 'primeng/button';
 export class NewsFeedComponent implements OnInit {
   networkService = inject(NetworkService);
 
-  books$!: Observable<Book[]>;
+  books$: Observable<Book[]> = of([]);
+  filteredBooks$: Observable<Book[]>;
   searchTerms = new Subject<string>();
   searchQuery: string;
   isLoading = true;
 
-  ngOnInit(): void {
+  constructor() {
     this.loadFeed();
+  }
 
+  ngOnInit(): void {
+    // Utilise le flux searchTerms pour réagir aux changements dans les termes de recherche
     this.searchTerms
       .pipe(
         debounceTime(300), // Attendre 0,3 s avant de déclencher la recherche
@@ -55,7 +57,7 @@ export class NewsFeedComponent implements OnInit {
   private updateFilteredBooks(): void {
     const searchQueryLower =
       this.removeAccents(this.searchQuery?.toLowerCase()) || '';
-    this.books$ = this.books$.pipe(
+    this.filteredBooks$ = this.books$.pipe(
       map((books) =>
         searchQueryLower
           ? books.filter((book) => {
@@ -73,13 +75,15 @@ export class NewsFeedComponent implements OnInit {
     );
   }
 
-  private loadFeed(page?: number): any {
+  private loadFeed(page?: number): void {
+    this.isLoading = true;
+
     this.networkService.getNetworkBooks().subscribe((books) => {
-      console.log('books: -- ', books);
       this.books$ = of(books);
+      this.filteredBooks$ = this.books$;
       setTimeout(() => {
         this.isLoading = false;
-      }, 1000);
+      }, 1500);
     });
   }
 

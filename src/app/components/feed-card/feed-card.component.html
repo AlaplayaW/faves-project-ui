@@ -4,7 +4,7 @@
       <div class="user flex gap-2 align-items-center py-1">
         <img class="user-image"
           [src]="book.user?.media?.imageUrl ?? 'https://primefaces.org/cdn/primeng/images/demo/avatar/amyelsner.png'"
-          alt="Image" />
+          alt="Photo de l'auteur du post" />
         <div>{{ book.user?.pseudo }}</div>
       </div>
       <div class="date">{{ book.createdAt | date: 'dd/MM/yy' }}</div>
@@ -27,7 +27,8 @@
 
     <div class="flex gap-2">
       <div>
-        <img class="book-image" [src]="book.media?.imageUrl ?? '/assets/affiche-joker.jpeg'" alt="Image" />
+        <img class="book-image" [src]="book.media?.imageUrl ?? '/assets/affiche-joker.jpeg'"
+          alt="Couverture du livre" />
       </div>
       <div class="flex flex-column p-2 flex-grow-1 gap-2">
         <div class="book-title">{{ book.title }}</div>
@@ -63,27 +64,29 @@
           <strong>Voir plus de commentaires</strong>
         </div>
         <ng-container *ngFor="let review of book.reviews.slice(-3); let i = index; let last = last">
-          <div *ngIf="i > 0" class="flex gap-2">
-            <img class="user-image" [src]="review.user?.media?.imageUrl" alt="Image" />
-            <div class="friend-comment">{{ review.comment }}</div>
-          </div>
-        </ng-container>
+          <div *ngIf="i > 0" class="flex gap-2 align-items-center">
+            <img class=" user-image" [src]="review.user?.media?.imageUrl" alt="Photo de l'auteur du commentaire'" />
+          <div>{{ review.user.pseudo }}</div>
+          <div class="friend-comment">{{ review.comment }}</div>
+    </div>
+    </ng-container>
+    </ng-container>
+    <ng-container *ngIf="showAllComments">
+      <ng-container *ngFor="let review of book.reviews; let i = index; let last = last">
+        <div *ngIf="i > 0" class="flex gap-2 align-items-center">
+          <img class="user-image" [src]="review.user?.media?.imageUrl" alt="Photo de l'auteur du commentaire" />
+          <div>{{ review.user.pseudo }}</div>
+          <div class="friend-comment">{{ review.comment }}</div>
+        </div>
       </ng-container>
-      <ng-container *ngIf="showAllComments">
-        <ng-container *ngFor="let review of book.reviews; let i = index; let last = last">
-          <div *ngIf="i > 0" class="flex gap-2">
-            <img class="user-image" [src]="review.user?.media?.imageUrl" alt="Image" />
-            <div class="friend-comment">{{ review.comment }}</div>
-          </div>
-        </ng-container>
-      </ng-container>
-      <div class="flex gap-2">
-        <form (ngSubmit)="postComment(book)" [formGroup]="reviewForm" class="inline-flex my-2 w-full" method="post">
-          <input type="text" pInputText formControlName="reviewText" class="p-inputtext-sm flex-auto"
-            placeholder="Votre commentaire..." />
-          <p-button type="submit" icon="pi pi-check" styleClass="p-button-rounded p-button-text"></p-button>
-        </form>
-      </div>
+    </ng-container>
+    <div class="flex gap-2">
+      <form (ngSubmit)="postComment(book)" [formGroup]="reviewForm" class="inline-flex my-2 w-full" method="post">
+        <input type="text" pInputText formControlName="reviewText" class="p-inputtext-sm flex-auto"
+          placeholder="Votre commentaire..." />
+        <p-button type="submit" icon="pi pi-check" styleClass="p-button-rounded p-button-text"></p-button>
+      </form>
+    </div>
     </div>
   </ng-template>
 </p-card>

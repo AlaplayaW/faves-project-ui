@@ -7,7 +7,7 @@
       placeholder="Recherche un livre" styleClass="w-full">
       <ng-template let-book pTemplate="book">
         <div class="book-container flex">
-          <img [src]="book.volumeInfo.imageLinks?.smallThumbnail?? '/assets/empty-star.png'" alt="Book Cover"
+          <img [src]="book.volumeInfo.imageLinks?.smallThumbnail?? '/assets/empty-star.png'" alt="Couverture du livre"
             class="mr-2" />
           <div class="details-container flex flex-column justify-content-between">
             <div class="title"><strong>{{ book.volumeInfo.title }}</strong></div>

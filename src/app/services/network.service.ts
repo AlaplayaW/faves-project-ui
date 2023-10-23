@@ -20,20 +20,20 @@ export class NetworkService {
 
   constructor() {
     this.apiUrl = environment.apiUrl + '/network';
-    this.loadFriendsByNetwork();
-    this.loadBooksByNetwork();
-    this.loadReviewsByNetwork();
   }
 
   getNetworkFriends(): Observable<User[]> {
+    this.loadFriendsByNetwork();
     return this.friendsSubject.asObservable();
   }
 
   getNetworkReviews(): Observable<Review[]> {
+    this.loadReviewsByNetwork();
     return this.reviewsSubject.asObservable();
   }
 
   getNetworkBooks(): Observable<Book[]> {
+    this.loadBooksByNetwork();
     return this.booksSubject.asObservable();
   }
 

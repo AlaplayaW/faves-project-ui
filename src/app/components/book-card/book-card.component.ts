@@ -1,6 +1,5 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ImageModule } from 'primeng/image';
 import { CardModule } from 'primeng/card';
 import { RatingModule } from 'primeng/rating';
 import { StarRatingComponent } from 'src/app/components/star-rating/star-rating.component';
@@ -12,7 +11,6 @@ import { Book } from '../../models/book.model';
   standalone: true,
   imports: [
     CommonModule,
-    ImageModule,
     CardModule,
     RatingModule,
     StarRatingComponent,
