@@ -16,7 +16,7 @@
       <ng-template #shortComment>
         {{ book.reviews[0].comment.slice(0, 120) }}
         <span *ngIf="book.reviews[0].comment && book.reviews[0].comment.length > 120" (click)="showMore = true"
-          style="cursor: pointer;"> ...
+          class="pointer"> ...
           Afficher plus
         </span>
       </ng-template>
@@ -78,8 +78,7 @@
         </ng-container>
       </ng-container>
       <div class="flex gap-2">
-        <form (ngSubmit)="postComment(book)" [formGroup]="reviewForm" class="inline-flex my-2" method="post"
-          style="width: 100%;">
+        <form (ngSubmit)="postComment(book)" [formGroup]="reviewForm" class="inline-flex my-2 w-full" method="post">
           <input type="text" pInputText formControlName="reviewText" class="p-inputtext-sm flex-auto"
             placeholder="Votre commentaire..." />
           <p-button type="submit" icon="pi pi-check" styleClass="p-button-rounded p-button-text"></p-button>

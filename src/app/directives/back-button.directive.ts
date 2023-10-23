@@ -3,15 +3,13 @@ import { NavigationService } from 'src/app/services/navigation.service';
 
 @Directive({
   selector: '[appBackButton]',
-  standalone: true
+  standalone: true,
 })
 export class BackButtonDirective {
-
   navigation = inject(NavigationService);
- 
-  @HostListener("click")
+
+  @HostListener('click')
   onClick(): void {
     this.navigation.back();
   }
-
 }

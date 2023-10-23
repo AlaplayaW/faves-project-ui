@@ -44,9 +44,9 @@ export const APP_ROUTES: Routes = [
       {
         path: 'search-friends',
         loadComponent: () =>
-          import('./components/pages/search-friends/search-friends.component').then(
-            (c) => c.SearchFriendsComponent
-          ),
+          import(
+            './components/pages/search-friends/search-friends.component'
+          ).then((c) => c.SearchFriendsComponent),
         title: 'Recherche un ami',
         data: { title: 'Recherche un ami' },
       },

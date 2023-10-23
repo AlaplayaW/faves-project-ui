@@ -1,4 +1,4 @@
-<p-tabMenu class="navbar" [model]="items" [activeItem]="activeItem">
+<p-tabMenu class="navbar m-0" [model]="items" [activeItem]="activeItem">
   <ng-template pTemplate="item" let-item let-i="index">
     <p-button icon={{item.icon}} styleClass="p-button-rounded p-button-info p-button-text"
       routerLink={{item.routerLink}} routerLinkActive="active"></p-button>

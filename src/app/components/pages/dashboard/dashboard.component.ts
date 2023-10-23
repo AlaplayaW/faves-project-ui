@@ -11,10 +11,9 @@ import { AuthService } from 'src/app/services/auth.service';
   standalone: true,
   imports: [CommonModule, MenuModule, RouterModule, ButtonModule, RouterOutlet],
   templateUrl: './dashboard.component.html',
-  styleUrls: []
+  styleUrls: [],
 })
 export class DashboardComponent {
-
   private authservice = inject(AuthService);
 
   menuItems: MenuItem[] = [];
@@ -28,9 +27,7 @@ export class DashboardComponent {
     ];
   }
 
-  logout () {
+  logout() {
     this.authservice.doLogout();
   }
-
-
 }

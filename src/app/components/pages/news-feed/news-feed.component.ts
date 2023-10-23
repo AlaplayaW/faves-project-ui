@@ -74,17 +74,14 @@ export class NewsFeedComponent implements OnInit {
   }
 
   private loadFeed(page?: number): any {
-    this.networkService
-      .getNetworkBooks()
-      .subscribe((books) => {
-        console.log('books: -- ', books)
-        this.books$ = of(books);
-        setTimeout(() => {
-          this.isLoading = false;
-        }, 1000);
-      });
+    this.networkService.getNetworkBooks().subscribe((books) => {
+      console.log('books: -- ', books);
+      this.books$ = of(books);
+      setTimeout(() => {
+        this.isLoading = false;
+      }, 1000);
+    });
   }
-  
 
   search(term: string) {
     this.searchTerms.next(term);

@@ -11,7 +11,7 @@ import { filter, map } from 'rxjs';
   imports: [CommonModule, MenubarModule],
   providers: [DefaultTitleStrategy],
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.scss']
+  styleUrls: []
 })
 export class HeaderComponent implements OnInit {
 

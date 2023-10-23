@@ -1,7 +1,6 @@
-import { of } from "rxjs";
+import { of } from 'rxjs';
 
 export class Utils {
-
   public static log(response: any) {
     console.table(response);
   }

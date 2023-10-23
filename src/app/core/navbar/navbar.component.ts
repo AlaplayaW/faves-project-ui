@@ -10,7 +10,7 @@ import { MenubarModule } from 'primeng/menubar';
   standalone: true,
   imports: [CommonModule, ButtonModule, TabMenuModule, MenubarModule],
   templateUrl: './navbar.component.html',
-  styleUrls: ['./navbar.component.scss']
+  styleUrls: [],
 })
 export class NavbarComponent implements OnInit {
   items!: MenuItem[];
@@ -22,14 +22,20 @@ export class NavbarComponent implements OnInit {
       {
         label: 'Home',
         icon: 'pi pi-home',
-        routerLink: 'feed'
+        routerLink: 'feed',
       },
       { label: 'Search', icon: 'pi pi-search', routerLink: 'search-friends' },
       {
-        label: 'Add', icon: 'pi pi-plus', routerLink: 'new-book'
+        label: 'Add',
+        icon: 'pi pi-plus',
+        routerLink: 'new-book',
       },
-      { label: 'Notifications', icon: 'pi pi-bell', routerLink: 'notifications' },
-      { label: 'Dashboard', icon: 'pi pi-user', routerLink: 'dashboard' }
+      {
+        label: 'Notifications',
+        icon: 'pi pi-bell',
+        routerLink: 'notifications',
+      },
+      { label: 'Dashboard', icon: 'pi pi-user', routerLink: 'dashboard' },
     ];
 
     this.activeItem = this.items[0];

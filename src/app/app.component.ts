@@ -13,11 +13,17 @@ import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-root',
-  imports: [CommonModule, RouterOutlet, LayoutComponent, ProgressSpinnerModule, ToastModule],
+  imports: [
+    CommonModule,
+    RouterOutlet,
+    LayoutComponent,
+    ProgressSpinnerModule,
+    ToastModule,
+  ],
   templateUrl: './app.component.html',
   styleUrls: [],
   providers: [MessageService],
-  standalone: true
+  standalone: true,
 })
 export class AppComponent implements OnInit {
   title = 'faves-project-ui';
@@ -25,10 +31,10 @@ export class AppComponent implements OnInit {
   showLoader!: boolean;
   theme: string;
 
-
-  readonly isHandset$ = this.breakpointObserver.observe(Breakpoints.Handset)
+  readonly isHandset$ = this.breakpointObserver
+    .observe(Breakpoints.Handset)
     .pipe(
-      map(result => result.matches),
+      map((result) => result.matches),
       shareReplay()
     );
 
@@ -36,15 +42,14 @@ export class AppComponent implements OnInit {
     private loaderService: LoaderService,
     private themeService: ThemeService,
     private sessionService: SessionService,
-    @Inject(BreakpointObserver) private breakpointObserver: BreakpointObserver,
+    @Inject(BreakpointObserver) private breakpointObserver: BreakpointObserver
   ) {
-
-    var theme = this.sessionService.getItem("selected-theme");
+    var theme = this.sessionService.getItem('selected-theme');
     if (theme != null && theme.length > 0) {
       this.theme = theme;
       this.themeService.selectTheme(theme);
     } else {
-      this.theme = "theme-soho-light";
+      this.theme = 'theme-soho-light';
     }
   }
 
@@ -59,7 +64,11 @@ export class AppComponent implements OnInit {
   }
 
   ngOnDestroy() {
-    this.themeService.theme.observers.forEach(function (element) { element.complete(); });
-    this.loaderService.status.observers.forEach(function (element) { element.complete(); });
+    this.themeService.theme.observers.forEach(function (element) {
+      element.complete();
+    });
+    this.loaderService.status.observers.forEach(function (element) {
+      element.complete();
+    });
   }
 }

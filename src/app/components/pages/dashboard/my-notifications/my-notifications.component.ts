@@ -6,8 +6,6 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './my-notifications.component.html',
-  styleUrls: ['./my-notifications.component.scss']
+  styleUrls: ['./my-notifications.component.scss'],
 })
-export class MyNotificationsComponent {
-
-}
+export class MyNotificationsComponent {}

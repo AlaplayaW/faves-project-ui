@@ -1,4 +1,4 @@
-import { User } from "./user.model";
+import { User } from './user.model';
 
 export interface Friendship {
   id?: number;
@@ -10,6 +10,4 @@ export interface Friendship {
   acceptanceDate: Date | null;
   rejectionDate: Date | null;
   updatedAt: Date | null;
-
 }
-

@@ -1,9 +1,9 @@
 import { Injectable, inject } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
-import { Location } from "@angular/common";
+import { Location } from '@angular/common';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class NavigationService {
   private history: string[] = [];
@@ -17,13 +17,13 @@ export class NavigationService {
       }
     });
   }
- 
+
   back(): void {
     this.history.pop();
     if (this.history.length > 0) {
       this.location.back();
     } else {
-      this.router.navigateByUrl("/");
+      this.router.navigateByUrl('/');
     }
   }
 }

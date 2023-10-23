@@ -2,11 +2,13 @@
 
   <div class="py-2 text-center">Quel livre voulez-vous commenter?</div>
   <form [formGroup]="searchForm!">
-    <p-autoComplete formControlName="selectedBook" field="volumeInfo.title" [suggestions]="filteredBooks!" [dropdown]="true"
-      (completeMethod)="filterBooks($event)" (onSelect)="onSelectNew()" placeholder="Recherche un livre" styleClass="w-full">
+    <p-autoComplete formControlName="selectedBook" field="volumeInfo.title" [suggestions]="filteredBooks!"
+      [dropdown]="true" (completeMethod)="filterBooks($event)" (onSelect)="onSelectNew()"
+      placeholder="Recherche un livre" styleClass="w-full">
       <ng-template let-book pTemplate="book">
         <div class="book-container flex">
-          <img [src]="book.volumeInfo.imageLinks?.smallThumbnail?? '/assets/empty-star.png'" alt="Book Cover" style="width: 30px;" class="mr-2"/>
+          <img [src]="book.volumeInfo.imageLinks?.smallThumbnail?? '/assets/empty-star.png'" alt="Book Cover"
+            class="mr-2" />
           <div class="details-container flex flex-column justify-content-between">
             <div class="title"><strong>{{ book.volumeInfo.title }}</strong></div>
             <div class="author-date">
@@ -25,7 +27,7 @@
       <app-book-card [book]="bookData"></app-book-card>
     </div>
 
-    
+
     <div>
       <!-- Créer une nouvelle critique -->
       <form [formGroup]="createReviewForm" (ngSubmit)="onSubmit()" class="create-review-form gap-3 flex flex-column">

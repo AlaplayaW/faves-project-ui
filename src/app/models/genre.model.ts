@@ -4,4 +4,3 @@ export interface Genre {
   createdAt: Date | null;
   updatedAt: Date | null;
 }
-

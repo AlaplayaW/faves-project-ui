@@ -22,11 +22,11 @@ export class FriendshipService {
 
   private loadFriendships() {
     this.http.get<Friendship[]>(this.apiUrl).subscribe({
-      next: friends => {
+      next: (friends) => {
         console.log(friends);
         this.friendshipSubject.next(friends);
       },
-      error: error => console.error(error),
+      error: (error) => console.error(error),
     });
   }
 
@@ -39,5 +39,4 @@ export class FriendshipService {
       this.apiUrl + '?isAccepted=true&userId=' + userId
     );
   }
-
 }

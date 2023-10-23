@@ -1,6 +1,6 @@
-import { Book } from "./book.model";
-import { Media } from "./media.model";
-import { Review } from "./review.model";
+import { Book } from './book.model';
+import { Media } from './media.model';
+import { Review } from './review.model';
 
 export interface User {
   id?: number;

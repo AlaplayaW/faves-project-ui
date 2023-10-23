@@ -11,13 +11,10 @@ import { CommonModule } from '@angular/common';
       <p>Une erreur s'est produite.</p>
     </div>
   `,
-  styleUrls: []
+  styleUrls: [],
 })
 export class ErrorComponent implements OnInit {
+  constructor() {}
 
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 }

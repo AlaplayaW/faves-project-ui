@@ -1,5 +1,5 @@
-import { Book } from "./book.model";
-import { Genre } from "./genre.model";
+import { Book } from './book.model';
+import { Genre } from './genre.model';
 
 export interface BookGenre {
   id: number;
@@ -8,4 +8,3 @@ export interface BookGenre {
   createdAt: Date | null;
   updatedAt: Date | null;
 }
-

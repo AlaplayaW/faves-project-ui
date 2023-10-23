@@ -9,12 +9,10 @@ import { ReviewService } from './review.service';
 import { Utils } from './utils';
 import { Media } from '../models/media.model';
 
-
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class BookService {
-
   friendshipService = inject(FriendshipService);
   userService = inject(UserService);
   reviewService = inject(ReviewService);
@@ -39,5 +37,4 @@ export class BookService {
       catchError((error) => Utils.handleError(error, undefined))
     );
   }
-
 }

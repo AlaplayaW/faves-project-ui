@@ -6,8 +6,6 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './my-posts.component.html',
-  styleUrls: ['./my-posts.component.scss']
+  styleUrls: ['./my-posts.component.scss'],
 })
-export class MyPostsComponent {
-
-}
+export class MyPostsComponent {}
