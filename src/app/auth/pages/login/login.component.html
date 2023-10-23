@@ -3,9 +3,8 @@
 		<div class="flex flex-column gap-2">
 			<p-toast></p-toast>
 
-			<input pInputText type="text" formControlName="username" class="form-control" name="username"
-				placeholder="Votre email">
-			<div [hidden]="loginForm.controls['username'].valid || !loginForm.controls['username'].dirty"
+			<input pInputText type="text" formControlName="email" class="form-control" name="email" placeholder="Votre email">
+			<div [hidden]="loginForm.controls['email'].valid || !loginForm.controls['email'].dirty"
 				class="alert alert-danger">Email obligatoire</div>
 
 			<input pInputText type="password" formControlName="password" class="form-control" name="password"
