@@ -39,6 +39,10 @@ input::placeholder {
   cursor: pointer;
 }
 
+.p-button.p-button-icon-only.p-button-rounded {
+  height: 2rem;
+}
+
 .p-autocomplete-panel {
   background-color: $secondary-lighter;
 
@@ -47,23 +51,53 @@ input::placeholder {
   }
 }
 
+main {
+  max-width: 600px;
+}
+
+.app-title,
 .page-title {
-  font-size: 1.3rem;
   font-weight: bold;
-  color: $whitesmoke;
   letter-spacing: 1px;
 }
 
+.app-title {
+  font-size: 3rem;
+  color: $primary-color;
+
+  @media (min-width: 500px) {
+    font-size: 3.5rem;
+  }
+
+  @media (min-width: 700px) {
+    font-size: 4.5rem;
+  }
+}
+
+.page-title {
+  font-size: 1.3rem;
+  color: $whitesmoke;
+
+  @media (min-width: 500px) {
+    font-size: 1.5rem;
+  }
+
+  @media (min-width: 700px) {
+    font-size: 2rem;
+  }
+}
+
+
 .auth-layout {
-  .app-title {
-    font-size: 3rem;
-    font-weight: 900;
-    color: $primary-color;
-    letter-spacing: 8px;
+  .header {
+    min-height: 30%;
+    height: 40%;
   }
 
   .login-page,
   .signup-page {
+    max-width: 400px;
+
     .pwd-infos {
       margin: 10px 10px 0 10px;
       font-size: 0.8rem;
@@ -273,23 +307,19 @@ app-auth-layout {
 
 }
 
-/* Pour les écrans de tablette (largeur minimale de 500px) */
+/* Pour les écrans de tablette */
 @media (min-width: 500px) {
   .p-card {
     width: 600px;
     max-width: 600px;
-    /* Par exemple, ajustez la largeur maximale pour les tablettes */
-    /* Autres styles spécifiques aux tablettes */
   }
 }
 
-/* Pour les écrans de bureau (largeur minimale de 700px) */
+/* Pour les écrans de bureau */
 @media (min-width: 700px) {
   .p-card {
     width: 100%;
     max-width: 100%;
-    /* Par exemple, ajustez la largeur maximale pour les écrans de bureau */
-    /* Autres styles spécifiques aux écrans de bureau */
   }
 }
 
@@ -306,6 +336,7 @@ app-auth-layout {
       background-color: $secondary-lighter;
       padding: 0.5em 1em;
       border-radius: 6px;
+      height: 30px;
     }
 
     .showAllComments-button {

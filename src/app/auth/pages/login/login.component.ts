@@ -30,7 +30,9 @@ import { ToastModule } from 'primeng/toast';
   styleUrls: [],
 })
 export class LoginComponent implements OnInit {
+
   authService = inject(AuthService);
+  
   messageService = inject(MessageService);
   errorService = inject(ErrorService);
 

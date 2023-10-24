@@ -58,35 +58,41 @@
   </ng-template>
   <ng-template pTemplate="footer">
     <div *ngIf="book.reviews" class="flex flex-column gap-2">
-
       <ng-container *ngIf="!showAllComments && book.reviews">
         <div *ngIf="book.reviews.length > 3" (click)="showAllComments = true" class="showAllComments-button">
           <strong>Voir plus de commentaires</strong>
         </div>
         <ng-container *ngFor="let review of book.reviews.slice(-3); let i = index; let last = last">
           <div *ngIf="i > 0" class="flex gap-2 align-items-center">
-            <img class=" user-image" [src]="review.user?.media?.imageUrl" alt="Photo de l'auteur du commentaire'" />
-          <div>{{ review.user.pseudo }}</div>
-          <div class="friend-comment">{{ review.comment }}</div>
-    </div>
-    </ng-container>
-    </ng-container>
-    <ng-container *ngIf="showAllComments">
-      <ng-container *ngFor="let review of book.reviews; let i = index; let last = last">
-        <div *ngIf="i > 0" class="flex gap-2 align-items-center">
-          <img class="user-image" [src]="review.user?.media?.imageUrl" alt="Photo de l'auteur du commentaire" />
-          <div>{{ review.user.pseudo }}</div>
-          <div class="friend-comment">{{ review.comment }}</div>
-        </div>
+            <div class="flex flex-column align-content-center">
+              <img class="user-image align-self-center" [src]="review.user?.media?.imageUrl"
+                alt="Photo de l'auteur du commentaire" />
+              <div class="white-space-nowrap">{{ review.user?.pseudo }}</div>
+            </div>
+            <div class="friend-comment">{{ review.comment }}</div>
+          </div>
+        </ng-container>
       </ng-container>
-    </ng-container>
-    <div class="flex gap-2">
-      <form (ngSubmit)="postComment(book)" [formGroup]="reviewForm" class="inline-flex my-2 w-full" method="post">
-        <input type="text" pInputText formControlName="reviewText" class="p-inputtext-sm flex-auto"
-          placeholder="Votre commentaire..." />
-        <p-button type="submit" icon="pi pi-check" styleClass="p-button-rounded p-button-text"></p-button>
-      </form>
-    </div>
+      <ng-container *ngIf="showAllComments">
+        <ng-container *ngFor="let review of book.reviews; let i = index; let last = last">
+          <div *ngIf="i > 0" class="flex gap-2 align-items-center">
+            <div class="flex flex-column align-content-center">
+              <img class="user-image align-self-center" [src]="review.user?.media?.imageUrl"
+                alt="Photo de l'auteur du commentaire" />
+              <div class="white-space-nowrap">{{ review.user?.pseudo }}</div>
+            </div>
+            <div class="friend-comment">{{ review.comment }}</div>
+          </div>
+        </ng-container>
+      </ng-container>
+      <div class="flex gap-2">
+        <form (ngSubmit)="postComment(book)" [formGroup]="reviewForm" class="inline-flex my-2 w-full" method="post">
+          <input type="text" pInputText formControlName="reviewText" class="p-inputtext-sm flex-auto"
+            placeholder="Votre commentaire..." />
+          <p-button type="submit" icon="pi pi-check" styleClass="p-button-rounded p-button-text p-button-sm"
+            size="small"></p-button>
+        </form>
+      </div>
     </div>
   </ng-template>
 </p-card>
