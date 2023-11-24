@@ -89,8 +89,9 @@
         <form (ngSubmit)="postComment(book)" [formGroup]="reviewForm" class="inline-flex my-2 w-full" method="post">
           <input type="text" pInputText formControlName="reviewText" class="p-inputtext-sm flex-auto"
             placeholder="Votre commentaire..." />
-          <p-button type="submit" icon="pi pi-check" styleClass="p-button-rounded p-button-text p-button-sm"
-            size="small"></p-button>
+          <p-button type="submit" icon="pi pi-send" styleClass="p-button-sm" class="comment-button"></p-button>
+          <!-- <p-button [disabled]="reviewForm.get('reviewText')?.value === ''" type="submit" icon="pi pi-send"
+            styleClass="p-button-sm" class="comment-button"></p-button> -->
         </form>
       </div>
     </div>
