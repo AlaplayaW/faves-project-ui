@@ -6,12 +6,43 @@
 @import "/src/themes/variables";
 
 
+@font-face {
+  font-family: "BebasNeue";
+  font-style: normal;
+  font-weight: 400;
+  src: local("BebasNeue-Regular"), url("./assets/fonts/BebasNeue-Regular.ttf") format("ttf");
+}
+
+@font-face {
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 300;
+  src: local("Lato Light"), local("Lato-Light"), url("./assets/fonts/Lato-Light.ttf") format("ttf");
+}
+
+@font-face {
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 400;
+  src: local("Lato Regular"), local("Lato-Regular"), url("./assets/fonts/Lato-Regular.ttf") format("ttf");
+}
+
+@font-face {
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 700;
+  src: local("Lato Bold"), local("Lato-Bold"), url("./assets/fonts/Lato-Bold.ttf") format("ttf");
+}
+
+* {
+  box-sizing: border-box;
+}
 
 html,
 body {
   height: 100%;
   margin: 0;
-  font-family: var(--font-family);
+  font-family: Lato, sans-serif;
   color: $white
 }
 
@@ -59,6 +90,7 @@ main {
 .page-title {
   font-weight: bold;
   letter-spacing: 1px;
+  font-family: BebasNeue, Arial, Helvetica, sans-serif;
 }
 
 .app-title {

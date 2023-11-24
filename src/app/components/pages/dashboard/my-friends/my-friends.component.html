@@ -3,8 +3,8 @@
   <div class="flex flex-column gap-2 pb-4">
     <p-card *ngFor="let friend of acceptedFriends">
       <ng-template pTemplate="content">
-        <div class="user-card flex align-items-center px-2 justify-content-between">
-          <div class="user-image mr-2 flex align-items-center">
+        <div class="user-card flex align-items-center p-2 justify-content-between">
+          <div class="user-image mr-2 flex align-items-center w-60">
             <p-avatar [image]="'https://primefaces.org/cdn/primeng/images/demo/avatar/amyelsner.png'" styleClass="mr-2"
               size="medium" shape="circle"></p-avatar>
             <p class="flex align-items-center">
@@ -32,7 +32,7 @@
 
     <p-card *ngFor="let friend of pendingFriends">
       <ng-template pTemplate="content">
-        <div class="user-card flex align-items-center px-2 justify-content-between">
+        <div class="user-card flex align-items-center p-2 justify-content-between">
           <div class="user-image mr-2 flex align-items-center">
             <p-avatar [image]="'https://primefaces.org/cdn/primeng/images/demo/avatar/amyelsner.png'" styleClass="mr-2"
               size="medium" shape="circle"></p-avatar>
