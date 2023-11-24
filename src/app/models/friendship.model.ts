@@ -10,4 +10,6 @@ export interface Friendship {
   acceptanceDate: Date | null;
   rejectionDate: Date | null;
   updatedAt: Date | null;
+
+  toSlide: Boolean;
 }

@@ -31,6 +31,9 @@ export class MyFriendsComponent {
 
   currentUser: User | null;
 
+  isDeleting = false;
+  isDeclining = false;
+
   ngOnInit(): void {
     this.currentUser = this.userService.getCurrentUser();
 
@@ -47,27 +50,47 @@ export class MyFriendsComponent {
     });
   }
 
-  deleteFriend(id: number) {
-    this.friendshipService.deleteFriendship(id).subscribe({
+  // deleteFriend(id: number) {
+  //   this.friendshipService.deleteFriendship(id).subscribe({
+  //     next: () => {
+  //       this.acceptedFriends = this.acceptedFriends.filter(
+  //         (friend) => friend.id !== id
+  //       );
+  //     },
+  //     error: (error) => {
+  //       console.error('Error deleting friendship:', error);
+  //     },
+  //   });
+  // }
+
+  deleteFriend(friend: Friendship) {
+    friend.toSlide = true;
+
+    this.friendshipService.deleteFriendship(friend.id).subscribe({
       next: () => {
-        this.acceptedFriends = this.acceptedFriends.filter(
-          (friend) => friend.id !== id
-        );
+        console.log('Friendship deleted successfully.');
+        setTimeout(() => {
+          this.acceptedFriends = this.acceptedFriends.filter(
+            (f) => f.id !== friend.id
+          );
+          friend.toSlide = false;
+        }, 500); // Ajoutez le délai en millisecondes que vous souhaitez
       },
       error: (error) => {
         console.error('Error deleting friendship:', error);
+        friend.toSlide = false;
       },
     });
   }
 
-  acceptFriend(id: number) {
-    this.friendshipService.acceptFriendship(id).subscribe({
+  acceptFriend(friend: Friendship) {
+    this.friendshipService.acceptFriendship(friend.id).subscribe({
       next: () => {
         const acceptedFriend = this.pendingFriends.find(
-          (friend) => friend.id === id
+          (f) => f.id === friend.id
         );
         this.pendingFriends = this.pendingFriends.filter(
-          (friend) => friend.id !== id
+          (f) => f.id !== friend.id
         );
         if (acceptedFriend) {
           this.acceptedFriends = [...this.acceptedFriends, acceptedFriend];
@@ -81,15 +104,35 @@ export class MyFriendsComponent {
     });
   }
 
-  rejectFriend(id: number) {
-    this.friendshipService.rejectFriendship(id).subscribe({
+  // rejectFriend(id: number) {
+  //   this.friendshipService.rejectFriendship(id).subscribe({
+  //     next: () => {
+  //       this.pendingFriends = this.pendingFriends.filter(
+  //         (friend) => friend.id !== id
+  //       );
+  //     },
+  //     error: (error) => {
+  //       console.error('Error declining friendship:', error);
+  //     },
+  //   });
+  // }
+
+  rejectFriend(friend: Friendship) {
+    friend.toSlide = true;
+
+    this.friendshipService.rejectFriendship(friend.id).subscribe({
       next: () => {
-        this.pendingFriends = this.pendingFriends.filter(
-          (friend) => friend.id !== id
-        );
+        console.log('Friendship delined successfully.');
+        setTimeout(() => {
+          this.pendingFriends = this.pendingFriends.filter(
+            (f) => f.id !== friend.id
+          );
+          friend.toSlide = true;
+        }, 500); // Ajoutez le délai en millisecondes que vous souhaitez
       },
       error: (error) => {
-        console.error('Error declining friendship:', error);
+        console.error('Error deleting friendship:', error);
+        friend.toSlide = true;
       },
     });
   }
