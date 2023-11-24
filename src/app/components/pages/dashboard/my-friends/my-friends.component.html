@@ -17,7 +17,8 @@
             </p>
           </div>
           <div class="flex gap-2">
-            <p-button icon="pi pi-times" styleClass="p-button-danger"></p-button>
+            <p-button icon="pi pi-times" class="delete-button" styleClass="p-button-danger p-button-sm"
+              (onClick)="deleteFriend(friend.id)"></p-button>
           </div>
         </div>
         <ng-template #accepterBlock></ng-template>
@@ -45,8 +46,9 @@
             </p>
           </div>
           <div class="flex gap-2">
-            <p-button icon="pi pi-check"></p-button>
-            <p-button icon="pi pi-times" styleClass="p-button-danger"></p-button>
+            <p-button icon="pi pi-check" class="accept-button" styleClass="p-button-sm" (onClick)="acceptFriend(friend.id)"></p-button>
+            <p-button icon="pi pi-times" class="decline-button" styleClass="p-button-danger p-button-sm"
+              (onClick)="rejectFriend(friend.id)"></p-button>
           </div>
         </div>
         <ng-template #accepterBlock></ng-template>

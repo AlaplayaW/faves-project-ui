@@ -1,7 +1,7 @@
 import { User } from './user.model';
 
 export interface Friendship {
-  id?: number;
+  id: number;
   friendRequester?: User;
   friendAccepter?: User;
   isAccepted: boolean;
