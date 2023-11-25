@@ -9,28 +9,42 @@
   font-family: "BebasNeue";
   font-style: normal;
   font-weight: 400;
-  src: local("BebasNeue-Regular"), url("./assets/fonts/BebasNeue-Regular.ttf") format("ttf");
+  src: url("./assets/fonts/BebasNeue-Regular.woff2") format("woff2");
 }
 
 @font-face {
   font-family: "Lato";
   font-style: normal;
   font-weight: 300;
-  src: local("Lato Light"), local("Lato-Light"), url("./assets/fonts/Lato-Light.ttf") format("ttf");
+  src: url("./assets/fonts/Lato-Light.woff2") format("woff2");
 }
 
 @font-face {
   font-family: "Lato";
   font-style: normal;
   font-weight: 400;
-  src: local("Lato Regular"), local("Lato-Regular"), url("./assets/fonts/Lato-Regular.ttf") format("ttf");
+  src: url("./assets/fonts/Lato-Regular.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 500;
+  src: url("./assets/fonts/Lato-Medium.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 600;
+  src: url("./assets/fonts/Lato-Semibold.woff2") format("woff2");
 }
 
 @font-face {
   font-family: "Lato";
   font-style: normal;
   font-weight: 700;
-  src: local("Lato Bold"), local("Lato-Bold"), url("./assets/fonts/Lato-Bold.ttf") format("ttf");
+  src: url("./assets/fonts/Lato-Bold.woff2") format("woff2");
 }
 
 * {
@@ -39,15 +53,48 @@
 
 html,
 body {
+  font-family: Lato, sans-serif;
+  font-weight: 400;
+  color: $white;
   height: 100%;
   margin: 0;
-  font-family: Lato, sans-serif;
-  color: $white
+}
+
+.app-title,
+.page-title {
+  font-family: BebasNeue, Arial, sans-serif;
+  letter-spacing: 1px;
+}
+
+.app-title {
+  font-size: 3rem;
+  color: $primary-color;
+
+  @media (min-width: 500px) {
+    font-size: 3.5rem;
+  }
+
+  @media (min-width: 700px) {
+    font-size: 4.5rem;
+  }
+}
+
+.page-title {
+  font-size: 1.6rem;
+  color: $whitesmoke;
+
+  @media (min-width: 500px) {
+    font-size: 1.8rem;
+  }
+
+  @media (min-width: 700px) {
+    font-size: 2rem;
+  }
 }
 
 .ohnohoney {
-  opacity: 0;
   position: absolute;
+  opacity: 0;
   top: 0;
   left: 0;
   height: 0;
@@ -73,32 +120,35 @@ input::placeholder {
   height: 2rem;
 }
 
+.feed-page,
+.add-review {
+  margin: auto;
+  max-width: 700px;
+}
+
 app-news-feed {
   form {
     gap: 10px;
 
     .comment-button {
       .p-button {
-        background-color: #645BA0;
-        border: 1px solid #645BA0;
+        background-color: $secondary-lighter;
+        border: 1px solid $secondary-lighter;
 
         &:hover {
           background-color: $primary-color;
           border: 1px solid $primary-color;
-          color: #ffffff;
+          color: $white;
         }
 
         &:active {
           animation: shrinkAnimation 0.3s ease-out;
         }
-
       }
     }
   }
 }
 
-/* Animation au clic et au touch (pour le boutton du post du commentaire) */
-/* Taille normale -> Réduction -> Taille normale */
 @keyframes shrinkAnimation {
   0% {
     transform: scale(1);
@@ -136,40 +186,6 @@ app-news-feed {
     color: $white;
   }
 }
-
-.app-title,
-.page-title {
-  font-weight: bold;
-  letter-spacing: 1px;
-  font-family: BebasNeue, Arial, Helvetica, sans-serif;
-}
-
-.app-title {
-  font-size: 3rem;
-  color: $primary-color;
-
-  @media (min-width: 500px) {
-    font-size: 3.5rem;
-  }
-
-  @media (min-width: 700px) {
-    font-size: 4.5rem;
-  }
-}
-
-.page-title {
-  font-size: 1.3rem;
-  color: $whitesmoke;
-
-  @media (min-width: 500px) {
-    font-size: 1.5rem;
-  }
-
-  @media (min-width: 700px) {
-    font-size: 2rem;
-  }
-}
-
 
 .auth-layout {
   .header {
@@ -265,7 +281,9 @@ app-news-feed {
 }
 
 .dashboard-friends {
-  min-width: 400px;
+  min-width: 350px;
+  max-width: 400px;
+  margin: auto;
 
   h2 {
     font-size: 1.2rem;
@@ -332,7 +350,6 @@ app-auth-layout {
 
   .p-button {
     color: $whitesmoke;
-    // padding: 5px 0;
     font-size: 0.9rem;
     font-weight: 300;
 
@@ -375,7 +392,7 @@ app-auth-layout {
   }
 
   .book-title {
-    font-weight: bold;
+    font-weight: 600;
   }
 
   .book-image {
